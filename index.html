@@ -274,6 +274,37 @@
     }
     /* --- End Sub-menu Buttons --- */
 
+    /* --- Styles for Drinks Menu Headers/Lists (Optional, specific to drinks-menu section) --- */
+    .drinks-menu h2 {
+      color: #DC381F; /* Accent color for main title */
+      margin-bottom: 1.5rem;
+      font-size: 1.8em;
+    }
+    .drinks-menu h3 {
+      color: #3B2F2F; /* Darker color for sub-titles */
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.4em;
+    }
+    .drinks-menu ul {
+      list-style: none; /* Remove default bullet points */
+      padding: 0;
+      margin: 0;
+      text-align: left; /* Align text to the left within the list */
+    }
+    .drinks-menu li {
+      padding: 0.5rem 0;
+      border-bottom: 1px dotted #ddd; /* Light dotted line for separation */
+      font-size: 1.1em;
+      line-height: 1.4;
+    }
+    .drinks-menu li:last-child {
+      border-bottom: none; /* No border for the last item in a list */
+    }
+    /* --- End Styles for Drinks Menu --- */
+
   </style>
 </head>
 <body>
@@ -438,7 +469,8 @@
         <button class="sub-button" onclick="openPopup('soft-drinks-popup')">Soft Drinks</button>
         <button class="sub-button" onclick="openPopup('local-beers-popup')">Local Beers</button>
         <button class="sub-button" onclick="openPopup('alcoholic-drinks-popup')">Alcoholic Beverages</button>
-        <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button> </div>
+        <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
+      </div>
       <div class="image-container">
           <img src="beergarden.jpg" alt="Refreshing drinks">
           <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
@@ -542,66 +574,53 @@
 
   <div id="alcoholic-drinks-popup" class="popup">
     <span class="close" onclick="closePopup('alcoholic-drinks-popup')">×</span>
-    <h3>Alcoholic Beverages</h3>
-    <p>For something stronger:</p>
+    <h3>Other Alcoholic Beverages</h3>
+    <p>For something stronger beyond our specialty cocktails:</p>
     <ul>
-      <li>Whiskey (local and international)</li>
-      <li>Rum (local and international)</li>
-      <li>Vodka</li>
-      <li>Gin</li>
+      <li>Whiskey (local and international selection)</li>
+      <li>Rum (local and international selection)</li>
+      <li>Vodka (various brands)</li>
+      <li>Gin (various brands)</li>
       <li>Tequila</li>
+      <li>Assorted Shots</li>
     </ul>
   </div>
 
   <div id="thai-bar-drinks-popup" class="popup">
     <span class="close" onclick="closePopup('thai-bar-drinks-popup')">×</span>
-    <h3>Thai Bar Drinks Menu</h3>
-    <p>Experience local spirits and classic cocktails with a Thai twist. All prices are in Thai Baht (THB).</p>
     
-    <h4>Local Beers (Large Bottle)</h4>
-    <ul>
-      <li>Chang Beer: 80 THB</li>
-      <li>Leo Beer: 80 THB</li>
-      <li>Singha Beer: 90 THB</li>
-    </ul>
+    <section class="drinks-menu">
+      <h2>🍹 Suan Som Bar – Drinks Menu<br>เมนูเครื่องดื่มบาร์สวนสม</h2>
 
-    <h4>Thai Spirits (by Glass/Shot)</h4>
-    <ul>
-      <li>Mekhong Whisky: 100 THB</li>
-      <li>SangSom Rum: 100 THB</li>
-      <li>Lao Khao (Thai Rice Whisky): 80 THB</li>
-    </ul>
+      <h3>🍸 Signature Cocktails – 180 THB<br>ค็อกเทลซิกเนเจอร์</h3>
+      <ul>
+        <li>🍃 Thai Mojito – ไทยโมฮิโต้ – เหล้ารัม มะนาว โซดา และโหระพาไทย</li>
+        <li>🌶️ Tom Yum Martini – ต้มยำมาร์ตินี่ – วอดก้า ตะไคร้ ใบมะกรูด พริก</li>
+        <li>🥭 Mango Tango – แมงโก้แทงโก้ – มะม่วง วอดก้า น้ำมะนาว</li>
+        <li>🍈 Lychee Martini – ลิ้นจี่มาร์ตินี่ – วอดก้า น้ำลิ้นจี่</li>
+        <li>🔥 Spicy Siam – สไปซี่สยาม – เตกีล่า น้ำมะนาว น้ำเชื่อมพริก</li>
+      </ul>
 
-    <h4>Classic Cocktails</h4>
-    <ul>
-      <li>Mojito: 220 THB</li>
-      <li>Pina Colada: 220 THB</li>
-      <li>Margarita: 220 THB</li>
-      <li>Daiquiri: 220 THB</li>
-    </ul>
+      <h3>🍹 Classic Cocktails – 160 THB<br>ค็อกเทลคลาสสิก</h3>
+      <ul>
+        <li>🍋 Margarita – มาการิต้า – เตกีล่า น้ำมะนาว</li>
+        <li>🍍 Pina Colada – พินาโคลาด้า – รัม ครีมมะพร้าว น้ำสับปะรด</li>
+        <li>🍊 Mai Tai – ไมไท – รัม มะนาว น้ำเชื่อมอัลมอนด์</li>
+        <li>🧊 Long Island Iced Tea – ลองไอซ์แลนด์ – วอดก้า รัม จิน เตกีล่า โคล่า</li>
+        <li>🍋 Whiskey Sour – วิสกี้ซาวร์ – วิสกี้ น้ำมะนาว</li>
+      </ul>
 
-    <h4>Thai Inspired Cocktails / Specialties</h4>
-    <ul>
-      <li>Thai Bucket (Mekhong/SangSom, mixer, Red Bull): 350 THB</li>
-      <li>Mekhong/SangSom Soda with Lime: 150 THB</li>
-      <li>Tom Yum Cocktail (spicy and unique!): 250 THB</li>
-    </ul>
+      <div class="image-container">
+          <img src="thai_cocktail.jpg" alt="Thai cocktail">
+          <div class="image-overlay"><p>Enjoy a perfectly crafted cocktail at our bar!</p></div>
+      </div>
+      <div class="image-container">
+          <img src="thai_beer.jpg" alt="Thai beer bottles">
+          <div class="image-overlay"><p>Cool down with a crisp, cold Thai beer.</p></div>
+      </div>
 
-    <h4>Shots</h4>
-    <ul>
-      <li>Tequila: 120 THB</li>
-      <li>Vodka: 120 THB</li>
-    </ul>
-
-    <div class="image-container">
-        <img src="thai_cocktail.jpg" alt="Thai cocktail">
-        <div class="image-overlay"><p>Try our refreshing Thai-inspired cocktails!</p></div>
+    </section>
     </div>
-    <div class="image-container">
-        <img src="thai_beer.jpg" alt="Thai beer bottles">
-        <div class="image-overlay"><p>Cool down with a classic Thai beer.</p></div>
-    </div>
-  </div>
   <div class="footer">
     © 2025 Suan Som Resort. All rights reserved.
   </div>
@@ -615,10 +634,8 @@
       document.getElementById('modal').style.display = 'none';
     }
 
-    // Modified openPopup function to handle initial tab selection
     function openPopup(id) {
       document.getElementById(id).style.display = 'block';
-      // If opening the restaurant popup, ensure food menu is active by default
       if (id === 'restaurant-popup') {
         const firstRestaurantTabButton = document.querySelector('#restaurant-popup .tab-button');
         if (firstRestaurantTabButton) {
@@ -631,25 +648,19 @@
       document.getElementById(id).style.display = 'none';
     }
 
-    // New function for handling menu section visibility
     function showMenuSection(sectionId, clickedButton) {
-      // Hide all menu sections within the restaurant popup
       var restaurantPopup = document.getElementById('restaurant-popup');
       var menuSections = restaurantPopup.querySelectorAll('.menu-section');
       menuSections.forEach(function(section) {
         section.classList.remove('active');
       });
 
-      // Deactivate all tab buttons within the restaurant popup
       var tabButtons = restaurantPopup.querySelectorAll('.tab-button');
       tabButtons.forEach(function(button) {
         button.classList.remove('active');
       });
 
-      // Show the selected section
       document.getElementById(sectionId).classList.add('active');
-
-      // Activate the clicked button
       clickedButton.classList.add('active');
     }
   </script>
