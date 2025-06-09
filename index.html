@@ -12,7 +12,7 @@
       color: #333;
     }
     header {
-      background-color: #DC381F;
+      background-color: #4CAF50;
       color: white;
       padding: 1rem 2rem;
       text-align: center;
@@ -21,16 +21,17 @@
       display: flex;
       justify-content: center;
       gap: 2rem;
-      background: #3B2F2F;
+      background: #3e8e41;
       padding: 0.5rem;
     }
     nav a {
       color: white;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
     .hero {
-      background-image: url('Driveway-Outside-04.jpg');
+      background-image: url('https://example.com/resort-hero.jpg');
       background-size: cover;
       background-position: center;
       height: 60vh;
@@ -88,17 +89,36 @@
       width: 100%;
       border-radius: 8px;
     }
-    .close {
+    .popup {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 800px;
+      width: 90%;
+      z-index: 1001;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+    .popup img {
+      width: 100%;
+      margin: 1rem 0;
+      border-radius: 8px;
+    }
+    .popup .close {
       position: absolute;
-      top: 20px;
-      right: 35px;
-      color: white;
-      font-size: 40px;
-      font-weight: bold;
+      top: 10px;
+      right: 20px;
+      font-size: 24px;
       cursor: pointer;
     }
     .footer {
-      background: #3B2F2F;
+      background: #2e7031;
       color: white;
       padding: 1rem;
       text-align: center;
@@ -118,8 +138,8 @@
 
   <nav>
     <a href="#resort">Resort</a>
-    <a href="#restaurant">Restaurant</a>
-    <a href="#gallery">Gallery</a>
+    <a onclick="openPopup('restaurant-popup')">Restaurant</a>
+    <a onclick="openPopup('gallery-popup')">Gallery</a>
     <a href="#contact">Contact</a>
   </nav>
 
@@ -133,18 +153,11 @@
       <p>Enjoy a tranquil stay surrounded by lush gardens and beautiful views. Our bungalows are fully equipped with modern comforts and traditional Thai design.</p>
     </div>
 
-    <div id="restaurant" class="section">
-      <h2>Restaurant</h2>
-      <p>Delight in authentic Thai cuisine prepared with fresh local ingredients. Indoor and outdoor seating available for a relaxing dining experience.</p>
-    </div>
-
-    <div id="gallery" class="section">
+    <div class="section">
       <h2>Gallery</h2>
       <div class="gallery-images">
-        <img src="Driveway-Outside-01.jpg" alt="Resort driveway" onclick="openModal(this.src)">
-        <img src="Standard-Room-01.jpg" alt="Standard Room" onclick="openModal(this.src)">
-        <img src="Standard-Room-02.jpg" alt="Standard Room" onclick="openModal(this.src)">
-        <img src="Driveway-Outside-05.jpg" alt="Standard Room" onclick="openModal(this.src)">
+        <img src="driveway.jpg" alt="Resort driveway" onclick="openModal(this.src)">
+        <img src="room.jpg" alt="Standard Room" onclick="openModal(this.src)">
       </div>
     </div>
 
@@ -157,11 +170,37 @@
     </div>
   </div>
 
+  <!-- Full Image Modal -->
   <div id="modal" class="modal" onclick="closeModal()">
     <span class="close">&times;</span>
     <div class="modal-content">
       <img id="modal-img" src="" alt="Popup image">
     </div>
+  </div>
+
+  <!-- Gallery Popup -->
+  <div id="gallery-popup" class="popup">
+    <span class="close" onclick="closePopup('gallery-popup')">&times;</span>
+    <h2>Photo Gallery</h2>
+    <img src="driveway.jpg" alt="Driveway">
+    <img src="room.jpg" alt="Room">
+    <img src="garden.jpg" alt="Garden">
+    <img src="restaurant.jpg" alt="Restaurant">
+  </div>
+
+  <!-- Restaurant Popup -->
+  <div id="restaurant-popup" class="popup">
+    <span class="close" onclick="closePopup('restaurant-popup')">&times;</span>
+    <h2>Restaurant Menu</h2>
+    <p>Our kitchen serves a delicious variety of Thai dishes including:</p>
+    <ul>
+      <li>Som Tum (Papaya Salad)</li>
+      <li>Pad Thai</li>
+      <li>Tom Yum Goong</li>
+      <li>Grilled Chicken and Sticky Rice</li>
+    </ul>
+    <img src="food1.jpg" alt="Menu item 1">
+    <img src="food2.jpg" alt="Menu item 2">
   </div>
 
   <div class="footer">
@@ -175,6 +214,12 @@
     }
     function closeModal() {
       document.getElementById('modal').style.display = 'none';
+    }
+    function openPopup(id) {
+      document.getElementById(id).style.display = 'block';
+    }
+    function closePopup(id) {
+      document.getElementById(id).style.display = 'none';
     }
   </script>
 </body>
