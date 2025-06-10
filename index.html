@@ -3,136 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suan Som Resort & Restaurant</title>
+    <title>Suan Som Resort</title>
     <style>
-        /* General Body Styles */
+        /* --- Base Styles (Mobile-First) --- */
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f4ec;
             color: #333;
             line-height: 1.6;
+            font-size: 16px; /* Base font size for mobile */
+            user-select: none; /* Prevent text selection on quick clicks/swipes */
         }
-
-        /* Header Styles */
-        .header {
-            background-color: #333;
-            color: #fff;
-            padding: 1rem 0;
+        header {
+            background-color: #DC381F;
+            color: white;
+            padding: 1rem; /* Reduced padding for mobile */
             text-align: center;
         }
-
-        .header h1 {
+        header h1 {
+            font-size: 1.8em; /* Smaller h1 for mobile */
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 0.9em; /* Smaller paragraph for mobile */
             margin: 0;
         }
-
-        /* Navigation Styles */
-        .navbar {
-            background-color: #444;
-            color: #fff;
-            padding: 0.5rem 0;
-            text-align: center;
+        nav {
+            display: flex;
+            flex-direction: column; /* Stack vertically by default for mobile */
+            justify-content: center;
+            background: #3B2F2F;
+            padding: 0.5rem 0; /* Adjusted padding */
         }
-
-        .navbar a {
-            color: #fff;
+        nav a {
+            color: white;
             text-decoration: none;
-            padding: 0 15px;
-            display: inline-block;
-        }
-
-        .navbar a:hover {
-            background-color: #555;
-        }
-
-        /* Main Content Area */
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-
-        /* Section Styles */
-        .section {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .section h2 {
-            color: #007bff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .section p {
-            text-align: justify;
-            margin-bottom: 10px;
-        }
-
-        .section ul {
-            list-style: none;
-            padding: 0;
-            text-align: center;
-        }
-
-        .section ul li {
-            background: #e9e9e9;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            display: inline-block;
-            margin: 5px;
-        }
-
-        /* Button Styles */
-        .button {
-            display: inline-block;
-            background: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            text-align: center;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
+            font-weight: bold;
             cursor: pointer;
-            border: none;
+            padding: 0.8rem 1rem; /* Padded links for easier tapping */
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator for stacked links */
         }
-
-        .button:hover {
-            background: #0056b3;
+        nav a:last-child {
+            border-bottom: none; /* No border for the last link */
         }
-
-        /* Gallery Styles */
+        .hero {
+            background-image: url('Driveway-Outside-04.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 40vh; /* Shorter hero on mobile */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.7);
+            font-size: 1.8rem; /* Smaller font for mobile */
+            font-weight: bold;
+            text-align: center; /* Ensure text is centered */
+            padding: 1rem; /* Add some padding to hero text */
+        }
+        .content {
+            padding: 1rem; /* Reduced padding for mobile */
+            text-align: center;
+        }
+        .section {
+            margin: 1.5rem 0; /* Slightly reduced margin */
+        }
         .gallery-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            padding: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
+        /* --- Styles for Image Containers and Overlays (Main Gallery) --- */
         .image-container {
             position: relative;
-            overflow: hidden;
+            width: 100%; /* Full width on mobile, will be overridden by media queries */
+            height: 220px; /* Fixed height for consistency, adjust as needed */
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
         .image-container img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .image-container:hover img {
-            transform: scale(1.05);
         }
 
         .image-overlay {
@@ -141,420 +103,665 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
-            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease;
-            border-radius: 8px;
-            text-align: center;
             padding: 10px;
             box-sizing: border-box;
+            text-align: center;
+            font-size: 0.8em; /* Slightly smaller for mobile overlay */
         }
 
         .image-container:hover .image-overlay {
             opacity: 1;
         }
-
-        .image-overlay p {
-            margin: 0;
-            font-size: 0.9em;
+        .image-container:hover {
+            transform: scale(1.02); /* Less aggressive scale on hover for touch devices */
         }
+        /* --- End Styles for Image Containers and Overlays (Main Gallery) --- */
 
-        /* Footer Styles */
-        .footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem 0;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        /* Popup Container */
-        .popup {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 100; /* Sit on top */
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%); /* Center the popup */
-            width: 90%; /* Occupy full width */
-            max-width: 800px; /* Max width */
-            height: auto;
-            max-height: 90vh; /* Max height for scrollable content */
-            background-color: #fefefe;
-            padding: 20px;
-            border: 1px solid #888;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-            flex-direction: column; /* For vertical alignment */
-            align-items: center;
-            opacity: 0; /* Initial state for fade-in */
-            visibility: hidden; /* Initial state for fade-in */
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-            box-sizing: border-box; /* Include padding in width/height */
-        }
-
-        .popup-content {
-            width: 100%;
-            padding: 10px 0;
-            overflow-y: auto; /* Enable scrolling for content */
-            flex-grow: 1; /* Allows content to take available space */
-        }
-
-        .popup h2 {
-            color: #007bff;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-
-        .popup h3 {
-            color: #555;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-
-        .popup ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .popup ul li {
-            padding: 8px 0;
-            border-bottom: 1px dotted #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .popup ul li:last-child {
-            border-bottom: none;
-        }
-
-        /* Close Button */
-        .close {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 101; /* Ensure it's above content */
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Overlay */
-        .overlay {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 99; /* Sit on top of page content */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
-            opacity: 0; /* Initial state for fade-in */
-            visibility: hidden; /* Initial state for fade-in */
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-        }
-
-        /* Menu Tabs within Popups */
-        .menu-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            width: 100%; /* Ensure tabs take full width */
-        }
-
-        .tab-button {
-            padding: 10px 20px;
-            margin: 0 5px;
-            border: none;
-            background-color: #e0e0e0;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .tab-button.active {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .tab-button:hover:not(.active) {
-            background-color: #d0d0d0;
-        }
-
-        .menu-section {
-            display: none; /* Hidden by default */
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-top: 10px;
-            background-color: #fff;
-        }
-
-        .menu-section.active {
-            display: block; /* Show active section */
-        }
-
-        .submenu-buttons {
-            display: flex;
-            flex-wrap: wrap; /* Allow buttons to wrap to next line */
-            justify-content: center;
-            gap: 10px; /* Space between buttons */
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-
-        .sub-button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.3s ease;
-        }
-
-        .sub-button:hover {
-            background-color: #218838;
-        }
-
-        /* Modal for full image view */
+        /* --- Modal Styles (Full-Screen Image) --- */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 101; /* Sit on top of everything */
-            padding-top: 50px; /* Location of the box */
+            display: none; /* Initially hidden, controlled by JS */
+            opacity: 0; /* NEW: Start transparent for fade-in/out */
+            visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
+            transition: opacity 1.5s ease, visibility 1.5s ease; /* NEW: Smooth transition for fade */
+
+            position: fixed;
+            z-index: 1000;
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-            flex-direction: column; /* For centering content */
-            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+        }
+        .modal-content { /* This is the scrollable container for the image */
+            display: flex; /* Use flex to center the image itself */
             justify-content: center;
-            opacity: 0; /* Initial state for fade-in */
-            visibility: hidden; /* Initial state for fade-in */
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            align-items: center;
+            max-width: 95%; /* Confine the image area to a max width */
+            max-height: 90%; /* Confine the image area to a max height */
+            overflow: auto; /* Make this content scrollable if image is too large */
+            border-radius: 8px;
+            background: transparent; /* No background for the content wrapper */
+        }
+        .modal-content img {
+            width: auto; /* Allow image to size naturally */
+            height: auto; /* Allow image to size naturally */
+            max-width: 100%; /* Ensure image fits within modal-content */
+            max-height: 100%; /* Ensure image fits within modal-content */
+            object-fit: contain; /* Ensure the image is fully visible, not cropped */
+            display: block; /* Remove extra space below img */
+        }
+        .modal .close {
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: white; /* Make it visible against dark background */
+            z-index: 1002; /* Ensure it's above modal content */
         }
 
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-            height: auto; /* Maintain aspect ratio */
-            max-height: 80%; /* Limit height to prevent image from going off screen */
-            object-fit: contain; /* Ensure the whole image is visible */
-        }
-
-        #modal-caption {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-            text-align: center;
-            color: #ccc;
-            padding: 10px 0;
-            height: 150px; /* Adjust height as needed */
-            font-size: 1.2em;
-            overflow-y: auto; /* Allow scrolling for long captions */
-        }
-
-        /* Modal Navigation Buttons */
+        /* NEW: Modal Navigation Buttons and Caption */
         .modal-nav {
             position: absolute;
             top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
             transform: translateY(-50%);
-            z-index: 102; /* Above modal content */
-        }
-
-        .modal-nav-btn {
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             color: white;
             border: none;
-            padding: 15px;
-            cursor: pointer;
+            padding: 15px 10px;
             font-size: 2em;
-            user-select: none; /* Prevent text selection */
-            transition: background-color 0.3s ease;
+            cursor: pointer;
+            z-index: 1001; /* Above modal-content, below close */
+            border-radius: 5px;
+            user-select: none; /* Prevent text selection on quick clicks */
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
         }
-
-        .modal-nav-btn:hover:not(:disabled) {
-            background-color: rgba(0,0,0,0.8);
+        .modal-nav:hover {
+            opacity: 1;
         }
-
-        .modal-nav-btn:disabled {
+        .modal-nav.prev {
+            left: 10px;
+        }
+        .modal-nav.next {
+            right: 10px;
+        }
+        .modal-nav:disabled {
             opacity: 0.3;
-            cursor: not-allowed;
+            cursor: default;
+        }
+        .modal-caption {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            max-width: 80%;
+            text-align: center;
+            z-index: 1001;
+            display: none; /* Hidden by default, shown when caption is available */
+        }
+        /* --- End Modal Styles --- */
+
+        /* --- Popup Styles --- */
+        .popup {
+            display: none; /* Initially hidden, controlled by JS */
+            opacity: 0; /* NEW: Start transparent for fade-in/out */
+            visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
+            transition: opacity 2.5s ease, visibility 2.5s ease; /* NEW: Smooth transition for fade */
+
+            position: fixed; /* Keep it fixed in the viewport */
+            top: 5%; /* Higher up for mobile */
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 12px;
+            max-width: 95%; /* Wider popup for mobile */
+            width: 90%;
+            z-index: 1001;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            flex-direction: column;
+            max-height: 90vh; /* Max height for the entire popup */
         }
 
-        .modal-nav-btn.prev {
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            margin-left: 0; /* Ensure no margin pushes it */
+        .popup .close {
+            position: absolute;
+            top: 8px; /* Adjusted position */
+            right: 15px; /* Adjusted position */
+            font-size: 28px; /* Larger tap target */
+            cursor: pointer;
+            z-index: 1002; /* Ensure it's above popup content */
         }
 
-        .modal-nav-btn.next {
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            margin-right: 0; /* Ensure no margin pushes it */
+        .popup h2 {
+            padding: 0.5rem 1rem; /* Padding for the title */
+            margin-top: 0.5rem; /* Space from top */
+            margin-bottom: 0.5rem; /* Space from content */
+            text-align: center;
+            /* Add a border-bottom or shadow if desired for header separation */
         }
 
-        /* New CSS for dynamic menu content placeholder */
-        .menu-content-placeholder {
-            padding: 10px; /* Adjust as needed */
-            max-height: calc(90vh - 150px); /* Max height relative to popup height minus title/padding */
-            overflow-y: auto;
+        /* New div for scrollable content */
+        .popup-content {
+            flex-grow: 1; /* Allow content to take available space */
+            overflow-y: auto; /* Make only this part scrollable */
+            padding: 0 1rem 1rem; /* Padding for the scrollable content */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
         }
 
-        /* Responsive adjustments */
-        @media screen and (max-width: 768px) {
-            .container {
-                width: 95%;
-            }
+        .popup .image-container {
+            width: 100%;
+            height: auto; /* Allow height to adjust based on aspect ratio */
+            min-height: 180px; /* Minimum height for small images */
+            margin: 0.8rem 0;
+            box-shadow: none;
+            cursor: pointer; /* Changed to pointer so images in popup are clickable */
+            transition: none;
+        }
+        .popup .image-container img {
+            border-radius: 8px;
+            width: 100%;
+            height: 100%; /* Fill the container */
+            object-fit: cover; /* Cover the container, cropping if necessary */
+        }
+        .popup .image-overlay {
+            opacity: 1; /* Always show overlay in popup */
+            position: static; /* Remove absolute positioning */
+            background: none; /* No background needed for overlay text in popup */
+            color: #333; /* Text color for popup overlay */
+            padding: 0.5rem 0; /* Add some padding around the text */
+            font-size: 0.9em; /* Adjust for popup text */
+            text-align: left; /* Align text left in popup */
+            justify-content: flex-start; /* Align content to start */
+            align-items: flex-start; /* Align content to start */
+        }
+        .popup .image-overlay p {
+            font-size: 0.8em;
+            line-height: 1.4;
+            margin: 0; /* Remove default paragraph margin */
+        }
+        /* --- End Popup Styles --- */
 
-            .tab-button {
-                flex-grow: 1;
-                margin: 5px 2px;
-            }
+        .footer {
+            background: #3B2F2F;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8em;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 50vh; /* Responsive height */
+            border: 0;
+        }
 
-            .submenu-buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
+        /* --- Restaurant/Gallery Menu Tabs --- */
+        .menu-tabs {
+            display: flex;
+            flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+            justify-content: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
 
-            .sub-button {
-                width: 100%;
-                margin: 5px 0;
-            }
+        .tab-button {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 8px 15px; /* Smaller padding for mobile tabs */
+            cursor: pointer;
+            font-size: 0.9em; /* Smaller font for mobile tabs */
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 5px; /* Space between wrapped buttons */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            flex-grow: 1; /* Allow buttons to grow to fill space */
+            max-width: calc(50% - 10px); /* Two columns on mobile for tabs */
+        }
 
-            .popup {
-                width: 95%;
-                padding: 15px;
-            }
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
 
-            .modal-content {
-                width: 95%;
-            }
+        .tab-button.active {
+            background-color: #DC381F;
+            color: white;
+            border-color: #DC381F;
+        }
 
-            #modal-caption {
-                width: 95%;
+        .menu-section {
+            display: none;
+        }
+
+        .menu-section.active {
+            display: block;
+        }
+
+        /* --- Sub-menu Buttons within Popup Sections --- */
+        .submenu-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .sub-button {
+            background-color: #f8f4ec;
+            color: #3B2F2F;
+            border: 1px solid #DC381F;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 0.9em; /* Slightly smaller for mobile sub-buttons */
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            flex: 1 1 calc(50% - 10px); /* Two buttons per row on mobile */
+            max-width: 200px; /* Capped max width */
+            box-sizing: border-box; /* Include padding/border in width */
+        }
+
+        .sub-button:hover {
+            background-color: #DC381F;
+            color: white;
+        }
+
+        /* --- Styles for Drinks Menu Headers/Lists --- */
+        .drinks-menu h2 {
+            color: #DC381F;
+            margin-bottom: 1rem;
+            font-size: 1.5em; /* Adjusted for mobile */
+        }
+        .drinks-menu h3 {
+            color: #3B2F2F;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.2em; /* Adjusted for mobile */
+        }
+        .drinks-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+        .drinks-menu li {
+            padding: 0.4rem 0; /* Slightly less padding */
+            border-bottom: 1px dotted #ddd;
+            font-size: 1em; /* Adjusted for mobile */
+            line-height: 1.4;
+        }
+        .drinks-menu li:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Overlay for closing popups --- */
+        .overlay {
+            display: none; /* Initially hidden, controlled by JS */
+            opacity: 0; /* NEW: Start transparent for fade-in/out */
+            visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
+            transition: opacity 0.3s ease, visibility 0.3s ease; /* NEW: Smooth transition for fade */
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            cursor: pointer;
+        }
+
+        /* --- Media Queries for Larger Screens --- */
+
+        /* Small Tablets and Up (e.g., min-width: 600px) */
+        @media (min-width: 600px) {
+            body {
+                font-size: 17px;
+            }
+            header {
+                padding: 1.5rem 2rem;
+            }
+            header h1 {
+                font-size: 2.2em;
+            }
+            header p {
                 font-size: 1em;
+            }
+            nav {
+                flex-direction: row; /* Horizontal navigation */
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+            nav a {
+                padding: 0.5rem 1rem;
+                border-bottom: none; /* No border for horizontal links */
+            }
+            .hero {
+                height: 50vh;
+                font-size: 2.5rem;
+            }
+            .content {
+                padding: 1.5rem;
+            }
+            .section {
+                margin: 2rem 0;
+            }
+            .gallery-images .image-container {
+                width: calc(50% - 0.5rem); /* Two columns, considering gap */
+            }
+            .modal {
+                top: 5%; /* Adjusted for larger screens */
+                max-height: 90vh; /* Ensure modal fits */
+            }
+            .modal-content {
+                max-width: 80%; /* Wider modal for tablets */
+                max-height: 80%; /* Adjusted max height */
+            }
+            .popup {
+                top: 8%;
+                padding: 0; /* No direct padding on popup itself */
+                max-width: 700px;
+                width: 90%;
+            }
+            .popup h2 {
+                padding: 0.8rem 2rem;
+            }
+            .popup-content {
+                padding: 0 2rem 2rem; /* Adjusted padding for scrollable content */
+            }
+            .popup .close {
+                font-size: 24px;
+            }
+            .tab-button {
+                padding: 10px 20px;
+                font-size: 1.1em;
+                margin: 0 5px; /* Restore original margin for tabs */
+                max-width: none; /* Allow tabs to be their natural width */
+            }
+            .sub-button {
+                flex: 1 1 auto; /* Allow buttons to grow more naturally */
+                max-width: 180px; /* Cap width */
+            }
+            .drinks-menu h2 {
+                font-size: 1.8em;
+            }
+            .drinks-menu h3 {
+                font-size: 1.4em;
+            }
+            .drinks-menu li {
+                font-size: 1.1em;
+            }
+            /* Ensure popup image containers scale appropriately on tablets */
+            .popup .image-container {
+                width: calc(50% - 1rem); /* Example: Two columns in popup */
+                height: 200px; /* Consistent height */
+            }
+        }
+
+        /* Desktops and Up (e.g., min-width: 900px) */
+        @media (min-width: 900px) {
+            body {
+                font-size: 18px;
+            }
+            header {
+                padding: 1rem 2rem;
+            }
+            header h1 {
+                font-size: 2.5em;
+            }
+            header p {
+                font-size: 1em;
+            }
+            nav {
+                gap: 2rem;
+            }
+            nav a {
+                padding: 0.5rem 1rem;
+            }
+            .hero {
+                height: 60vh;
+                font-size: 3.5rem;
+            }
+            .content {
+                padding: 2rem;
+            }
+            .gallery-images .image-container {
+                width: 300px; /* Restore original width */
+                height: 200px; /* Restore original height */
+            }
+            .image-container:hover {
+                transform: scale(1.05); /* Restore more aggressive scale on hover */
+            }
+            .modal {
+                top: 10%; /* Adjusted for desktops */
+                max-height: 80vh;
+            }
+            .modal-content {
+                max-width: 70%; /* Wider modal for desktops */
+                max-height: 70%;
+            }
+            .popup {
+                top: 10%;
+                max-width: 800px;
+                width: 90%;
+            }
+            .popup h2 {
+                padding: 1rem 2rem;
+            }
+            .popup-content {
+                padding: 0 2rem 2rem;
+            }
+            /* Ensure popup image containers restore to desired desktop layout */
+            .popup .image-container {
+                width: calc(33.33% - 1rem); /* Example: Three columns in popup */
+                height: 200px; /* Consistent height */
             }
         }
     </style>
 </head>
 <body>
-
-    <div class="header">
+    <header>
         <h1>Suan Som Resort & Restaurant</h1>
-    </div>
+        <p>Your peaceful escape in nature</p>
+        <p>Bikers are welcome</p>
+    </header>
 
-    <div class="navbar">
-        <a href="#about">About Us</a>
-        <a href="#restaurant" onclick="openPopup('restaurant-popup')">Restaurant</a>
-        <a href="#rooms">Rooms</a>
-        <a href="#facilities">Facilities</a>
+    <nav>
+        <a href="#resort">Resort</a>
+        <a onclick="openPopup('restaurant-popup')">Restaurant</a>
+        <a onclick="openPopup('main-gallery-popup')">Gallery</a>
         <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="hero">
+        Welcome to Suan Som
     </div>
 
-    <div class="container">
-        <div id="about" class="section">
-            <h2>About Us</h2>
-            <p>Welcome to Suan Som Resort & Restaurant, a serene oasis nestled in the heart of Thailand. We offer a perfect blend of traditional Thai hospitality and modern comforts, ensuring a memorable stay for all our guests.</p>
-            <p>Our resort boasts lush gardens, a sparkling swimming pool, and direct access to tranquil natural surroundings. Whether you're seeking a relaxing getaway or an adventurous exploration of the local culture, Suan Som is your ideal destination.</p>
-            <div class="gallery-images">
-                <div class="image-container">
-                    <img src="images/resort_view.jpg" alt="Aerial view of the resort" onclick="openModal(this)">
-                    <div class="image-overlay"><p>An aerial view showcasing the expansive beauty of Suan Som Resort.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="images/garden.jpg" alt="Lush resort garden" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Stroll through our beautifully manicured tropical gardens.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="images/pool.jpg" alt="Swimming pool area" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Relax by our refreshing swimming pool, perfect for a sunny afternoon.</p></div>
-                </div>
-            </div>
+    <div class="content">
+        <div id="resort" class="section">
+            <h2>Resort</h2>
+            <p>Enjoy a tranquil stay surrounded by lush gardens and beautiful views. Our bungalows, 400B a night, are fully equipped with modern comforts and traditional Thai design.</p>
         </div>
 
-        <div id="restaurant" class="section">
-            <h2>Our Restaurant</h2>
-            <p>Savor authentic Thai cuisine and a selection of international dishes at our on-site restaurant. Our chefs use fresh, local ingredients to create delightful culinary experiences.</p>
-            <button class="button" onclick="openPopup('restaurant-popup')">View Our Menu</button>
-        </div>
-
-        <div id="rooms" class="section">
-            <h2>Rooms & Accommodation</h2>
-            <p>Our comfortable and elegantly designed rooms offer a peaceful retreat. Each room is equipped with amenities to ensure a pleasant stay, including air conditioning, private bathrooms, and scenic views.</p>
+        <div class="section">
+            <h2>Gallery</h2>
             <div class="gallery-images">
                 <div class="image-container">
-                    <img src="images/room_interior.jpg" alt="Comfortable room interior" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Step into the comfort and elegance of our spacious rooms.</p></div>
+                    <!-- IMPORTANT: Pass 'this' element to openModal instead of just 'this.src' -->
+                    <img src="Driveway-Outside-01.jpg" alt="Resort driveway" onclick="openModal(this)">
+                    <div class="image-overlay">
+                        <p>The inviting entrance to Suan Som Resort, surrounded by lush greenery.</p>
+                    </div>
                 </div>
                 <div class="image-container">
-                    <img src="images/balcony_view.jpg" alt="Room balcony view" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Enjoy breathtaking views from your private balcony.</p></div>
+                    <img src="Standard-Room-01.jpg" alt="Standard Room" onclick="openModal(this)">
+                    <div class="image-overlay">
+                        <p>Our comfortable standard room, offering a cozy and relaxing atmosphere.</p>
+                    </div>
                 </div>
                 <div class="image-container">
-                    <img src="images/bed.jpg" alt="Cozy bed in a room" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Sink into the plush comfort of our beds after a day of adventure.</p></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="facilities" class="section">
-            <h2>Facilities</h2>
-            <p>Suan Som Resort offers a range of facilities to enhance your stay, including a fitness center, spa services, and a tour desk to help you explore the local attractions.</p>
-            <div class="gallery-images">
-                <div class="image-container">
-                    <img src="images/spa.jpg" alt="Resort spa" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Indulge in relaxation at our tranquil spa.</p></div>
+                    <img src="Standard-Room-02.jpg" alt="Standard Room" onclick="openModal(this)">
+                    <div class="image-overlay">
+                        <p>A closer look at the elegant interior of our standard accommodation.</p>
+                    </div>
                 </div>
                 <div class="image-container">
-                    <img src="images/gym.jpg" alt="Fitness center" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Stay active in our well-equipped fitness center.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="images/reception.jpg" alt="Reception area" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Our friendly reception staff are ready to assist you.</p></div>
+                    <img src="Driveway-Outside-05.jpg" alt="Resort grounds" onclick="openModal(this)">
+                    <div class="image-overlay">
+                        <p>Pathways winding through the serene grounds of Suan Som Resort.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div id="contact" class="section">
             <h2>Contact Us</h2>
-            <p>We look forward to welcoming you to Suan Som Resort & Restaurant. For reservations or inquiries, please contact us:</p>
-            <p><strong>Phone:</strong> +66 123 456 789</p>
-            <p><strong>Email:</strong> info@suansomresort.com</p>
-            <p><strong>Address:</strong> 123 Main Road, Khon Kaen, Thailand</p>
-            <div class="image-container">
-                <img src="images/map.jpg" alt="Resort map" onclick="openModal(this)">
-                <div class="image-overlay"><p>Find us easily on the map.</p></div>
+            <p>Email: naris090952@gmail.com<br>Phone: +66 (0)939356326<br>Address: 86/4 Ban Sawsawan, Han Na Ngam, Nong Bua Lamphu, Si Bun Rueang, 39180</p>
+            <div class="map-container">
+                <!-- IMPORTANT: You need to replace this with your actual Google Maps Embed Code -->
+                <!-- Go to Google Maps, find your location, click "Share", then "Embed a map", and copy the <iframe> code here -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3839.999999999999!2d102.50000000000001!3d17.000000000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDAwJzAwLjAiTiAxMDLCsDMwJzAwLjAiRQ!5e0!3m2!1sen!2sth!4v1700000000000!5m2!1sen!2sth" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">×</span>
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="Popup image">
+        </div>
+        <!-- NEW: Navigation Buttons and Caption for the Modal -->
+        <button class="modal-nav prev" id="modal-prev" aria-label="Previous image">‹</button>
+        <button class="modal-nav next" id="modal-next" aria-label="Next image">›</button>
+        <div class="modal-caption" id="modal-caption"></div>
+    </div>
+
+    <div id="main-gallery-popup" class="popup">
+        <span class="close" onclick="closePopup('main-gallery-popup')">×</span>
+        <h2>Our Photo Gallery</h2>
+        <div class="popup-content">
+            <div class="menu-tabs">
+                <button class="tab-button active" onclick="showMenuSection('our-resort-section', this, 'main-gallery-popup')">Our Resort</button>
+                <button class="tab-button" onclick="showMenuSection('photo-album-section', this, 'main-gallery-popup')">Photo Album</button>
+            </div>
+
+            <div id="our-resort-section" class="menu-section active">
+                <h3>Our Resort Photos</h3>
+                <p>A collection of beautiful moments from around Suan Som Resort.</p>
+                <div class="gallery-images">
+                    <div class="image-container">
+                        <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance" onclick="openModal(this)">
+                        <div class="image-overlay"><p>The main entrance to the resort, welcoming all guests.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Driveway-Outside-02.jpg" alt="Driveway" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Another view of the well-maintained driveway leading to our bungalows.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Driveway-Outside-03.jpg" alt="Driveway" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Experience the peaceful ambiance along our resort pathways.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Driveway-Outside-04.jpg" alt="Driveway" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Scenic views of the resort grounds, perfect for a stroll.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Driveway-Outside-05.jpg" alt="Driveway" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Lush tropical foliage enhances the beauty of our resort's exterior.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Standard-Room-01.jpg" alt="Room 400 Baht" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Discover the comfort of our standard room, priced at just 400 Baht per night.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Standard-Room-02.jpg" alt="Room 400 Baht" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Inside our cozy standard room, designed for relaxation.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Standard-Room-03.jpg" alt="Room 400 Baht" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Enjoy the simplicity and tranquility of our standard accommodation.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Standard-Room-04.jpg" alt="Room 400 Baht" onclick="openModal(this)">
+                        <div class="image-overlay"><p>All standard rooms offer a peaceful retreat from daily life.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Standard-Room-05.jpg" alt="Room 400 Baht" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Spacious and clean, our standard rooms provide great value.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Standard-Room-06.jpg" alt="Room 400 Baht" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Experience authentic Thai hospitality in our charming bungalows.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Standard-Room-07.jpg" alt="Room 400 Baht" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Each standard room is equipped for your comfort and convenience.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Standard-Room-08.jpg" alt="Room 400 Baht" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Unwind in our well-appointed standard rooms, perfect for a peaceful stay.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="beergarden.jpg" alt="Restaurant" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Our inviting Beer Garden, a great spot to relax and socialize.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="photo-album-section" class="menu-section">
+                <h3>Photo Album</h3>
+                <p>A curated collection of special moments. Click any image to view it larger.</p>
+                <p>You can also use the buttons below to open specific highlights.</p>
+                <div class="submenu-buttons">
+                    <!-- IMPORTANT: Changed these to also pass 'this' to openModal -->
+                    <button class="sub-button" onclick="openModal(document.querySelector('#our-resort-section img[src=\'Driveway-Outside-01.jpg\']'))">Driveway View</button>
+                    <button class="sub-button" onclick="openModal(document.querySelector('#our-resort-section img[src=\'Standard-Room-03.jpg\']'))">Room Detail</button>
+                    <button class="sub-button" onclick="openModal(document.querySelector('#our-resort-section img[src=\'Driveway-Outside-05.jpg\']'))">Garden Pathway</button>
+                    <button class="sub-button" onclick="openModal(document.querySelector('#our-resort-section img[src=\'Standard-Room-07.jpg\']'))">Bungalow Interior</button>
+                </div>
+                <div class="gallery-images">
+                    <div class="image-container">
+                        <img src="photogallery.jpg" alt="Photo Album Main" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Explore more moments in our special Photo Album.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="thai_cocktail.jpg" alt="Refreshing Cocktail" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Enjoy a refreshing cocktail from our bar.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Green-Curry.jpg" alt="Delicious Green Curry" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Taste our aromatic Green Curry.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Burger.jpg" alt="Hearty Burger" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Our classic Burger and Fries, a Western favorite.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Mango-Sticky-Rice.jpg" alt="Sweet Mango Sticky Rice" onclick="openModal(this)">
+                        <div class="image-overlay"><p>Indulge in seasonal Mango Sticky Rice.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="porkroast.jpg" alt="Chef's Special" onclick="openModal(this)">
+                        <div class="image-overlay"><p>A look at one of our delicious chef's specials.</p></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -578,7 +785,7 @@
                     <button class="sub-button" onclick="openPopup('special-food-popup')">This Week's Special</button>
                 </div>
                 <div class="image-container">
-                    <img src="images/padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this)">
+                    <img src="padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this)">
                     <div class="image-overlay"><p>A glimpse into our delicious range of Thai cuisine.</p></div>
                 </div>
             </div>
@@ -593,87 +800,220 @@
                     <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
                 </div>
                 <div class="image-container">
-                    <img src="images/beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this)">
+                    <img src="beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this)">
                     <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- START: POPUPS BELOW ARE COMPLETED/FILLED WITH PLACEHOLDER CONTENT -->
+
     <div id="thai-food-popup" class="popup">
         <span class="close" onclick="closePopup('thai-food-popup')">×</span>
-        <h2 id="thai-food-title"></h2>
+        <h2>Thai Food Menu</h2>
         <div class="popup-content">
-            <div id="thai-food-content" class="menu-content-placeholder"></div>
+            <div class="drinks-menu">
+                <h3>Curries</h3>
+                <ul>
+                    <li>Green Curry with Chicken - 90 Baht</li>
+                    <li>Red Curry with Pork - 90 Baht</li>
+                    <li>Massaman Curry with Beef - 120 Baht</li>
+                    <li>Panang Curry with Shrimp - 110 Baht</li>
+                </ul>
+                <h3>Stir-fries</h3>
+                <ul>
+                    <li>Pad Krapow (Basil Stir-fry) - Chicken/Pork 80 Baht, Beef 100 Baht</li>
+                    <li>Pad Med Mamuang (Cashew Nut Stir-fry) - Chicken 90 Baht</li>
+                    <li>Pad Priew Wan (Sweet & Sour) - Chicken/Pork 80 Baht</li>
+                    <li>Pad Pak Ruam (Mixed Vegetables) - 70 Baht</li>
+                </ul>
+                <h3>Soups</h3>
+                <ul>
+                    <li>Tom Yum Goong (Spicy Shrimp Soup) - 120 Baht</li>
+                    <li>Tom Kha Gai (Chicken Coconut Soup) - 100 Baht</li>
+                    <li>Gaeng Jued (Clear Soup with Tofu & Veg) - 80 Baht</li>
+                </ul>
+                <h3>Noodles & Rice</h3>
+                <ul>
+                    <li>Pad See Ew (Stir-fried Noodles) - Chicken/Pork 80 Baht</li>
+                    <li>Pad Thai - Shrimp 100 Baht, Chicken 80 Baht</li>
+                    <li>Fried Rice - Chicken/Pork/Veg 70 Baht, Shrimp 90 Baht</li>
+                    <li>Khao Pad Sapparot (Pineapple Fried Rice) - 120 Baht</li>
+                </ul>
+                <h3>Salads</h3>
+                <ul>
+                    <li>Som Tum (Papaya Salad) - 70 Baht</li>
+                    <li>Laab Moo (Spicy Minced Pork Salad) - 90 Baht</li>
+                    <li>Yum Woon Sen (Glass Noodle Salad) - 100 Baht</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <div id="farang-food-popup" class="popup">
         <span class="close" onclick="closePopup('farang-food-popup')">×</span>
-        <h2 id="farang-food-title"></h2>
+        <h2>Farang (Western) Food Menu</h2>
         <div class="popup-content">
-            <div id="farang-food-content" class="menu-content-placeholder"></div>
+            <div class="drinks-menu">
+                <h3>Main Dishes</h3>
+                <ul>
+                    <li>Hamburger with Fries - 150 Baht</li>
+                    <li>Cheeseburger with Fries - 170 Baht</li>
+                    <li>Chicken Nuggets with Fries - 120 Baht</li>
+                    <li>Fish & Chips - 160 Baht</li>
+                    <li>Spaghetti Carbonara - 130 Baht</li>
+                    <li>Spaghetti Bolognese - 140 Baht</li>
+                    <li>Grilled Chicken Breast with Salad - 180 Baht</li>
+                </ul>
+                <h3>Sides</h3>
+                <ul>
+                    <li>French Fries - 50 Baht</li>
+                    <li>Onion Rings - 60 Baht</li>
+                    <li>Mixed Green Salad - 70 Baht</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <div id="desserts-popup" class="popup">
         <span class="close" onclick="closePopup('desserts-popup')">×</span>
-        <h2 id="desserts-title"></h2>
+        <h2>Desserts Menu</h2>
         <div class="popup-content">
-            <div id="desserts-content" class="menu-content-placeholder"></div>
+            <div class="drinks-menu">
+                <ul>
+                    <li>Mango Sticky Rice (Seasonal) - 80 Baht</li>
+                    <li>Fried Banana with Honey - 60 Baht</li>
+                    <li>Fried Banana with Ice Cream - 70 Baht</li>
+                    <li>Ice Cream (Vanilla, Chocolate, Strawberry) - 50 Baht (per scoop)</li>
+                    <li>Fresh Fruit Plate - 90 Baht</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <div id="special-food-popup" class="popup">
         <span class="close" onclick="closePopup('special-food-popup')">×</span>
-        <h2 id="special-food-title"></h2>
+        <h2>This Week's Special!</h2>
         <div class="popup-content">
-            <div id="special-food-content" class="menu-content-placeholder"></div>
+            <div class="drinks-menu">
+                <p>Ask our staff for today's delicious special!</p>
+                <ul>
+                    <li>**Chef's Daily Special** - Price Varies</li>
+                    <li>(Example: Grilled Snapper with Tamarind Sauce)</li>
+                    <li>(Example: Duck Red Curry)</li>
+                </ul>
+            </div>
+            <div class="image-container">
+                <img src="porkroast.jpg" alt="Chef's Special Example" onclick="openModal(this)">
+                <div class="image-overlay"><p>Today's special: A savory Pork Roast. (Image for illustration)</p></div>
+            </div>
         </div>
     </div>
 
     <div id="soft-drinks-popup" class="popup">
         <span class="close" onclick="closePopup('soft-drinks-popup')">×</span>
-        <h2 id="soft-drinks-title"></h2>
+        <h2>Soft Drinks Menu</h2>
         <div class="popup-content">
-            <div id="soft-drinks-content" class="menu-content-placeholder"></div>
+            <div class="drinks-menu">
+                <h3>Carbonated Drinks</h3>
+                <ul>
+                    <li>Coca-Cola / Pepsi - 25 Baht</li>
+                    <li>Sprite / 7-Up - 25 Baht</li>
+                    <li>Fanta (Orange/Strawberry) - 25 Baht</li>
+                    <li>Soda Water - 20 Baht</li>
+                </ul>
+                <h3>Juices</h3>
+                <ul>
+                    <li>Orange Juice - 40 Baht</li>
+                    <li>Pineapple Juice - 40 Baht</li>
+                    <li>Mango Juice - 40 Baht</li>
+                    <li>Coconut Water (Fresh) - 60 Baht</li>
+                </ul>
+                <h3>Other</h3>
+                <ul>
+                    <li>Drinking Water (small bottle) - 15 Baht</li>
+                    <li>Drinking Water (large bottle) - 25 Baht</li>
+                    <li>Iced Tea (Lemon/Thai Milk Tea) - 30 Baht</li>
+                    <li>Hot Coffee - 40 Baht</li>
+                    <li>Iced Coffee - 50 Baht</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <div id="local-beers-popup" class="popup">
         <span class="close" onclick="closePopup('local-beers-popup')">×</span>
-        <h2 id="local-beers-title"></h2>
+        <h2>Local Beers Menu</h2>
         <div class="popup-content">
-            <div id="local-beers-content" class="menu-content-placeholder"></div>
+            <div class="drinks-menu">
+                <ul>
+                    <li>Chang Beer (Small Bottle) - 60 Baht</li>
+                    <li>Chang Beer (Large Bottle) - 90 Baht</li>
+                    <li>Leo Beer (Small Bottle) - 60 Baht</li>
+                    <li>Leo Beer (Large Bottle) - 90 Baht</li>
+                    <li>Singha Beer (Small Bottle) - 70 Baht</li>
+                    <li>Singha Beer (Large Bottle) - 100 Baht</li>
+                    <li>Archa Beer (Small Bottle) - 55 Baht</li>
+                    <li>Archa Beer (Large Bottle) - 85 Baht</li>
+                </ul>
+                <p><em>Prices may vary slightly.</em></p>
+            </div>
         </div>
     </div>
 
     <div id="alcoholic-drinks-popup" class="popup">
         <span class="close" onclick="closePopup('alcoholic-drinks-popup')">×</span>
-        <h2 id="alcoholic-drinks-title"></h2>
+        <h2>Alcoholic Beverages Menu</h2>
         <div class="popup-content">
-            <div id="alcoholic-drinks-content" class="menu-content-placeholder"></div>
+            <div class="drinks-menu">
+                <h3>Spirits (per shot/glass)</h3>
+                <ul>
+                    <li>Thai Whiskey (Mekong, Sangsom) - 80 Baht</li>
+                    <li>Local Rum (Chalong Bay, etc.) - 90 Baht</li>
+                    <li>Imported Whiskey (Basic) - 120 Baht+</li>
+                    <li>Vodka (Basic) - 100 Baht+</li>
+                    <li>Gin (Basic) - 100 Baht+</li>
+                </ul>
+                <h3>Wine (per glass / bottle)</h3>
+                <ul>
+                    <li>House Red Wine - 150 Baht / 700 Baht</li>
+                    <li>House White Wine - 150 Baht / 700 Baht</li>
+                    <li>(Ask for our wine list for other selections)</li>
+                </ul>
+                <h3>Other</h3>
+                <ul>
+                    <li>Cider (Local/Imported) - Prices Vary</li>
+                    <li>Cocktails (see Thai Bar Drinks)</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <div id="thai-bar-drinks-popup" class="popup">
         <span class="close" onclick="closePopup('thai-bar-drinks-popup')">×</span>
-        <h2 id="thai-bar-drinks-title"></h2>
+        <h2>Thai Bar Drinks (Cocktails)</h2>
         <div class="popup-content">
-            <div id="thai-bar-drinks-content" class="menu-content-placeholder"></div>
+            <div class="drinks-menu">
+                <p>Enjoy our refreshing tropical and classic cocktails!</p>
+                <ul>
+                    <li>Mekong Cocktail (Thai Whiskey, Lime, Soda) - 120 Baht</li>
+                    <li>Sangsom Special (Thai Rum, Coke/Soda, Lime) - 120 Baht</li>
+                    <li>Mojito (Rum, Mint, Lime, Soda) - 150 Baht</li>
+                    <li>Pina Colada (Rum, Coconut Cream, Pineapple) - 150 Baht</li>
+                    <li>Margarita (Tequila, Triple Sec, Lime) - 150 Baht</li>
+                    <li>Long Island Iced Tea - 200 Baht</li>
+                    <li>Thai Sabai (Thai Basil, Mekong, Lime) - 140 Baht</li>
+                </ul>
+            </div>
+            <div class="image-container">
+                <img src="thai_cocktail.jpg" alt="Thai Cocktail" onclick="openModal(this)">
+                <div class="image-overlay"><p>A vibrant example of our refreshing Thai cocktails.</p></div>
+            </div>
         </div>
     </div>
 
-    <div id="modal" class="modal">
-        <span class="close" onclick="closeModal()">×</span>
-        <img class="modal-content" id="modal-img">
-        <div id="modal-caption"></div>
-        <div class="modal-nav">
-            <button class="modal-nav-btn prev" id="modal-prev" onclick="showPrevImage()">&#10094;</button>
-            <button class="modal-nav-btn next" id="modal-next" onclick="showNextImage()">&#10095;</button>
-        </div>
-    </div>
-
+    <!-- END: POPUPS -->
 
     <div class="footer">
         <p>© 2024 Suan Som Resort & Restaurant. All rights reserved.</p>
@@ -682,559 +1022,6 @@
     <div class="overlay"></div>
 
     <script>
-// public/index.html (inside <script> tag) or public/script.js
-
-let menuData;
-
-async function fetchMenuData() {
-    try {
-        const response = await fetch('/api/menu');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        menuData = await response.json();
-        console.log('Menu data fetched successfully:', menuData);
-
-    } catch (error) {
-        console.error('Failed to fetch menu data:', error);
-        alert('Could not load menu data. Please refresh the page or try again later.');
-    }
-}
-
-// Global constant for transition duration (matches CSS)
-const TRANSITION_DURATION_MS = 1000;
-
-// Global variables for gallery functionality
-let currentGalleryImages = [];
-let currentImageIndex = -1;
-
-// Get modal elements once
-const modal = document.getElementById('modal');
-const modalImg = document.getElementById('modal-img');
-const modalCaption = document.getElementById('modal-caption');
-const modalPrevBtn = document.getElementById('modal-prev');
-const modalNextBtn = document.getElementById('modal-next');
-const overlay = document.querySelector('.overlay');
-
-// --- Gallery/Swipe functionality variables ---
-let touchStartX = 0;
-let touchEndX = 0;
-const SWIPE_THRESHOLD = 50;
-
-function hideAllImmediately() {
-    const allPopups = document.querySelectorAll('.popup');
-    allPopups.forEach(p => {
-        p.style.opacity = '0';
-        p.style.visibility = 'hidden';
-        p.style.display = 'none';
-    });
-
-    modal.style.opacity = '0';
-    modal.style.visibility = 'hidden';
-    modal.style.display = 'none';
-
-    overlay.style.opacity = '0';
-    overlay.style.visibility = 'hidden';
-    overlay.style.display = 'none';
-
-    currentGalleryImages = [];
-    currentImageIndex = -1;
-    disableGalleryControls();
-    removeGalleryEventListeners();
-}
-
-function showMenuSection(sectionId, clickedButton, parentPopupId) {
-    const parentPopup = document.getElementById(parentPopupId);
-    const tabButtons = parentPopup.querySelectorAll('.tab-button');
-    tabButtons.forEach(button => {
-        button.classList.remove('active');
-    });
-
-    const menuSections = parentPopup.querySelectorAll('.menu-section');
-    menuSections.forEach(section => {
-        section.classList.remove('active');
-    });
-
-    clickedButton.classList.add('active');
-    document.getElementById(sectionId).classList.add('active');
-}
-
-function generateMenuContent(popupId, menuCategoryData) {
-    const contentDiv = document.getElementById(popupId.replace('-popup', '-content'));
-    if (!contentDiv) {
-        console.error(`Content div not found for popup: ${popupId}`);
-        return;
-    }
-
-    contentDiv.innerHTML = '';
-
-    const titleElement = document.getElementById(popupId.replace('-popup', '-title'));
-    if (titleElement) {
-        titleElement.textContent = menuCategoryData.title;
-    }
-
-    if (menuCategoryData.description) {
-        const p = document.createElement('p');
-        p.textContent = menuCategoryData.description;
-        contentDiv.appendChild(p);
-    }
-
-    if (menuCategoryData.sections) {
-        menuCategoryData.sections.forEach(section => {
-            if (section.heading) {
-                const h3 = document.createElement('h3');
-                h3.textContent = section.heading;
-                contentDiv.appendChild(h3);
-            }
-            const ul = document.createElement('ul');
-            section.items.forEach(item => {
-                const li = document.createElement('li');
-                let itemText = item.name;
-                if (item.price !== null) {
-                    itemText += ` - ${item.price} Baht`;
-                }
-                li.textContent = itemText;
-                ul.appendChild(li);
-            });
-            contentDiv.appendChild(ul);
-        });
-    } else if (menuCategoryData.items) {
-        const ul = document.createElement('ul');
-        menuCategoryData.items.forEach(item => {
-            const li = document.createElement('li');
-            let itemText = item.name;
-            if (item.price !== null) {
-                itemText += ` - ${item.price}`;
-            }
-            li.innerHTML = itemText;
-            ul.appendChild(li);
-        });
-        contentDiv.appendChild(ul);
-    }
-
-    if (menuCategoryData.imageSrc) {
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('image-container');
-
-        const img = document.createElement('img');
-        img.src = menuCategoryData.imageSrc;
-        img.alt = menuCategoryData.imageAlt;
-        img.onclick = () => openModal(img);
-
-        const imageOverlay = document.createElement('div');
-        imageOverlay.classList.add('image-overlay');
-        const overlayP = document.createElement('p');
-        overlayP.textContent = menuCategoryData.imageOverlayText;
-        imageOverlay.appendChild(overlayP);
-
-        imageContainer.appendChild(img);
-        imageContainer.appendChild(imageOverlay);
-        contentDiv.appendChild(imageContainer);
-    }
-
-    if (menuCategoryData.footer) {
-        const p = document.createElement('p');
-        p.innerHTML = menuCategoryData.footer;
-        contentDiv.appendChild(p);
-    }
-}
-
-const originalOpenPopup = openPopup;
-
-openPopup = function(popupId) {
-    if (!menuData) {
-        console.warn('Menu data not yet loaded. Please wait and try again.');
-        return;
-    }
-
-    switch (popupId) {
-        case 'thai-food-popup':
-            generateMenuContent(popupId, menuData.food.thaiFood);
-            break;
-        case 'farang-food-popup':
-            generateMenuContent(popupId, menuData.food.farangFood);
-            break;
-        case 'desserts-popup':
-            generateMenuContent(popupId, menuData.food.desserts);
-            break;
-        case 'special-food-popup':
-            generateMenuContent(popupId, menuData.food.specialFood);
-            break;
-        case 'soft-drinks-popup':
-            generateMenuContent(popupId, menuData.drinks.softDrinks);
-            break;
-        case 'local-beers-popup':
-            generateMenuContent(popupId, menuData.drinks.localBeers);
-            break;
-        case 'alcoholic-drinks-popup':
-            generateMenuContent(popupId, menuData.drinks.alcoholicDrinks);
-            break;
-        case 'thai-bar-drinks-popup':
-            generateMenuContent(popupId, menuData.drinks.thaiBarDrinks);
-            break;
-        default:
-            break;
-    }
-    originalOpenPopup(popupId);
-};
-
-function openModal(clickedElementOrSrc) {
-    hideAllImmediately();
-
-    let initialSrc = '';
-    let clickedImageElement = null;
-
-    if (typeof clickedElementOrSrc === 'string') {
-        initialSrc = clickedElementOrSrc;
-        currentGalleryImages = [{ src: initialSrc, alt: '' }];
-        currentImageIndex = 0;
-    } else {
-        clickedImageElement = clickedElementOrSrc;
-        initialSrc = clickedImageElement.src;
-
-        const parentGallery = clickedImageElement.closest('.gallery-images');
-
-        if (parentGallery) {
-            currentGalleryImages = Array.from(parentGallery.querySelectorAll('.image-container img'));
-            currentImageIndex = currentGalleryImages.indexOf(clickedImageElement);
-        } else {
-            currentGalleryImages = [{ src: initialSrc, alt: clickedImageElement.alt }];
-            currentImageIndex = 0;
-        }
-    }
-
-    modalImg.src = initialSrc;
-    modalImg.alt = currentGalleryImages[currentImageIndex]?.alt || 'Image';
-    modalCaption.textContent = currentGalleryImages[currentImageIndex]?.alt || '';
-    modalCaption.style.display = modalCaption.textContent ? 'block' : 'none';
-
-    modal.style.display = 'flex';
-    overlay.style.display = 'block';
-
-    setTimeout(() => {
-        modal.style.opacity = '1';
-        modal.style.visibility = 'visible';
-        overlay.style.opacity = '1';
-        overlay.style.visibility = 'visible';
-    }, 10);
-
-    setupGalleryControls();
-}
-
-function setupGalleryControls() {
-    if (currentGalleryImages.length > 1) {
-        modalPrevBtn.style.display = 'block';
-        modalNextBtn.style.display = 'block';
-        updateGalleryButtons();
-
-        modalPrevBtn.onclick = showPrevImage;
-        modalNextBtn.onclick = showNextImage;
-        document.addEventListener('keydown', handleKeyPress);
-
-        modalImg.addEventListener('touchstart', handleTouchStart, { passive: true });
-        modalImg.addEventListener('touchmove', handleTouchMove, { passive: true });
-        modalImg.addEventListener('touchend', handleTouchEnd);
-    } else {
-        disableGalleryControls();
-    }
-}
-
-function disableGalleryControls() {
-    if (modalPrevBtn) modalPrevBtn.style.display = 'none';
-    if (modalNextBtn) modalNextBtn.style.display = 'none';
-    if (modalCaption) modalCaption.style.display = 'none';
-}
-
-function updateModalImage() {
-    modalImg.src = currentGalleryImages[currentImageIndex].src;
-    modalImg.alt = currentGalleryImages[currentImageIndex].alt;
-    modalCaption.textContent = currentGalleryImages[currentImageIndex].alt;
-    modalCaption.style.display = modalCaption.textContent ? 'block' : 'none';
-
-    updateGalleryButtons();
-}
-
-function updateGalleryButtons() {
-    modalPrevBtn.disabled = currentImageIndex === 0;
-    modalNextBtn.disabled = currentImageIndex === currentGalleryImages.length - 1;
-}
-
-function showNextImage() {
-    if (currentImageIndex < currentGalleryImages.length - 1) {
-        currentImageIndex++;
-        updateModalImage();
-    }
-}
-
-function showPrevImage() {
-    if (currentImageIndex > 0) {
-        currentImageIndex--;
-        updateModalImage();
-    }
-}
-
-function handleKeyPress(event) {
-    if (modal.style.display === 'flex' && modal.style.visibility === 'visible') {
-        if (event.key === 'ArrowRight') {
-            showNextImage();
-        } else if (event.key === 'ArrowLeft') {
-            showPrevImage();
-        }
-    }
-}
-
-function handleTouchStart(event) {
-    touchStartX = event.touches[0].clientX;
-}
-
-function handleTouchMove(event) {
-    touchEndX = event.touches[0].clientX;
-}
-
-function handleTouchEnd() {
-    const swipeDistance = touchEndX - touchStartX;
-
-    if (currentGalleryImages.length > 1) {
-        if (swipeDistance > SWIPE_THRESHOLD) {
-            showPrevImage();
-        } else if (swipeDistance < -SWIPE_THRESHOLD) {
-            showNextImage();
-        }
-    }
-    touchStartX = 0;
-    touchEndX = 0;
-}
-
-function closeModal() {
-    modal.style.opacity = '0';
-
-    setTimeout(() => {
-        modal.style.display = 'none';
-        modal.style.visibility = 'hidden';
-        closeOverlayIfNoPopupsOpen();
-
-        currentGalleryImages = [];
-        currentImageIndex = -1;
-        disableGalleryControls();
-        removeGalleryEventListeners();
-    }, TRANSITION_DURATION_MS);
-}
-
-function closePopup(popupId) {
-    const popup = document.getElementById(popupId);
-    popup.style.opacity = '0';
-
-    setTimeout(() => {
-        popup.style.display = 'none';
-        popup.style.visibility = 'hidden';
-        closeOverlayIfNoPopupsOpen();
-    }, TRANSITION_DURATION_MS);
-}
-
-function closeAllPopups() {
-    const allPopups = document.querySelectorAll('.popup');
-    let anyElementStartedToClose = false;
-
-    allPopups.forEach(p => {
-        if (p.style.display === 'flex' || p.style.visibility === 'visible') {
-            p.style.opacity = '0';
-            anyElementStartedToClose = true;
-        }
-    });
-
-    if (modal.style.display === 'flex' || modal.style.visibility === 'visible') {
-        modal.style.opacity = '0';
-        anyElementStartedToClose = true;
-    }
-
-    if (anyElementStartedToClose && (overlay.style.display === 'block' || overlay.style.visibility === 'visible')) {
-        overlay.style.opacity = '0';
-    }
-
-    setTimeout(() => {
-        allPopups.forEach(p => {
-            p.style.display = 'none';
-            p.style.visibility = 'hidden';
-        });
-        modal.style.display = 'none';
-        modal.style.visibility = 'hidden';
-        closeOverlayIfNoPopupsOpen();
-
-        currentGalleryImages = [];
-        currentImageIndex = -1;
-        disableGalleryControls();
-        removeGalleryEventListeners();
-    }, TRANSITION_DURATION_MS);
-}
-
-function closeOverlayIfNoPopupsOpen() {
-    const allPopups = document.querySelectorAll('.popup');
-
-    let anyPopupStillOpen = false;
-    allPopups.forEach(p => {
-        if (p.style.display === 'flex' || p.style.visibility === 'visible') {
-            anyPopupStillOpen = true;
-        }
-    });
-    const isModalStillOpen = (modal.style.display === 'flex' || modal.style.visibility === 'visible');
-
-    if (!anyPopupStillOpen && !isModalStillOpen) {
-        overlay.style.display = 'none';
-        overlay.style.visibility = 'hidden';
-    }
-}
-
-function removeGalleryEventListeners() {
-    document.removeEventListener('keydown', handleKeyPress);
-    modalImg.removeEventListener('touchstart', handleTouchStart);
-    modalImg.removeEventListener('touchmove', handleTouchMove);
-    modalImg.removeEventListener('touchend', handleTouchEnd);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    fetchMenuData();
-
-    if (overlay) {
-        overlay.addEventListener('click', closeAllPopups);
-    }
-    if (modalPrevBtn) modalPrevBtn.addEventListener('click', showPrevImage);
-    if (modalNextBtn) modalNextBtn.addEventListener('click', showNextImage);
-});
-        // Start of new dynamic menu data and functions
-        
-
-        /**
-         * Generates and injects menu content into a popup.
-         * @param {string} popupId - The ID of the popup div (e.g., 'thai-food-popup').
-         * @param {object} menuCategoryData - The data object for the specific menu category (e.g., menuData.food.thaiFood).
-         */
-        function generateMenuContent(popupId, menuCategoryData) {
-            const contentDiv = document.getElementById(popupId.replace('-popup', '-content'));
-            if (!contentDiv) {
-                console.error(`Content div not found for popup: ${popupId}`);
-                return;
-            }
-
-            // Clear previous content
-            contentDiv.innerHTML = '';
-
-            // Set the title
-            const titleElement = document.getElementById(popupId.replace('-popup', '-title'));
-            if (titleElement) {
-                titleElement.textContent = menuCategoryData.title;
-            }
-
-            // Add description if it exists
-            if (menuCategoryData.description) {
-                const p = document.createElement('p');
-                p.textContent = menuCategoryData.description;
-                contentDiv.appendChild(p);
-            }
-
-            // Generate menu sections
-            if (menuCategoryData.sections) {
-                menuCategoryData.sections.forEach(section => {
-                    if (section.heading) {
-                        const h3 = document.createElement('h3');
-                        h3.textContent = section.heading;
-                        contentDiv.appendChild(h3);
-                    }
-                    const ul = document.createElement('ul');
-                    section.items.forEach(item => {
-                        const li = document.createElement('li');
-                        let itemText = item.name;
-                        if (item.price !== null) { // Only add price if it's not null (for examples)
-                            itemText += ` - ${item.price} Baht`;
-                        }
-                        li.textContent = itemText;
-                        ul.appendChild(li);
-                    });
-                    contentDiv.appendChild(ul);
-                });
-            } else if (menuCategoryData.items) { // For simpler lists like desserts or specials
-                const ul = document.createElement('ul');
-                menuCategoryData.items.forEach(item => {
-                    const li = document.createElement('li');
-                    let itemText = item.name;
-                    if (item.price !== null) {
-                        itemText += ` - ${item.price}`;
-                    }
-                    li.innerHTML = itemText; // Use innerHTML for potential bold in special
-                    ul.appendChild(li);
-                });
-                contentDiv.appendChild(ul);
-            }
-
-            // Add image container for special food and thai bar drinks if applicable
-            if (menuCategoryData.imageSrc) {
-                const imageContainer = document.createElement('div');
-                imageContainer.classList.add('image-container');
-
-                const img = document.createElement('img');
-                img.src = menuCategoryData.imageSrc;
-                img.alt = menuCategoryData.imageAlt;
-                img.onclick = () => openModal(img); // Re-attach click to open modal
-
-                const imageOverlay = document.createElement('div');
-                imageOverlay.classList.add('image-overlay');
-                const overlayP = document.createElement('p');
-                overlayP.textContent = menuCategoryData.imageOverlayText;
-                imageOverlay.appendChild(overlayP);
-
-                imageContainer.appendChild(img);
-                imageContainer.appendChild(imageOverlay);
-                contentDiv.appendChild(imageContainer);
-            }
-
-            // Add footer if it exists
-            if (menuCategoryData.footer) {
-                const p = document.createElement('p');
-                p.innerHTML = menuCategoryData.footer; // Use innerHTML for italics
-                contentDiv.appendChild(p);
-            }
-        }
-
-        // Store a reference to the original openPopup function
-        const originalOpenPopup = openPopup;
-
-        // Override the global openPopup function
-        openPopup = function(popupId) {
-            // Before opening, check if it's a menu popup and load its data
-            switch (popupId) {
-                case 'thai-food-popup':
-                    generateMenuContent(popupId, menuData.food.thaiFood);
-                    break;
-                case 'farang-food-popup':
-                    generateMenuContent(popupId, menuData.food.farangFood);
-                    break;
-                case 'desserts-popup':
-                    generateMenuContent(popupId, menuData.food.desserts);
-                    break;
-                case 'special-food-popup':
-                    generateMenuContent(popupId, menuData.food.specialFood);
-                    break;
-                case 'soft-drinks-popup':
-                    generateMenuContent(popupId, menuData.drinks.softDrinks);
-                    break;
-                case 'local-beers-popup':
-                    generateMenuContent(popupId, menuData.drinks.localBeers);
-                    break;
-                case 'alcoholic-drinks-popup':
-                    generateMenuContent(popupId, menuData.drinks.alcoholicDrinks);
-                    break;
-                case 'thai-bar-drinks-popup':
-                    generateMenuContent(popupId, menuData.drinks.thaiBarDrinks);
-                    break;
-                default:
-                    // No dynamic content generation needed for this popup
-                    break;
-            }
-            // Call the original openPopup function to handle display logic
-            originalOpenPopup(popupId);
-        };
-        // End of new dynamic menu data and functions
-
-
         // Global constant for transition duration (matches CSS)
         const TRANSITION_DURATION_MS = 1000; // Adjusted back to 0.5s for modal fade
 
@@ -1471,10 +1258,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }, TRANSITION_DURATION_MS);
         }
 
+        // Opens any general popup with fade
+        function openPopup(popupId) {
+            hideAllImmediately(); // Hide any currently open popups/modal instantly
+
+            const popup = document.getElementById(popupId);
+            popup.style.display = 'flex';
+            overlay.style.display = 'block';
+
+            setTimeout(() => {
+                popup.style.opacity = '1';
+                popup.style.visibility = 'visible';
+                overlay.style.opacity = '1';
+                overlay.style.visibility = 'visible';
+            }, 10);
+        }
+
         // Closes any general popup with fade
-        // This function is still needed by individual close buttons on popups
-        // The global 'openPopup' function has been modified, but this one remains
-        // as it's directly called by the 'x' close button.
         function closePopup(popupId) {
             const popup = document.getElementById(popupId);
             popup.style.opacity = '0'; // Start fade out
