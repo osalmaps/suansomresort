@@ -13,6 +13,7 @@
             color: #333;
             line-height: 1.6;
             font-size: 16px; /* Base font size for mobile */
+            user-select: none; /* Prevent text selection on quick clicks/swipes */
         }
         header {
             background-color: #DC381F;
@@ -76,7 +77,7 @@
             gap: 1rem;
             margin-top: 1rem;
         }
-        
+
         /* --- Styles for Image Containers and Overlays (Main Gallery) --- */
         .image-container {
             position: relative;
@@ -128,7 +129,7 @@
             display: none; /* Initially hidden, controlled by JS */
             opacity: 0; /* NEW: Start transparent for fade-in/out */
             visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
-            transition: opacity 1.5s ease, visibility 1.5s ease; /* NEW: Smooth transition for fade */
+            transition: opacity 0.5s ease, visibility 0.5s ease; /* NEW: Smooth transition for fade */
 
             position: fixed;
             z-index: 1000;
@@ -168,6 +169,52 @@
             color: white; /* Make it visible against dark background */
             z-index: 1002; /* Ensure it's above modal content */
         }
+
+        /* NEW: Modal Navigation Buttons and Caption */
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px 10px;
+            font-size: 2em;
+            cursor: pointer;
+            z-index: 1001; /* Above modal-content, below close */
+            border-radius: 5px;
+            user-select: none; /* Prevent text selection on quick clicks */
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .modal-nav:hover {
+            opacity: 1;
+        }
+        .modal-nav.prev {
+            left: 10px;
+        }
+        .modal-nav.next {
+            right: 10px;
+        }
+        .modal-nav:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+        .modal-caption {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            max-width: 80%;
+            text-align: center;
+            z-index: 1001;
+            display: none; /* Hidden by default, shown when caption is available */
+        }
         /* --- End Modal Styles --- */
 
         /* --- Popup Styles --- */
@@ -175,7 +222,7 @@
             display: none; /* Initially hidden, controlled by JS */
             opacity: 0; /* NEW: Start transparent for fade-in/out */
             visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
-            transition: opacity 2.5s ease, visibility 2.5s ease; /* NEW: Smooth transition for fade */
+            transition: opacity 0.5s ease, visibility 0.5s ease; /* NEW: Smooth transition for fade */
 
             position: fixed; /* Keep it fixed in the viewport */
             top: 5%; /* Higher up for mobile */
@@ -557,25 +604,26 @@
             <h2>Gallery</h2>
             <div class="gallery-images">
                 <div class="image-container">
-                    <img src="Driveway-Outside-01.jpg" alt="Resort driveway" onclick="openModal(this.src)">
+                    <!-- IMPORTANT: Pass 'this' element to openModal instead of just 'this.src' -->
+                    <img src="Driveway-Outside-01.jpg" alt="Resort driveway" onclick="openModal(this)">
                     <div class="image-overlay">
                         <p>The inviting entrance to Suan Som Resort, surrounded by lush greenery.</p>
                     </div>
                 </div>
                 <div class="image-container">
-                    <img src="Standard-Room-01.jpg" alt="Standard Room" onclick="openModal(this.src)">
+                    <img src="Standard-Room-01.jpg" alt="Standard Room" onclick="openModal(this)">
                     <div class="image-overlay">
                         <p>Our comfortable standard room, offering a cozy and relaxing atmosphere.</p>
                     </div>
                 </div>
                 <div class="image-container">
-                    <img src="Standard-Room-02.jpg" alt="Standard Room" onclick="openModal(this.src)">
+                    <img src="Standard-Room-02.jpg" alt="Standard Room" onclick="openModal(this)">
                     <div class="image-overlay">
                         <p>A closer look at the elegant interior of our standard accommodation.</p>
                     </div>
                 </div>
                 <div class="image-container">
-                    <img src="Driveway-Outside-05.jpg" alt="Resort grounds" onclick="openModal(this.src)">
+                    <img src="Driveway-Outside-05.jpg" alt="Resort grounds" onclick="openModal(this)">
                     <div class="image-overlay">
                         <p>Pathways winding through the serene grounds of Suan Som Resort.</p>
                     </div>
@@ -587,6 +635,8 @@
             <h2>Contact Us</h2>
             <p>Email: naris090952@gmail.com<br>Phone: +66 (0)939356326<br>Address: 86/4 Ban Sawsawan, Han Na Ngam, Nong Bua Lamphu, Si Bun Rueang, 39180</p>
             <div class="map-container">
+                <!-- IMPORTANT: You need to replace this with your actual Google Maps Embed Code -->
+                <!-- Go to Google Maps, find your location, click "Share", then "Embed a map", and copy the <iframe> code here -->
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3839.999999999999!2d102.50000000000001!3d17.000000000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDAwJzAwLjAiTiAxMDLCsDMwJzAwLjAiRQ!5e0!3m2!1sen!2sth!4v1700000000000!5m2!1sen!2sth" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
@@ -597,6 +647,10 @@
         <div class="modal-content">
             <img id="modal-img" src="" alt="Popup image">
         </div>
+        <!-- NEW: Navigation Buttons and Caption for the Modal -->
+        <button class="modal-nav prev" id="modal-prev" aria-label="Previous image">‹</button>
+        <button class="modal-nav next" id="modal-next" aria-label="Next image">›</button>
+        <div class="modal-caption" id="modal-caption"></div>
     </div>
 
     <div id="main-gallery-popup" class="popup">
@@ -613,59 +667,59 @@
                 <p>A collection of beautiful moments from around Suan Som Resort.</p>
                 <div class="gallery-images">
                     <div class="image-container">
-                        <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance" onclick="openModal(this.src)">
+                        <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance" onclick="openModal(this)">
                         <div class="image-overlay"><p>The main entrance to the resort, welcoming all guests.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Driveway-Outside-02.jpg" alt="Driveway" onclick="openModal(this.src)">
+                        <img src="Driveway-Outside-02.jpg" alt="Driveway" onclick="openModal(this)">
                         <div class="image-overlay"><p>Another view of the well-maintained driveway leading to our bungalows.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Driveway-Outside-03.jpg" alt="Driveway" onclick="openModal(this.src)">
+                        <img src="Driveway-Outside-03.jpg" alt="Driveway" onclick="openModal(this)">
                         <div class="image-overlay"><p>Experience the peaceful ambiance along our resort pathways.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Driveway-Outside-04.jpg" alt="Driveway" onclick="openModal(this.src)">
+                        <img src="Driveway-Outside-04.jpg" alt="Driveway" onclick="openModal(this)">
                         <div class="image-overlay"><p>Scenic views of the resort grounds, perfect for a stroll.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Driveway-Outside-05.jpg" alt="Driveway" onclick="openModal(this.src)">
+                        <img src="Driveway-Outside-05.jpg" alt="Driveway" onclick="openModal(this)">
                         <div class="image-overlay"><p>Lush tropical foliage enhances the beauty of our resort's exterior.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Standard-Room-01.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                        <img src="Standard-Room-01.jpg" alt="Room 400 Baht" onclick="openModal(this)">
                         <div class="image-overlay"><p>Discover the comfort of our standard room, priced at just 400 Baht per night.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Standard-Room-02.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                        <img src="Standard-Room-02.jpg" alt="Room 400 Baht" onclick="openModal(this)">
                         <div class="image-overlay"><p>Inside our cozy standard room, designed for relaxation.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Standard-Room-03.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                        <img src="Standard-Room-03.jpg" alt="Room 400 Baht" onclick="openModal(this)">
                         <div class="image-overlay"><p>Enjoy the simplicity and tranquility of our standard accommodation.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Standard-Room-04.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                        <img src="Standard-Room-04.jpg" alt="Room 400 Baht" onclick="openModal(this)">
                         <div class="image-overlay"><p>All standard rooms offer a peaceful retreat from daily life.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Standard-Room-05.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                        <img src="Standard-Room-05.jpg" alt="Room 400 Baht" onclick="openModal(this)">
                         <div class="image-overlay"><p>Spacious and clean, our standard rooms provide great value.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Standard-Room-06.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                        <img src="Standard-Room-06.jpg" alt="Room 400 Baht" onclick="openModal(this)">
                         <div class="image-overlay"><p>Experience authentic Thai hospitality in our charming bungalows.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Standard-Room-07.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                        <img src="Standard-Room-07.jpg" alt="Room 400 Baht" onclick="openModal(this)">
                         <div class="image-overlay"><p>Each standard room is equipped for your comfort and convenience.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Standard-Room-08.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                        <img src="Standard-Room-08.jpg" alt="Room 400 Baht" onclick="openModal(this)">
                         <div class="image-overlay"><p>Unwind in our well-appointed standard rooms, perfect for a peaceful stay.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="beergarden.jpg" alt="Restaurant" onclick="openModal(this.src)">
+                        <img src="beergarden.jpg" alt="Restaurant" onclick="openModal(this)">
                         <div class="image-overlay"><p>Our inviting Beer Garden, a great spot to relax and socialize.</p></div>
                     </div>
                 </div>
@@ -676,34 +730,35 @@
                 <p>A curated collection of special moments. Click any image to view it larger.</p>
                 <p>You can also use the buttons below to open specific highlights.</p>
                 <div class="submenu-buttons">
-                    <button class="sub-button" onclick="openModal('Driveway-Outside-01.jpg')">Driveway View</button>
-                    <button class="sub-button" onclick="openModal('Standard-Room-03.jpg')">Room Detail</button>
-                    <button class="sub-button" onclick="openModal('Driveway-Outside-05.jpg')">Garden Pathway</button>
-                    <button class="sub-button" onclick="openModal('Standard-Room-07.jpg')">Bungalow Interior</button>
+                    <!-- IMPORTANT: Changed these to also pass 'this' to openModal -->
+                    <button class="sub-button" onclick="openModal(document.querySelector('#our-resort-section img[src=\'Driveway-Outside-01.jpg\']'))">Driveway View</button>
+                    <button class="sub-button" onclick="openModal(document.querySelector('#our-resort-section img[src=\'Standard-Room-03.jpg\']'))">Room Detail</button>
+                    <button class="sub-button" onclick="openModal(document.querySelector('#our-resort-section img[src=\'Driveway-Outside-05.jpg\']'))">Garden Pathway</button>
+                    <button class="sub-button" onclick="openModal(document.querySelector('#our-resort-section img[src=\'Standard-Room-07.jpg\']'))">Bungalow Interior</button>
                 </div>
                 <div class="gallery-images">
                     <div class="image-container">
-                        <img src="photogallery.jpg" alt="Photo Album Main" onclick="openModal(this.src)">
+                        <img src="photogallery.jpg" alt="Photo Album Main" onclick="openModal(this)">
                         <div class="image-overlay"><p>Explore more moments in our special Photo Album.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="thai_cocktail.jpg" alt="Refreshing Cocktail" onclick="openModal(this.src)">
+                        <img src="thai_cocktail.jpg" alt="Refreshing Cocktail" onclick="openModal(this)">
                         <div class="image-overlay"><p>Enjoy a refreshing cocktail from our bar.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Green-Curry.jpg" alt="Delicious Green Curry" onclick="openModal(this.src)">
+                        <img src="Green-Curry.jpg" alt="Delicious Green Curry" onclick="openModal(this)">
                         <div class="image-overlay"><p>Taste our aromatic Green Curry.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Burger.jpg" alt="Hearty Burger" onclick="openModal(this.src)">
+                        <img src="Burger.jpg" alt="Hearty Burger" onclick="openModal(this)">
                         <div class="image-overlay"><p>Our classic Burger and Fries, a Western favorite.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="Mango-Sticky-Rice.jpg" alt="Sweet Mango Sticky Rice" onclick="openModal(this.src)">
+                        <img src="Mango-Sticky-Rice.jpg" alt="Sweet Mango Sticky Rice" onclick="openModal(this)">
                         <div class="image-overlay"><p>Indulge in seasonal Mango Sticky Rice.</p></div>
                     </div>
                     <div class="image-container">
-                        <img src="porkroast.jpg" alt="Chef's Special" onclick="openModal(this.src)">
+                        <img src="porkroast.jpg" alt="Chef's Special" onclick="openModal(this)">
                         <div class="image-overlay"><p>A look at one of our delicious chef's specials.</p></div>
                     </div>
                 </div>
@@ -730,7 +785,7 @@
                     <button class="sub-button" onclick="openPopup('special-food-popup')">This Week's Special</button>
                 </div>
                 <div class="image-container">
-                    <img src="padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this.src)">
+                    <img src="padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this)">
                     <div class="image-overlay"><p>A glimpse into our delicious range of Thai cuisine.</p></div>
                 </div>
             </div>
@@ -745,12 +800,14 @@
                     <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
                 </div>
                 <div class="image-container">
-                    <img src="beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this.src)">
+                    <img src="beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this)">
                     <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- START: POPUPS BELOW ARE COMPLETED/FILLED WITH PLACEHOLDER CONTENT -->
 
     <div id="thai-food-popup" class="popup">
         <span class="close" onclick="closePopup('thai-food-popup')">×</span>
@@ -848,7 +905,7 @@
                 </ul>
             </div>
             <div class="image-container">
-                <img src="porkroast.jpg" alt="Chef's Special Example" onclick="openModal(this.src)">
+                <img src="porkroast.jpg" alt="Chef's Special Example" onclick="openModal(this)">
                 <div class="image-overlay"><p>Today's special: A savory Pork Roast. (Image for illustration)</p></div>
             </div>
         </div>
@@ -950,25 +1007,46 @@
                 </ul>
             </div>
             <div class="image-container">
-                <img src="thai_cocktail.jpg" alt="Thai Cocktail" onclick="openModal(this.src)">
+                <img src="thai_cocktail.jpg" alt="Thai Cocktail" onclick="openModal(this)">
                 <div class="image-overlay"><p>A vibrant example of our refreshing Thai cocktails.</p></div>
             </div>
         </div>
     </div>
 
+    <!-- END: POPUPS -->
+
+    <div class="footer">
+        <p>© 2024 Suan Som Resort & Restaurant. All rights reserved.</p>
+    </div>
+
     <div class="overlay"></div>
 
     <script>
-        // NEW: Global constant for transition duration
-        const TRANSITION_DURATION_MS = 1000; // Matches CSS transition time
+        // Global constant for transition duration (matches CSS)
+        const TRANSITION_DURATION_MS = 500; // Adjusted back to 0.5s for modal fade
 
-        // NEW: Function to close all currently visible popups and the modal immediately without waiting for fade-out,
+        // Global variables for gallery functionality
+        let currentGalleryImages = []; // Stores the <img> elements of the current gallery
+        let currentImageIndex = -1; // Stores the index of the currently displayed image
+
+        // Get modal elements once
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalCaption = document.getElementById('modal-caption');
+        const modalPrevBtn = document.getElementById('modal-prev');
+        const modalNextBtn = document.getElementById('modal-next');
+        const overlay = document.querySelector('.overlay');
+
+        // --- Gallery/Swipe functionality variables ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const SWIPE_THRESHOLD = 50; // Minimum pixels to count as a swipe
+
+
+        // Function to close all currently visible popups and the modal immediately without waiting for fade-out.
         // This is for use when opening a new one, to ensure only one is active at a time.
         function hideAllImmediately() {
             const allPopups = document.querySelectorAll('.popup');
-            const modal = document.getElementById('modal');
-            const overlay = document.querySelector('.overlay');
-
             allPopups.forEach(p => {
                 p.style.opacity = '0';
                 p.style.visibility = 'hidden';
@@ -982,93 +1060,225 @@
             overlay.style.opacity = '0';
             overlay.style.visibility = 'hidden';
             overlay.style.display = 'none';
+
+            // Reset gallery state when hiding all
+            currentGalleryImages = [];
+            currentImageIndex = -1;
+            disableGalleryControls(); // Ensure buttons are disabled and hidden
+            removeGalleryEventListeners(); // Clean up listeners
         }
 
         function showMenuSection(sectionId, clickedButton, parentPopupId) {
-            // Deactivate all tab buttons within the same parent popup
             const parentPopup = document.getElementById(parentPopupId);
             const tabButtons = parentPopup.querySelectorAll('.tab-button');
             tabButtons.forEach(button => {
                 button.classList.remove('active');
             });
 
-            // Hide all menu sections within the same parent popup
             const menuSections = parentPopup.querySelectorAll('.menu-section');
             menuSections.forEach(section => {
                 section.classList.remove('active');
             });
 
-            // Activate the clicked button
             clickedButton.classList.add('active');
-
-            // Show the corresponding menu section
             document.getElementById(sectionId).classList.add('active');
         }
 
-        // Function to open the full image modal with fade
-        function openModal(imgSrc) {
-            const modal = document.getElementById('modal');
-            const modalImg = document.getElementById('modal-img');
-            const overlay = document.querySelector('.overlay');
+        /**
+         * Opens the image modal, optionally initializing it as a gallery.
+         * @param {HTMLElement|string} clickedElementOrSrc - The <img> element that was clicked, or just the image source string.
+         */
+        function openModal(clickedElementOrSrc) {
+            hideAllImmediately(); // Hide any currently open popups/modal instantly
 
-            // Hide everything immediately BEFORE opening the new one
-            hideAllImmediately(); // IMPORTANT CHANGE
+            let initialSrc = '';
+            let clickedImageElement = null;
 
-            modalImg.src = imgSrc;
+            if (typeof clickedElementOrSrc === 'string') {
+                // If only a source is passed (e.g., from a sub-button like "Driveway View")
+                initialSrc = clickedElementOrSrc;
+                // Since we don't have a direct element, we can't build a dynamic gallery for this specific click.
+                // So, we'll treat it as a single image view for now.
+                currentGalleryImages = [{ src: initialSrc, alt: '' }]; // Create a temporary single-image gallery
+                currentImageIndex = 0;
+            } else {
+                // If the <img> element itself was clicked (e.g., from gallery-images)
+                clickedImageElement = clickedElementOrSrc;
+                initialSrc = clickedImageElement.src;
 
-            // Make elements visible for layout calculation, then trigger fade-in
+                // Find the parent .gallery-images container
+                const parentGallery = clickedImageElement.closest('.gallery-images');
+
+                if (parentGallery) {
+                    // Populate currentGalleryImages with all <img> elements in that container
+                    currentGalleryImages = Array.from(parentGallery.querySelectorAll('.image-container img'));
+                    currentImageIndex = currentGalleryImages.indexOf(clickedImageElement);
+                } else {
+                    // Fallback for individual images not in a gallery-images container
+                    currentGalleryImages = [{ src: initialSrc, alt: clickedImageElement.alt }];
+                    currentImageIndex = 0;
+                }
+            }
+
+            // Set initial image and caption
+            modalImg.src = initialSrc;
+            modalImg.alt = currentGalleryImages[currentImageIndex]?.alt || 'Image'; // Use alt from stored element, or default
+            modalCaption.textContent = currentGalleryImages[currentImageIndex]?.alt || ''; // Use alt as caption
+
+            // Show caption only if there's content
+            modalCaption.style.display = modalCaption.textContent ? 'block' : 'none';
+
+            // Display modal and overlay with fade-in
             modal.style.display = 'flex';
             overlay.style.display = 'block';
 
-            // Allow a tiny delay for the 'display' change to register before starting the CSS transition
             setTimeout(() => {
                 modal.style.opacity = '1';
                 modal.style.visibility = 'visible';
                 overlay.style.opacity = '1';
                 overlay.style.visibility = 'visible';
-            }, 10); // Small delay, e.g., 10ms
+            }, 10);
+
+            // Setup gallery controls and event listeners
+            setupGalleryControls();
         }
 
-        // Function to close the full image modal with fade
+        // Sets up click listeners for modal nav buttons and keyboard/touch events
+        function setupGalleryControls() {
+            if (currentGalleryImages.length > 1) {
+                modalPrevBtn.style.display = 'block';
+                modalNextBtn.style.display = 'block';
+                updateGalleryButtons(); // Ensure correct initial state
+
+                // Add event listeners (ensure they are not added multiple times)
+                modalPrevBtn.onclick = showPrevImage;
+                modalNextBtn.onclick = showNextImage;
+                document.addEventListener('keydown', handleKeyPress);
+
+                // Touch swipe listeners
+                modalImg.addEventListener('touchstart', handleTouchStart, { passive: true });
+                modalImg.addEventListener('touchmove', handleTouchMove, { passive: true });
+                modalImg.addEventListener('touchend', handleTouchEnd);
+            } else {
+                disableGalleryControls(); // Hide buttons if only one image
+            }
+        }
+
+        // Disables and hides gallery navigation buttons and caption
+        function disableGalleryControls() {
+            if (modalPrevBtn) modalPrevBtn.style.display = 'none';
+            if (modalNextBtn) modalNextBtn.style.display = 'none';
+            if (modalCaption) modalCaption.style.display = 'none'; // Hide caption for single images
+        }
+
+        // Updates the source and alt of the modal image, and enables/disables nav buttons
+        function updateModalImage() {
+            modalImg.src = currentGalleryImages[currentImageIndex].src;
+            modalImg.alt = currentGalleryImages[currentImageIndex].alt;
+            modalCaption.textContent = currentGalleryImages[currentImageIndex].alt;
+            modalCaption.style.display = modalCaption.textContent ? 'block' : 'none';
+
+            updateGalleryButtons();
+        }
+
+        // Enables/disables prev/next buttons based on current index
+        function updateGalleryButtons() {
+            modalPrevBtn.disabled = currentImageIndex === 0;
+            modalNextBtn.disabled = currentImageIndex === currentGalleryImages.length - 1;
+        }
+
+        // Shows the next image in the current gallery
+        function showNextImage() {
+            if (currentImageIndex < currentGalleryImages.length - 1) {
+                currentImageIndex++;
+                updateModalImage();
+            }
+        }
+
+        // Shows the previous image in the current gallery
+        function showPrevImage() {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+                updateModalImage();
+            }
+        }
+
+        // Handles keyboard arrow key navigation
+        function handleKeyPress(event) {
+            if (modal.style.display === 'flex' && modal.style.visibility === 'visible') { // Only active if modal is open
+                if (event.key === 'ArrowRight') {
+                    showNextImage();
+                } else if (event.key === 'ArrowLeft') {
+                    showPrevImage();
+                }
+            }
+        }
+
+        // Touch swipe handlers
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchMove(event) {
+            touchEndX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd() {
+            const swipeDistance = touchEndX - touchStartX;
+
+            if (currentGalleryImages.length > 1) { // Only allow swipe if it's a gallery
+                if (swipeDistance > SWIPE_THRESHOLD) {
+                    // Swipe right (prev image)
+                    showPrevImage();
+                } else if (swipeDistance < -SWIPE_THRESHOLD) {
+                    // Swipe left (next image)
+                    showNextImage();
+                }
+            }
+            // Reset touch coordinates
+            touchStartX = 0;
+            touchEndX = 0;
+        }
+
+
+        // Closes the full image modal with fade
         function closeModal() {
-            const modal = document.getElementById('modal');
             modal.style.opacity = '0'; // Start fade out
 
-            // After the CSS transition completes, set display to 'none' and visibility to 'hidden'
             setTimeout(() => {
                 modal.style.display = 'none';
                 modal.style.visibility = 'hidden';
                 closeOverlayIfNoPopupsOpen(); // Check if the overlay should also be hidden
+
+                // Reset gallery state and remove listeners
+                currentGalleryImages = [];
+                currentImageIndex = -1;
+                disableGalleryControls(); // Ensure controls are hidden after closing
+                removeGalleryEventListeners();
             }, TRANSITION_DURATION_MS);
         }
 
-        // Function to open any general popup with fade
+        // Opens any general popup with fade
         function openPopup(popupId) {
+            hideAllImmediately(); // Hide any currently open popups/modal instantly
+
             const popup = document.getElementById(popupId);
-            const overlay = document.querySelector('.overlay');
-
-            // Hide everything immediately BEFORE opening the new one
-            hideAllImmediately(); // IMPORTANT CHANGE
-
-            // Make elements visible for layout calculation, then trigger fade-in
             popup.style.display = 'flex';
             overlay.style.display = 'block';
 
-            // Allow a tiny delay for the 'display' change to register before starting the CSS transition
             setTimeout(() => {
                 popup.style.opacity = '1';
                 popup.style.visibility = 'visible';
                 overlay.style.opacity = '1';
                 overlay.style.visibility = 'visible';
-            }, 10); // Small delay
+            }, 10);
         }
 
-        // Function to close any general popup with fade
+        // Closes any general popup with fade
         function closePopup(popupId) {
             const popup = document.getElementById(popupId);
             popup.style.opacity = '0'; // Start fade out
 
-            // After the CSS transition completes, set display to 'none' and visibility to 'hidden'
             setTimeout(() => {
                 popup.style.display = 'none';
                 popup.style.visibility = 'hidden';
@@ -1080,32 +1290,24 @@
         // This function is for when you explicitly want to fade-out the current item(s)
         function closeAllPopups() {
             const allPopups = document.querySelectorAll('.popup');
-            const modal = document.getElementById('modal');
-            const overlay = document.querySelector('.overlay');
-
             let anyElementStartedToClose = false;
 
-            // Initiate fade out for all currently visible popups
             allPopups.forEach(p => {
-                // Check if element is currently active/visible before fading
                 if (p.style.display === 'flex' || p.style.visibility === 'visible') {
-                    p.style.opacity = '0'; // Trigger fade out
+                    p.style.opacity = '0';
                     anyElementStartedToClose = true;
                 }
             });
 
-            // Initiate fade out for the modal if it's open
             if (modal.style.display === 'flex' || modal.style.visibility === 'visible') {
-                modal.style.opacity = '0'; // Trigger fade out
+                modal.style.opacity = '0';
                 anyElementStartedToClose = true;
             }
 
-            // Only fade out the overlay if any popup/modal was indeed open
             if (anyElementStartedToClose && (overlay.style.display === 'block' || overlay.style.visibility === 'visible')) {
-                overlay.style.opacity = '0'; // Trigger fade out for overlay
+                overlay.style.opacity = '0';
             }
 
-            // After the fade-out transition, truly hide them by setting display: none
             setTimeout(() => {
                 allPopups.forEach(p => {
                     p.style.display = 'none';
@@ -1113,18 +1315,20 @@
                 });
                 modal.style.display = 'none';
                 modal.style.visibility = 'hidden';
-                closeOverlayIfNoPopupsOpen(); // Final check to hide overlay if nothing is open
+                closeOverlayIfNoPopupsOpen();
+
+                // Reset gallery state and remove listeners
+                currentGalleryImages = [];
+                currentImageIndex = -1;
+                disableGalleryControls();
+                removeGalleryEventListeners();
             }, TRANSITION_DURATION_MS);
         }
 
         // Helper function to determine if the overlay should be hidden
         function closeOverlayIfNoPopupsOpen() {
-            const overlay = document.querySelector('.overlay');
             const allPopups = document.querySelectorAll('.popup');
-            const modal = document.getElementById('modal');
 
-            // Check if any popup or the modal is currently being displayed (flex/block)
-            // or is still visible (during transition to hidden)
             let anyPopupStillOpen = false;
             allPopups.forEach(p => {
                 if (p.style.display === 'flex' || p.style.visibility === 'visible') {
@@ -1139,13 +1343,24 @@
             }
         }
 
+        // Removes keyboard and touch listeners to prevent conflicts when modal is closed
+        function removeGalleryEventListeners() {
+            document.removeEventListener('keydown', handleKeyPress);
+            modalImg.removeEventListener('touchstart', handleTouchStart);
+            modalImg.removeEventListener('touchmove', handleTouchMove);
+            modalImg.removeEventListener('touchend', handleTouchEnd);
+        }
+
         // Attach event listener to overlay for closing all popups/modal
         document.addEventListener('DOMContentLoaded', () => {
-            const overlay = document.querySelector('.overlay');
             if (overlay) {
                 overlay.addEventListener('click', closeAllPopups);
             }
+            // Ensure modal nav buttons have event listeners (initially hidden)
+            if (modalPrevBtn) modalPrevBtn.addEventListener('click', showPrevImage);
+            if (modalNextBtn) modalNextBtn.addEventListener('click', showNextImage);
         });
+
     </script>
 
 </body>
