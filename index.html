@@ -1,1020 +1,1062 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suan Som Resort</title>
-  <style>
-    /* --- Base Styles (Mobile-First) --- */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f8f4ec;
-      color: #333;
-      line-height: 1.6;
-      font-size: 16px; /* Base font size for mobile */
-    }
-    header {
-      background-color: #DC381F;
-      color: white;
-      padding: 1rem; /* Reduced padding for mobile */
-      text-align: center;
-    }
-    header h1 {
-      font-size: 1.8em; /* Smaller h1 for mobile */
-      margin-bottom: 0.5rem;
-    }
-    header p {
-      font-size: 0.9em; /* Smaller paragraph for mobile */
-      margin: 0;
-    }
-    nav {
-      display: flex;
-      flex-direction: column; /* Stack vertically by default for mobile */
-      justify-content: center;
-      background: #3B2F2F;
-      padding: 0.5rem 0; /* Adjusted padding */
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 0.8rem 1rem; /* Padded links for easier tapping */
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator for stacked links */
-    }
-    nav a:last-child {
-      border-bottom: none; /* No border for the last link */
-    }
-    .hero {
-      background-image: url('Driveway-Outside-04.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 40vh; /* Shorter hero on mobile */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-shadow: 0 0 10px rgba(0,0,0,0.7);
-      font-size: 1.8rem; /* Smaller font for mobile */
-      font-weight: bold;
-      text-align: center; /* Ensure text is centered */
-      padding: 1rem; /* Add some padding to hero text */
-    }
-    .content {
-      padding: 1rem; /* Reduced padding for mobile */
-      text-align: center;
-    }
-    .section {
-      margin: 1.5rem 0; /* Slightly reduced margin */
-    }
-    .gallery-images {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    
-    /* --- Styles for Image Containers and Overlays (Main Gallery) --- */
-    .image-container {
-      position: relative;
-      width: 100%; /* Full width on mobile, will be overridden by media queries */
-      height: 220px; /* Fixed height for consistency, adjust as needed */
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suan Som Resort</title>
+    <style>
+        /* --- Base Styles (Mobile-First) --- */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f4ec;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px; /* Base font size for mobile */
+        }
+        header {
+            background-color: #DC381F;
+            color: white;
+            padding: 1rem; /* Reduced padding for mobile */
+            text-align: center;
+        }
+        header h1 {
+            font-size: 1.8em; /* Smaller h1 for mobile */
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 0.9em; /* Smaller paragraph for mobile */
+            margin: 0;
+        }
+        nav {
+            display: flex;
+            flex-direction: column; /* Stack vertically by default for mobile */
+            justify-content: center;
+            background: #3B2F2F;
+            padding: 0.5rem 0; /* Adjusted padding */
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.8rem 1rem; /* Padded links for easier tapping */
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator for stacked links */
+        }
+        nav a:last-child {
+            border-bottom: none; /* No border for the last link */
+        }
+        .hero {
+            background-image: url('Driveway-Outside-04.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 40vh; /* Shorter hero on mobile */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.7);
+            font-size: 1.8rem; /* Smaller font for mobile */
+            font-weight: bold;
+            text-align: center; /* Ensure text is centered */
+            padding: 1rem; /* Add some padding to hero text */
+        }
+        .content {
+            padding: 1rem; /* Reduced padding for mobile */
+            text-align: center;
+        }
+        .section {
+            margin: 1.5rem 0; /* Slightly reduced margin */
+        }
+        .gallery-images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        /* --- Styles for Image Containers and Overlays (Main Gallery) --- */
+        .image-container {
+            position: relative;
+            width: 100%; /* Full width on mobile, will be overridden by media queries */
+            height: 220px; /* Fixed height for consistency, adjust as needed */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
-    .image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
-    .image-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      padding: 10px;
-      box-sizing: border-box;
-      text-align: center;
-      font-size: 0.8em; /* Slightly smaller for mobile overlay */
-    }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 0.8em; /* Slightly smaller for mobile overlay */
+        }
 
-    .image-container:hover .image-overlay {
-      opacity: 1;
-    }
-    .image-container:hover {
-      transform: scale(1.02); /* Less aggressive scale on hover for touch devices */
-    }
-    /* --- End Styles for Image Containers and Overlays (Main Gallery) --- */
+        .image-container:hover .image-overlay {
+            opacity: 1;
+        }
+        .image-container:hover {
+            transform: scale(1.02); /* Less aggressive scale on hover for touch devices */
+        }
+        /* --- End Styles for Image Containers and Overlays (Main Gallery) --- */
 
-    /* --- Modal Styles (Full-Screen Image) --- */
-    .modal {
-      display: none; /* Initially hidden by default */
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
+        /* --- Modal Styles (Full-Screen Image) --- */
+        .modal {
+            display: none; /* Initially hidden, controlled by JS */
+            opacity: 0; /* NEW: Start transparent for fade-in/out */
+            visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
+            transition: opacity 0.5s ease, visibility 0.5s ease; /* NEW: Smooth transition for fade */
 
-      /* Use flexbox to center content and manage layout */
-      flex-direction: column;
-      align-items: center; /* Center horizontally */
-      justify-content: center; /* Center vertically */
-    }
-    .modal-content { /* This is the scrollable container for the image */
-      display: flex; /* Use flex to center the image itself */
-      justify-content: center;
-      align-items: center;
-      max-width: 95%; /* Confine the image area to a max width */
-      max-height: 90%; /* Confine the image area to a max height */
-      overflow: auto; /* Make this content scrollable if image is too large */
-      border-radius: 8px;
-      background: transparent; /* No background for the content wrapper */
-    }
-    .modal-content img {
-      width: auto; /* Allow image to size naturally */
-      height: auto; /* Allow image to size naturally */
-      max-width: 100%; /* Ensure image fits within modal-content */
-      max-height: 100%; /* Ensure image fits within modal-content */
-      object-fit: contain; /* Ensure the image is fully visible, not cropped */
-      display: block; /* Remove extra space below img */
-    }
-    .modal .close {
-      position: absolute;
-      top: 8px;
-      right: 15px;
-      font-size: 28px;
-      cursor: pointer;
-      color: white; /* Make it visible against dark background */
-      z-index: 1002; /* Ensure it's above modal content */
-    }
-    /* --- End Modal Styles --- */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+        }
+        .modal-content { /* This is the scrollable container for the image */
+            display: flex; /* Use flex to center the image itself */
+            justify-content: center;
+            align-items: center;
+            max-width: 95%; /* Confine the image area to a max width */
+            max-height: 90%; /* Confine the image area to a max height */
+            overflow: auto; /* Make this content scrollable if image is too large */
+            border-radius: 8px;
+            background: transparent; /* No background for the content wrapper */
+        }
+        .modal-content img {
+            width: auto; /* Allow image to size naturally */
+            height: auto; /* Allow image to size naturally */
+            max-width: 100%; /* Ensure image fits within modal-content */
+            max-height: 100%; /* Ensure image fits within modal-content */
+            object-fit: contain; /* Ensure the image is fully visible, not cropped */
+            display: block; /* Remove extra space below img */
+        }
+        .modal .close {
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: white; /* Make it visible against dark background */
+            z-index: 1002; /* Ensure it's above modal content */
+        }
+        /* --- End Modal Styles --- */
 
-    /* --- Popup Styles --- */
-    .popup {
-      display: none; /* Initially hidden by default */
-      position: fixed; /* Keep it fixed in the viewport */
-      top: 5%; /* Higher up for mobile */
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
-      border-radius: 12px;
-      max-width: 95%; /* Wider popup for mobile */
-      width: 90%;
-      z-index: 1001;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-      
-      flex-direction: column;
-      max-height: 90vh; /* Max height for the entire popup */
-    }
+        /* --- Popup Styles --- */
+        .popup {
+            display: none; /* Initially hidden, controlled by JS */
+            opacity: 0; /* NEW: Start transparent for fade-in/out */
+            visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
+            transition: opacity 0.5s ease, visibility 0.5s ease; /* NEW: Smooth transition for fade */
 
-    .popup .close {
-      position: absolute;
-      top: 8px; /* Adjusted position */
-      right: 15px; /* Adjusted position */
-      font-size: 28px; /* Larger tap target */
-      cursor: pointer;
-      z-index: 1002; /* Ensure it's above popup content */
-    }
+            position: fixed; /* Keep it fixed in the viewport */
+            top: 5%; /* Higher up for mobile */
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 12px;
+            max-width: 95%; /* Wider popup for mobile */
+            width: 90%;
+            z-index: 1001;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            flex-direction: column;
+            max-height: 90vh; /* Max height for the entire popup */
+        }
 
-    .popup h2 {
-      padding: 0.5rem 1rem; /* Padding for the title */
-      margin-top: 0.5rem; /* Space from top */
-      margin-bottom: 0.5rem; /* Space from content */
-      text-align: center;
-      /* Add a border-bottom or shadow if desired for header separation */
-    }
+        .popup .close {
+            position: absolute;
+            top: 8px; /* Adjusted position */
+            right: 15px; /* Adjusted position */
+            font-size: 28px; /* Larger tap target */
+            cursor: pointer;
+            z-index: 1002; /* Ensure it's above popup content */
+        }
 
-    /* New div for scrollable content */
-    .popup-content {
-      flex-grow: 1; /* Allow content to take available space */
-      overflow-y: auto; /* Make only this part scrollable */
-      padding: 0 1rem 1rem; /* Padding for the scrollable content */
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    }
+        .popup h2 {
+            padding: 0.5rem 1rem; /* Padding for the title */
+            margin-top: 0.5rem; /* Space from top */
+            margin-bottom: 0.5rem; /* Space from content */
+            text-align: center;
+            /* Add a border-bottom or shadow if desired for header separation */
+        }
 
-    .popup .image-container {
-        width: 100%;
-        height: auto; /* Allow height to adjust based on aspect ratio */
-        min-height: 180px; /* Minimum height for small images */
-        margin: 0.8rem 0;
-        box-shadow: none;
-        cursor: pointer; /* Changed to pointer so images in popup are clickable */
-        transition: none;
-    }
-    .popup .image-container img {
-        border-radius: 8px;
-        width: 100%;
-        height: 100%; /* Fill the container */
-        object-fit: cover; /* Cover the container, cropping if necessary */
-    }
-    .popup .image-overlay {
-        opacity: 1; /* Always show overlay in popup */
-        position: static; /* Remove absolute positioning */
-        background: none; /* No background needed for overlay text in popup */
-        color: #333; /* Text color for popup overlay */
-        padding: 0.5rem 0; /* Add some padding around the text */
-        font-size: 0.9em; /* Adjust for popup text */
-        text-align: left; /* Align text left in popup */
-        justify-content: flex-start; /* Align content to start */
-        align-items: flex-start; /* Align content to start */
-    }
-    .popup .image-overlay p {
-      font-size: 0.8em;
-      line-height: 1.4;
-      margin: 0; /* Remove default paragraph margin */
-    }
-    /* --- End Popup Styles --- */
+        /* New div for scrollable content */
+        .popup-content {
+            flex-grow: 1; /* Allow content to take available space */
+            overflow-y: auto; /* Make only this part scrollable */
+            padding: 0 1rem 1rem; /* Padding for the scrollable content */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
 
-    .footer {
-      background: #3B2F2F;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.8em;
-    }
-    .map-container iframe {
-      width: 100%;
-      height: 50vh; /* Responsive height */
-      border: 0;
-    }
+        .popup .image-container {
+            width: 100%;
+            height: auto; /* Allow height to adjust based on aspect ratio */
+            min-height: 180px; /* Minimum height for small images */
+            margin: 0.8rem 0;
+            box-shadow: none;
+            cursor: pointer; /* Changed to pointer so images in popup are clickable */
+            transition: none;
+        }
+        .popup .image-container img {
+            border-radius: 8px;
+            width: 100%;
+            height: 100%; /* Fill the container */
+            object-fit: cover; /* Cover the container, cropping if necessary */
+        }
+        .popup .image-overlay {
+            opacity: 1; /* Always show overlay in popup */
+            position: static; /* Remove absolute positioning */
+            background: none; /* No background needed for overlay text in popup */
+            color: #333; /* Text color for popup overlay */
+            padding: 0.5rem 0; /* Add some padding around the text */
+            font-size: 0.9em; /* Adjust for popup text */
+            text-align: left; /* Align text left in popup */
+            justify-content: flex-start; /* Align content to start */
+            align-items: flex-start; /* Align content to start */
+        }
+        .popup .image-overlay p {
+            font-size: 0.8em;
+            line-height: 1.4;
+            margin: 0; /* Remove default paragraph margin */
+        }
+        /* --- End Popup Styles --- */
 
-    /* --- Restaurant/Gallery Menu Tabs --- */
-    .menu-tabs {
-      display: flex;
-      flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
-      justify-content: center;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 8px;
-    }
+        .footer {
+            background: #3B2F2F;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8em;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 50vh; /* Responsive height */
+            border: 0;
+        }
 
-    .tab-button {
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      padding: 8px 15px; /* Smaller padding for mobile tabs */
-      cursor: pointer;
-      font-size: 0.9em; /* Smaller font for mobile tabs */
-      font-weight: bold;
-      border-radius: 5px;
-      margin: 5px; /* Space between wrapped buttons */
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-      flex-grow: 1; /* Allow buttons to grow to fill space */
-      max-width: calc(50% - 10px); /* Two columns on mobile for tabs */
-    }
+        /* --- Restaurant/Gallery Menu Tabs --- */
+        .menu-tabs {
+            display: flex;
+            flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+            justify-content: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
 
-    .tab-button:hover {
-      background-color: #e0e0e0;
-    }
+        .tab-button {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 8px 15px; /* Smaller padding for mobile tabs */
+            cursor: pointer;
+            font-size: 0.9em; /* Smaller font for mobile tabs */
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 5px; /* Space between wrapped buttons */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            flex-grow: 1; /* Allow buttons to grow to fill space */
+            max-width: calc(50% - 10px); /* Two columns on mobile for tabs */
+        }
 
-    .tab-button.active {
-      background-color: #DC381F;
-      color: white;
-      border-color: #DC381F;
-    }
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
 
-    .menu-section {
-      display: none;
-    }
+        .tab-button.active {
+            background-color: #DC381F;
+            color: white;
+            border-color: #DC381F;
+        }
 
-    .menu-section.active {
-      display: block;
-    }
+        .menu-section {
+            display: none;
+        }
 
-    /* --- Sub-menu Buttons within Popup Sections --- */
-    .submenu-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 15px;
-      margin-bottom: 20px;
-    }
+        .menu-section.active {
+            display: block;
+        }
 
-    .sub-button {
-      background-color: #f8f4ec;
-      color: #3B2F2F;
-      border: 1px solid #DC381F;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-size: 0.9em; /* Slightly smaller for mobile sub-buttons */
-      font-weight: bold;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      flex: 1 1 calc(50% - 10px); /* Two buttons per row on mobile */
-      max-width: 200px; /* Capped max width */
-      box-sizing: border-box; /* Include padding/border in width */
-    }
+        /* --- Sub-menu Buttons within Popup Sections --- */
+        .submenu-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
 
-    .sub-button:hover {
-      background-color: #DC381F;
-      color: white;
-    }
+        .sub-button {
+            background-color: #f8f4ec;
+            color: #3B2F2F;
+            border: 1px solid #DC381F;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 0.9em; /* Slightly smaller for mobile sub-buttons */
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            flex: 1 1 calc(50% - 10px); /* Two buttons per row on mobile */
+            max-width: 200px; /* Capped max width */
+            box-sizing: border-box; /* Include padding/border in width */
+        }
 
-    /* --- Styles for Drinks Menu Headers/Lists --- */
-    .drinks-menu h2 {
-      color: #DC381F;
-      margin-bottom: 1rem;
-      font-size: 1.5em; /* Adjusted for mobile */
-    }
-    .drinks-menu h3 {
-      color: #3B2F2F;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 0.5rem;
-      margin-top: 1.5rem;
-      margin-bottom: 0.8rem;
-      font-size: 1.2em; /* Adjusted for mobile */
-    }
-    .drinks-menu ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      text-align: left;
-    }
-    .drinks-menu li {
-      padding: 0.4rem 0; /* Slightly less padding */
-      border-bottom: 1px dotted #ddd;
-      font-size: 1em; /* Adjusted for mobile */
-      line-height: 1.4;
-    }
-    .drinks-menu li:last-child {
-      border-bottom: none;
-    }
+        .sub-button:hover {
+            background-color: #DC381F;
+            color: white;
+        }
 
-    /* --- Overlay for closing popups --- */
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        cursor: pointer;
-    }
+        /* --- Styles for Drinks Menu Headers/Lists --- */
+        .drinks-menu h2 {
+            color: #DC381F;
+            margin-bottom: 1rem;
+            font-size: 1.5em; /* Adjusted for mobile */
+        }
+        .drinks-menu h3 {
+            color: #3B2F2F;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.2em; /* Adjusted for mobile */
+        }
+        .drinks-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+        .drinks-menu li {
+            padding: 0.4rem 0; /* Slightly less padding */
+            border-bottom: 1px dotted #ddd;
+            font-size: 1em; /* Adjusted for mobile */
+            line-height: 1.4;
+        }
+        .drinks-menu li:last-child {
+            border-bottom: none;
+        }
 
-    /* --- Media Queries for Larger Screens --- */
+        /* --- Overlay for closing popups --- */
+        .overlay {
+            display: none; /* Initially hidden, controlled by JS */
+            opacity: 0; /* NEW: Start transparent for fade-in/out */
+            visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
+            transition: opacity 0.5s ease, visibility 0.5s ease; /* NEW: Smooth transition for fade */
 
-    /* Small Tablets and Up (e.g., min-width: 600px) */
-    @media (min-width: 600px) {
-      body {
-        font-size: 17px;
-      }
-      header {
-        padding: 1.5rem 2rem;
-      }
-      header h1 {
-        font-size: 2.2em;
-      }
-      header p {
-        font-size: 1em;
-      }
-      nav {
-        flex-direction: row; /* Horizontal navigation */
-        gap: 1rem;
-        padding: 0.5rem;
-      }
-      nav a {
-        padding: 0.5rem 1rem;
-        border-bottom: none; /* No border for horizontal links */
-      }
-      .hero {
-        height: 50vh;
-        font-size: 2.5rem;
-      }
-      .content {
-        padding: 1.5rem;
-      }
-      .section {
-        margin: 2rem 0;
-      }
-      .gallery-images .image-container {
-        width: calc(50% - 0.5rem); /* Two columns, considering gap */
-      }
-      .modal {
-        top: 5%; /* Adjusted for larger screens */
-        max-height: 90vh; /* Ensure modal fits */
-      }
-      .modal-content {
-        max-width: 80%; /* Wider modal for tablets */
-        max-height: 80%; /* Adjusted max height */
-      }
-      .popup {
-        top: 8%;
-        padding: 0; /* No direct padding on popup itself */
-        max-width: 700px;
-        width: 90%;
-      }
-      .popup h2 {
-        padding: 0.8rem 2rem;
-      }
-      .popup-content {
-        padding: 0 2rem 2rem; /* Adjusted padding for scrollable content */
-      }
-      .popup .close {
-        font-size: 24px;
-      }
-      .tab-button {
-        padding: 10px 20px;
-        font-size: 1.1em;
-        margin: 0 5px; /* Restore original margin for tabs */
-        max-width: none; /* Allow tabs to be their natural width */
-      }
-      .sub-button {
-        flex: 1 1 auto; /* Allow buttons to grow more naturally */
-        max-width: 180px; /* Cap width */
-      }
-      .drinks-menu h2 {
-        font-size: 1.8em;
-      }
-      .drinks-menu h3 {
-        font-size: 1.4em;
-      }
-      .drinks-menu li {
-        font-size: 1.1em;
-      }
-      /* Ensure popup image containers scale appropriately on tablets */
-      .popup .image-container {
-        width: calc(50% - 1rem); /* Example: Two columns in popup */
-        height: 200px; /* Consistent height */
-      }
-    }
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            cursor: pointer;
+        }
 
-    /* Desktops and Up (e.g., min-width: 900px) */
-    @media (min-width: 900px) {
-      body {
-        font-size: 18px;
-      }
-      header {
-        padding: 1rem 2rem;
-      }
-      header h1 {
-        font-size: 2.5em;
-      }
-      header p {
-        font-size: 1em;
-      }
-      nav {
-        gap: 2rem;
-      }
-      nav a {
-        padding: 0.5rem 1rem;
-      }
-      .hero {
-        height: 60vh;
-        font-size: 3.5rem;
-      }
-      .content {
-        padding: 2rem;
-      }
-      .gallery-images .image-container {
-        width: 300px; /* Restore original width */
-        height: 200px; /* Restore original height */
-      }
-      .image-container:hover {
-        transform: scale(1.05); /* Restore more aggressive scale on hover */
-      }
-      .modal {
-        top: 10%; /* Adjusted for desktops */
-        max-height: 80vh;
-      }
-      .modal-content {
-        max-width: 70%; /* Wider modal for desktops */
-        max-height: 70%;
-      }
-      .popup {
-        top: 10%;
-        max-width: 800px;
-        width: 90%;
-      }
-      .popup h2 {
-        padding: 1rem 2rem;
-      }
-      .popup-content {
-        padding: 0 2rem 2rem;
-      }
-      /* Ensure popup image containers restore to desired desktop layout */
-      .popup .image-container {
-        width: calc(33.33% - 1rem); /* Example: Three columns in popup */
-        height: 200px; /* Consistent height */
-      }
-    }
-  </style>
+        /* --- Media Queries for Larger Screens --- */
+
+        /* Small Tablets and Up (e.g., min-width: 600px) */
+        @media (min-width: 600px) {
+            body {
+                font-size: 17px;
+            }
+            header {
+                padding: 1.5rem 2rem;
+            }
+            header h1 {
+                font-size: 2.2em;
+            }
+            header p {
+                font-size: 1em;
+            }
+            nav {
+                flex-direction: row; /* Horizontal navigation */
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+            nav a {
+                padding: 0.5rem 1rem;
+                border-bottom: none; /* No border for horizontal links */
+            }
+            .hero {
+                height: 50vh;
+                font-size: 2.5rem;
+            }
+            .content {
+                padding: 1.5rem;
+            }
+            .section {
+                margin: 2rem 0;
+            }
+            .gallery-images .image-container {
+                width: calc(50% - 0.5rem); /* Two columns, considering gap */
+            }
+            .modal {
+                top: 5%; /* Adjusted for larger screens */
+                max-height: 90vh; /* Ensure modal fits */
+            }
+            .modal-content {
+                max-width: 80%; /* Wider modal for tablets */
+                max-height: 80%; /* Adjusted max height */
+            }
+            .popup {
+                top: 8%;
+                padding: 0; /* No direct padding on popup itself */
+                max-width: 700px;
+                width: 90%;
+            }
+            .popup h2 {
+                padding: 0.8rem 2rem;
+            }
+            .popup-content {
+                padding: 0 2rem 2rem; /* Adjusted padding for scrollable content */
+            }
+            .popup .close {
+                font-size: 24px;
+            }
+            .tab-button {
+                padding: 10px 20px;
+                font-size: 1.1em;
+                margin: 0 5px; /* Restore original margin for tabs */
+                max-width: none; /* Allow tabs to be their natural width */
+            }
+            .sub-button {
+                flex: 1 1 auto; /* Allow buttons to grow more naturally */
+                max-width: 180px; /* Cap width */
+            }
+            .drinks-menu h2 {
+                font-size: 1.8em;
+            }
+            .drinks-menu h3 {
+                font-size: 1.4em;
+            }
+            .drinks-menu li {
+                font-size: 1.1em;
+            }
+            /* Ensure popup image containers scale appropriately on tablets */
+            .popup .image-container {
+                width: calc(50% - 1rem); /* Example: Two columns in popup */
+                height: 200px; /* Consistent height */
+            }
+        }
+
+        /* Desktops and Up (e.g., min-width: 900px) */
+        @media (min-width: 900px) {
+            body {
+                font-size: 18px;
+            }
+            header {
+                padding: 1rem 2rem;
+            }
+            header h1 {
+                font-size: 2.5em;
+            }
+            header p {
+                font-size: 1em;
+            }
+            nav {
+                gap: 2rem;
+            }
+            nav a {
+                padding: 0.5rem 1rem;
+            }
+            .hero {
+                height: 60vh;
+                font-size: 3.5rem;
+            }
+            .content {
+                padding: 2rem;
+            }
+            .gallery-images .image-container {
+                width: 300px; /* Restore original width */
+                height: 200px; /* Restore original height */
+            }
+            .image-container:hover {
+                transform: scale(1.05); /* Restore more aggressive scale on hover */
+            }
+            .modal {
+                top: 10%; /* Adjusted for desktops */
+                max-height: 80vh;
+            }
+            .modal-content {
+                max-width: 70%; /* Wider modal for desktops */
+                max-height: 70%;
+            }
+            .popup {
+                top: 10%;
+                max-width: 800px;
+                width: 90%;
+            }
+            .popup h2 {
+                padding: 1rem 2rem;
+            }
+            .popup-content {
+                padding: 0 2rem 2rem;
+            }
+            /* Ensure popup image containers restore to desired desktop layout */
+            .popup .image-container {
+                width: calc(33.33% - 1rem); /* Example: Three columns in popup */
+                height: 200px; /* Consistent height */
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Suan Som Resort & Restaurant</h1>
-    <p>Your peaceful escape in nature</p>
-    <p>Bikers are welcome</p>
-  </header>
+    <header>
+        <h1>Suan Som Resort & Restaurant</h1>
+        <p>Your peaceful escape in nature</p>
+        <p>Bikers are welcome</p>
+    </header>
 
-  <nav>
-    <a href="#resort">Resort</a>
-    <a onclick="openPopup('restaurant-popup')">Restaurant</a>
-    <a onclick="openPopup('main-gallery-popup')">Gallery</a>
-    <a href="#contact">Contact</a>
-  </nav>
+    <nav>
+        <a href="#resort">Resort</a>
+        <a onclick="openPopup('restaurant-popup')">Restaurant</a>
+        <a onclick="openPopup('main-gallery-popup')">Gallery</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-  <div class="hero">
-    Welcome to Suan Som
-  </div>
-
-  <div class="content">
-    <div id="resort" class="section">
-      <h2>Resort</h2>
-      <p>Enjoy a tranquil stay surrounded by lush gardens and beautiful views. Our bungalows, 400B a night, are fully equipped with modern comforts and traditional Thai design.</p>
+    <div class="hero">
+        Welcome to Suan Som
     </div>
 
-    <div class="section">
-      <h2>Gallery</h2>
-      <div class="gallery-images">
-        <div class="image-container">
-          <img src="Driveway-Outside-01.jpg" alt="Resort driveway" onclick="openModal(this.src)">
-          <div class="image-overlay">
-            <p>The inviting entrance to Suan Som Resort, surrounded by lush greenery.</p>
-          </div>
+    <div class="content">
+        <div id="resort" class="section">
+            <h2>Resort</h2>
+            <p>Enjoy a tranquil stay surrounded by lush gardens and beautiful views. Our bungalows, 400B a night, are fully equipped with modern comforts and traditional Thai design.</p>
         </div>
-        <div class="image-container">
-          <img src="Standard-Room-01.jpg" alt="Standard Room" onclick="openModal(this.src)">
-          <div class="image-overlay">
-            <p>Our comfortable standard room, offering a cozy and relaxing atmosphere.</p>
-          </div>
+
+        <div class="section">
+            <h2>Gallery</h2>
+            <div class="gallery-images">
+                <div class="image-container">
+                    <img src="Driveway-Outside-01.jpg" alt="Resort driveway" onclick="openModal(this.src)">
+                    <div class="image-overlay">
+                        <p>The inviting entrance to Suan Som Resort, surrounded by lush greenery.</p>
+                    </div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-01.jpg" alt="Standard Room" onclick="openModal(this.src)">
+                    <div class="image-overlay">
+                        <p>Our comfortable standard room, offering a cozy and relaxing atmosphere.</p>
+                    </div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-02.jpg" alt="Standard Room" onclick="openModal(this.src)">
+                    <div class="image-overlay">
+                        <p>A closer look at the elegant interior of our standard accommodation.</p>
+                    </div>
+                </div>
+                <div class="image-container">
+                    <img src="Driveway-Outside-05.jpg" alt="Resort grounds" onclick="openModal(this.src)">
+                    <div class="image-overlay">
+                        <p>Pathways winding through the serene grounds of Suan Som Resort.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="image-container">
-          <img src="Standard-Room-02.jpg" alt="Standard Room" onclick="openModal(this.src)">
-          <div class="image-overlay">
-            <p>A closer look at the elegant interior of our standard accommodation.</p>
-          </div>
+
+        <div id="contact" class="section">
+            <h2>Contact Us</h2>
+            <p>Email: naris090952@gmail.com<br>Phone: +66 (0)939356326<br>Address: 86/4 Ban Sawsawan, Han Na Ngam, Nong Bua Lamphu, Si Bun Rueang, 39180</p>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489865.20950885834!2d102.24171450000002!3d16.9528546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3123cd64ced576e3%3A0xb4cdfba10e398850!2s2%2C%20Tambon%20Han%20Na%20Ngam%2C%20Amphoe%20Si%20Bun%20Rueang%2C%20Chang%20Wat%20Nong%20Bua%20Lam%20Phu%2039180%2C%20Thailand!5e0!3m2!1sen!2sth!4v1717852800000!5m2!1sen!2sth" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
         </div>
-        <div class="image-container">
-          <img src="Driveway-Outside-05.jpg" alt="Resort grounds" onclick="openModal(this.src)">
-          <div class="image-overlay">
-            <p>Pathways winding through the serene grounds of Suan Som Resort.</p>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <div id="contact" class="section">
-      <h2>Contact Us</h2>
-      <p>Email: naris090952@gmail.com<br />Phone: +66 (0)939356326<br />Address: 86/4 Ban Sawsawan, Han Na Ngam, Nong Bua Lamphu, Si Bun Rueang, 39180</p>
-      <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489865.20950885834!2d102.24171450000002!3d16.9528546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3123cd64ced576e3%3A0xb4cdfba10e398850!2s2%2C%20Tambon%20Han%20Na%20Ngam%2C%20Amphoe%20Si%20Bun%20Rueang%2C%20Chang%20Wat%20Nong%20Bua%20Lam%20Phu%2039180%2C%20Thailand!5e0!3m2!1sen!2sth!4v1717852800000!5m2!1sen!2sth" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
+    <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">×</span>
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="Popup image">
+        </div>
     </div>
-  </div>
 
-  <div id="modal" class="modal">
-    <span class="close" onclick="closeModal()">×</span>
-    <div class="modal-content"> <img id="modal-img" src="" alt="Popup image">
+    <div id="main-gallery-popup" class="popup">
+        <span class="close" onclick="closePopup('main-gallery-popup')">×</span>
+        <h2>Our Photo Gallery</h2>
+        <div class="popup-content">
+            <div class="menu-tabs">
+                <button class="tab-button active" onclick="showMenuSection('our-resort-section', this, 'main-gallery-popup')">Our Resort</button>
+                <button class="tab-button" onclick="showMenuSection('photo-album-section', this, 'main-gallery-popup')">Photo Album</button>
+            </div>
+
+            <div id="our-resort-section" class="menu-section active">
+                <h3>Our Resort Photos</h3>
+                <p>A collection of beautiful moments from around Suan Som Resort.</p>
+                <div class="image-container">
+                    <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>The main entrance to the resort, welcoming all guests.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Driveway-Outside-02.jpg" alt="Driveway" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Another view of the well-maintained driveway leading to our bungalows.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Driveway-Outside-03.jpg" alt="Driveway" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Experience the peaceful ambiance along our resort pathways.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Driveway-Outside-04.jpg" alt="Driveway" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Scenic views of the resort grounds, perfect for a stroll.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Driveway-Outside-05.jpg" alt="Driveway" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Lush tropical foliage enhances the beauty of our resort's exterior.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-01.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Discover the comfort of our standard room, priced at just 400 Baht per night.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-02.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Inside our cozy standard room, designed for relaxation.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-03.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Enjoy the simplicity and tranquility of our standard accommodation.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-04.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>All standard rooms offer a peaceful retreat from daily life.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-05.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Spacious and clean, our standard rooms provide great value.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-06.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Experience authentic Thai hospitality in our charming bungalows.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-07.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Each standard room is equipped for your comfort and convenience.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="Standard-Room-08.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Unwind in our well-appointed standard rooms, perfect for a peaceful stay.</p></div>
+                </div>
+                <div class="image-container">
+                    <img src="beergarden.jpg" alt="Restaurant" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Our inviting Beer Garden, a great spot to relax and socialize.</p></div>
+                </div>
+            </div>
+
+            <div id="photo-album-section" class="menu-section">
+                <h3>Photo Album</h3>
+                <p>A curated collection of special moments. Click any image to view it larger.</p>
+                <p>You can also use the buttons below to open specific highlights.</p>
+                <div class="submenu-buttons">
+                    <button class="sub-button" onclick="openModal('Driveway-Outside-01.jpg')">Driveway View</button>
+                    <button class="sub-button" onclick="openModal('Standard-Room-03.jpg')">Room Detail</button>
+                    <button class="sub-button" onclick="openModal('Driveway-Outside-05.jpg')">Garden Pathway</button>
+                    <button class="sub-button" onclick="openModal('Standard-Room-07.jpg')">Bungalow Interior</button>
+                </div>
+                <div class="gallery-images">
+                    <div class="image-container">
+                        <img src="photogallery.jpg" alt="Photo Album Main" onclick="openModal(this.src)">
+                        <div class="image-overlay"><p>Explore more moments in our special Photo Album.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="thai_cocktail.jpg" alt="Refreshing Cocktail" onclick="openModal(this.src)">
+                        <div class="image-overlay"><p>Enjoy a refreshing cocktail from our bar.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Green-Curry.jpg" alt="Delicious Green Curry" onclick="openModal(this.src)">
+                        <div class="image-overlay"><p>Taste our aromatic Green Curry.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Burger.jpg" alt="Hearty Burger" onclick="openModal(this.src)">
+                        <div class="image-overlay"><p>Our classic Burger and Fries, a Western favorite.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Mango-Sticky-Rice.jpg" alt="Sweet Mango Sticky Rice" onclick="openModal(this.src)">
+                        <div class="image-overlay"><p>Indulge in seasonal Mango Sticky Rice.</p></div>
+                    </div>
+                    <div class="image-container">
+                        <img src="porkroast.jpg" alt="Chef's Special" onclick="openModal(this.src)">
+                        <div class="image-overlay"><p>A look at one of our delicious chef's specials.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div id="main-gallery-popup" class="popup">
-    <span class="close" onclick="closePopup('main-gallery-popup')">×</span>
-    <h2>Our Photo Gallery</h2>
-    <div class="popup-content"> <div class="menu-tabs">
-        <button class="tab-button active" onclick="showMenuSection('our-resort-section', this, 'main-gallery-popup')">Our Resort</button>
-        <button class="tab-button" onclick="showMenuSection('photo-album-section', this, 'main-gallery-popup')">Photo Album</button>
-      </div>
+    <div id="restaurant-popup" class="popup">
+        <span class="close" onclick="closePopup('restaurant-popup')">×</span>
+        <h2>Our Restaurant</h2>
+        <div class="popup-content">
+            <div class="menu-tabs">
+                <button class="tab-button active" onclick="showMenuSection('food-menu-section', this, 'restaurant-popup')">Food Menu</button>
+                <button class="tab-button" onclick="showMenuSection('drink-menu-section', this, 'restaurant-popup')">Drink Menu</button>
+            </div>
 
-      <div id="our-resort-section" class="menu-section active">
-        <h3>Our Resort Photos</h3>
-        <p>A collection of beautiful moments from around Suan Som Resort.</p>
-        <div class="image-container">
-            <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>The main entrance to the resort, welcoming all guests.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Driveway-Outside-02.jpg" alt="Driveway" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Another view of the well-maintained driveway leading to our bungalows.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Driveway-Outside-03.jpg" alt="Driveway" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Experience the peaceful ambiance along our resort pathways.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Driveway-Outside-04.jpg" alt="Driveway" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Scenic views of the resort grounds, perfect for a stroll.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Driveway-Outside-05.jpg" alt="Driveway" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Lush tropical foliage enhances the beauty of our resort's exterior.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Standard-Room-01.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Discover the comfort of our standard room, priced at just 400 Baht per night.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Standard-Room-02.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Inside our cozy standard room, designed for relaxation.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Standard-Room-03.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Enjoy the simplicity and tranquility of our standard accommodation.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Standard-Room-04.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>All standard rooms offer a peaceful retreat from daily life.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Standard-Room-05.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Spacious and clean, our standard rooms provide great value.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Standard-Room-06.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Experience authentic Thai hospitality in our charming bungalows.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Standard-Room-07.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Each standard room is equipped for your comfort and convenience.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="Standard-Room-08.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Unwind in our well-appointed standard rooms, perfect for a peaceful stay.</p></div>
-        </div>
-        <div class="image-container">
-            <img src="beergarden.jpg" alt="Restaurant" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Our inviting Beer Garden, a great spot to relax and socialize.</p></div>
-        </div>
-      </div>
+            <div id="food-menu-section" class="menu-section active">
+                <h3>Food Menu</h3>
+                <p>Explore our culinary delights:</p>
+                <div class="submenu-buttons">
+                    <button class="sub-button" onclick="openPopup('thai-food-popup')">Thai Food</button>
+                    <button class="sub-button" onclick="openPopup('farang-food-popup')">Farang Food</button>
+                    <button class="sub-button" onclick="openPopup('desserts-popup')">Desserts</button>
+                    <button class="sub-button" onclick="openPopup('special-food-popup')">This Week's Special</button>
+                </div>
+                <div class="image-container">
+                    <img src="padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>A glimpse into our delicious range of Thai cuisine.</p></div>
+                </div>
+            </div>
 
-      <div id="photo-album-section" class="menu-section">
-        <h3>Photo Album</h3>
-        <p>A curated collection of special moments. Click any image to view it larger.</p>
-        <p>You can also use the buttons below to open specific highlights.</p>
-        <div class="submenu-buttons">
-          <button class="sub-button" onclick="openModal('Driveway-Outside-01.jpg')">Driveway View</button>
-          <button class="sub-button" onclick="openModal('Standard-Room-03.jpg')">Room Detail</button>
-          <button class="sub-button" onclick="openModal('Driveway-Outside-05.jpg')">Garden Pathway</button>
-          <button class="sub-button" onclick="openModal('Standard-Room-07.jpg')">Bungalow Interior</button>
+            <div id="drink-menu-section" class="menu-section">
+                <h3>Drink Menu</h3>
+                <p>Quench your thirst with our wide selection:</p>
+                <div class="submenu-buttons">
+                    <button class="sub-button" onclick="openPopup('soft-drinks-popup')">Soft Drinks</button>
+                    <button class="sub-button" onclick="openPopup('local-beers-popup')">Local Beers</button>
+                    <button class="sub-button" onclick="openPopup('alcoholic-drinks-popup')">Alcoholic Beverages</button>
+                    <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
+                </div>
+                <div class="image-container">
+                    <img src="beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this.src)">
+                    <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
+                </div>
+            </div>
         </div>
-        <div class="gallery-images">
-          <div class="image-container">
-              <img src="photogallery.jpg" alt="Photo Album Main" onclick="openModal(this.src)">
-              <div class="image-overlay"><p>Explore more moments in our special Photo Album.</p></div>
-          </div>
-          <div class="image-container">
-              <img src="thai_cocktail.jpg" alt="Refreshing Cocktail" onclick="openModal(this.src)">
-              <div class="image-overlay"><p>Enjoy a refreshing cocktail from our bar.</p></div>
-          </div>
-          <div class="image-container">
-              <img src="Green-Curry.jpg" alt="Delicious Green Curry" onclick="openModal(this.src)">
-              <div class="image-overlay"><p>Taste our aromatic Green Curry.</p></div>
-          </div>
-          <div class="image-container">
-              <img src="Burger.jpg" alt="Hearty Burger" onclick="openModal(this.src)">
-              <div class="image-overlay"><p>Our classic Burger and Fries, a Western favorite.</p></div>
-          </div>
-          <div class="image-container">
-              <img src="Mango-Sticky-Rice.jpg" alt="Sweet Mango Sticky Rice" onclick="openModal(this.src)">
-              <div class="image-overlay"><p>Indulge in seasonal Mango Sticky Rice.</p></div>
-          </div>
-          <div class="image-container">
-              <img src="porkroast.jpg" alt="Chef's Special" onclick="openModal(this.src)">
-              <div class="image-overlay"><p>A look at one of our delicious chef's specials.</p></div>
-          </div>
-          </div>
-      </div>
-    </div> </div>
-
-  <div id="restaurant-popup" class="popup">
-    <span class="close" onclick="closePopup('restaurant-popup')">×</span>
-    <h2>Our Restaurant</h2>
-    <div class="popup-content"> <div class="menu-tabs">
-        <button class="tab-button active" onclick="showMenuSection('food-menu-section', this, 'restaurant-popup')">Food Menu</button>
-        <button class="tab-button" onclick="showMenuSection('drink-menu-section', this, 'restaurant-popup')">Drink Menu</button>
-      </div>
-
-      <div id="food-menu-section" class="menu-section active">
-        <h3>Food Menu</h3>
-        <p>Explore our culinary delights:</p>
-        <div class="submenu-buttons">
-          <button class="sub-button" onclick="openPopup('thai-food-popup')">Thai Food</button>
-          <button class="sub-button" onclick="openPopup('farang-food-popup')">Farang Food</button>
-          <button class="sub-button" onclick="openPopup('desserts-popup')">Desserts</button>
-          <button class="sub-button" onclick="openPopup('special-food-popup')">This Week's Special</button>
-        </div>
-        <div class="image-container">
-            <img src="padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>A glimpse into our delicious range of Thai cuisine.</p></div>
-        </div>
-      </div>
-
-      <div id="drink-menu-section" class="menu-section">
-        <h3>Drink Menu</h3>
-        <p>Quench your thirst with our wide selection:</p>
-        <div class="submenu-buttons">
-          <button class="sub-button" onclick="openPopup('soft-drinks-popup')">Soft Drinks</button>
-          <button class="sub-button" onclick="openPopup('local-beers-popup')">Local Beers</button>
-          <button class="sub-button" onclick="openPopup('alcoholic-drinks-popup')">Alcoholic Beverages</button>
-          <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
-        </div>
-        <div class="image-container">
-            <img src="beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
-        </div>
-      </div>
-    </div> </div>
-
-  <div id="thai-food-popup" class="popup">
-    <span class="close" onclick="closePopup('thai-food-popup')">×</span>
-    <h3>Thai Food Menu</h3>
-    <div class="popup-content">
-      <p>Authentic Thai flavors cooked to perfection:</p>
-      <ul>
-        <li>Som Tum (Papaya Salad) - Spicy and refreshing!</li>
-        <li>Pad Thai - Classic stir-fried noodles.</li>
-        <li>Tom Yum Goong - Famous hot and sour shrimp soup.</li>
-        <li>Green Curry with Chicken - Rich and aromatic.</li>
-        <li>Laab Moo (Minced Pork Salad) - Savory and spicy.</li>
-      </ul>
-      <div class="image-container">
-          <img src="padthai.jpg" alt="Pad Thai dish" onclick="openModal(this.src)">
-          <div class="image-overlay"><p>Our signature Pad Thai, a must-try!</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Green-Curry.jpg" alt="Green Curry dish" onclick="openModal(this.src)">
-          <div class="image-overlay"><p>Rich and fragrant Green Curry with fresh ingredients.</p></div>
-      </div>
     </div>
-  </div>
 
-  <div id="farang-food-popup" class="popup">
-    <span class="close" onclick="closePopup('farang-food-popup')">×</span>
-    <h3>Farang Food Menu</h3>
-    <div class="popup-content">
-      <p>Western comfort food options:</p>
-      <ul>
-        <li>Burger and Fries</li>
-        <li>Chicken Schnitzel with Salad</li>
-        <li>Spaghetti Carbonara</li>
-        <li>Club Sandwich</li>
-      </ul>
-      <div class="image-container">
-          <img src="Burger.jpg" alt="Burger and fries" onclick="openModal(this.src)">
-          <div class="image-overlay"><p>Satisfy your cravings with our juicy burger and crispy fries.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="desserts-popup" class="popup">
-    <span class="close" onclick="closePopup('desserts-popup')">×</span>
-    <h3>Desserts</h3>
-    <div class="popup-content">
-      <p>End your meal on a sweet note:</p>
-      <ul>
-        <li>Mango Sticky Rice (seasonal)</li>
-        <li>Ice Cream (Vanilla, Chocolate, Strawberry)</li>
-        <li>Fried Banana with Honey</li>
-      </ul>
-      <div class="image-container">
-          <img src="Mango-Sticky-Rice.jpg" alt="Mango Sticky Rice" onclick="openModal(this.src)">
-          <div class="image-overlay"><p>Seasonal favorite: sweet sticky rice with fresh mango.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="special-food-popup" class="popup">
-    <span class="close" onclick="closePopup('special-food-popup')">×</span>
-    <h3>This Week's Special</h3>
-    <div class="popup-content">
-      <p>Ask our staff for today's unique offering!</p>
-      <ul>
-        <li>Chef's daily recommendation</li>
-        <li>Seasonal ingredient highlight</li>
-      </ul>
-      <div class="image-container">
-          <img src="porkroast.jpg" alt="Special dish" onclick="openModal(this.src)">
-          <div class="image-overlay"><p>Don't miss our rotating weekly special!</p></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="soft-drinks-popup" class="popup">
-    <span class="close" onclick="closePopup('soft-drinks-popup')">×</span>
-    <h3>Soft Drinks</h3>
-    <div class="popup-content">
-      <p>Cool down with a refreshing soft drink:</p>
-      <ul>
-        <li>Coca-Cola</li>
-        <li>Sprite</li>
-        <li>Fanta</li>
-        <li>Bottled Water</li>
-        <li>Fresh Orange Juice</li>
-      </ul>
-    </div>
-  </div>
-
-  <div id="local-beers-popup" class="popup">
-    <span class="close" onclick="closePopup('local-beers-popup')">×</span>
-    <h3>Local Beers</h3>
-    <div class="popup-content">
-      <p>Taste the local brews:</p>
-      <ul>
-        <li>Chang Beer</li>
-        <li>Leo Beer</li>
-        <li>Singha Beer</li>
-      </ul>
-      <div class="image-container">
-          <img src="beergarden.jpg" alt="Local beer glasses" onclick="openModal(this.src)">
-          <div class="image-overlay"><p>Enjoy a cold Thai beer at our Beer Garden.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="alcoholic-drinks-popup" class="popup">
-    <span class="close" onclick="closePopup('alcoholic-drinks-popup')">×</span>
-    <h3>Other Alcoholic Beverages</h3>
-    <div class="popup-content">
-      <p>For something stronger beyond our specialty cocktails:</p>
-      <ul>
-        <li>Whiskey (local and international selection)</li>
-        <li>Rum (local and international selection)</li>
-        <li>Vodka (various brands)</li>
-        <li>Gin (various brands)</li>
-        <li>Tequila</li>
-        <li>Assorted Shots</li>
-      </ul>
-    </div>
-  </div>
-
-  <div id="thai-bar-drinks-popup" class="popup">
-    <span class="close" onclick="closePopup('thai-bar-drinks-popup')">×</span>
-    <h3>🍹 Suan Som Bar – Drinks Menu<br>เมนูเครื่องดื่มบาร์สวนสม</h3>
-    <div class="popup-content">
-      <section class="drinks-menu">
-        <h3>🍸 Signature Cocktails – 180 THB<br>ค็อกเทลซิกเนเจอร์</h3>
-        <ul>
-          <li>🍃 Thai Mojito – ไทยโมฮิโต้ – เหล้ารัม มะนาว โซดา และโหระพาไทย</li>
-          <li>🌶️ Tom Yum Martini – ต้มยำมาร์ตินี่ – วอดก้า ตะไคร้ ใบมะกรูด พริก</li>
-          <li>🥭 Mango Tango – แมงโก้แทงโก้ – มะม่วง วอดก้า น้ำมะนาว</li>
-          <li>🍈 Lychee Martini – ลิ้นจี่มาร์ตินี่ – วอดก้า น้ำลิ้นจี่</li>
-          <li>🔥 Spicy Siam – สไปซี่สยาม – เตกีล่า น้ำมะนาว น้ำเชื่อมพริก</li>
-        </ul>
-             
-        <div class="image-container">
-            <img src="thai_cocktail.jpg" alt="Thai cocktail" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Enjoy a perfectly crafted cocktail at our bar!</p></div>
+    <div id="thai-food-popup" class="popup">
+        <span class="close" onclick="closePopup('thai-food-popup')">×</span>
+        <h3>Thai Food Menu</h3>
+        <div class="popup-content">
+            <p>Authentic Thai flavors cooked to perfection:</p>
+            <ul>
+                <li>Som Tum (Papaya Salad) - Spicy and refreshing!</li>
+                <li>Pad Thai - Classic stir-fried noodles.</li>
+                <li>Tom Yum Goong - Famous hot and sour shrimp soup.</li>
+                <li>Green Curry with Chicken - Rich and aromatic.</li>
+                <li>Laab Moo (Minced Pork Salad) - Savory and spicy.</li>
+            </ul>
+            <div class="image-container">
+                <img src="padthai.jpg" alt="Pad Thai dish" onclick="openModal(this.src)">
+                <div class="image-overlay"><p>Our signature Pad Thai, a must-try!</p></div>
+            </div>
+            <div class="image-container">
+                <img src="Green-Curry.jpg" alt="Green Curry dish" onclick="openModal(this.src)">
+                <div class="image-overlay"><p>Rich and fragrant Green Curry with fresh ingredients.</p></div>
+            </div>
         </div>
-        <div class="image-container">
-            <img src="thai_beer.jpg" alt="Thai beer bottles" onclick="openModal(this.src)">
-            <div class="image-overlay"><p>Cool down with a crisp, cold Thai beer.</p></div>
-        </div>
-      </section>
     </div>
-  </div>
-  <div class="footer">
-    © 2025 Suan Som Resort. All rights reserved.
-  </div>
 
-  <div id="overlay" class="overlay" onclick="closeAllPopups()"></div>
+    <div id="farang-food-popup" class="popup">
+        <span class="close" onclick="closePopup('farang-food-popup')">×</span>
+        <h3>Farang Food Menu</h3>
+        <div class="popup-content">
+            <p>Western comfort food options:</p>
+            <ul>
+                <li>Burger and Fries</li>
+                <li>Chicken Schnitzel with Salad</li>
+                <li>Spaghetti Carbonara</li>
+                <li>Club Sandwich</li>
+            </ul>
+            <div class="image-container">
+                <img src="Burger.jpg" alt="Burger and fries" onclick="openModal(this.src)">
+                <div class="image-overlay"><p>Satisfy your cravings with our juicy burger and crispy fries.</p></div>
+            </div>
+        </div>
+    </div>
 
-  <script>
-    // List of all popup IDs to manage their state
-    const popupIds = [
-      'modal', // The full-screen image modal
-      'main-gallery-popup',
-      'restaurant-popup',
-      'thai-food-popup',
-      'farang-food-popup',
-      'desserts-popup',
-      'special-food-popup',
-      'soft-drinks-popup',
-      'local-beers-popup',
-      'alcoholic-drinks-popup',
-      'thai-bar-drinks-popup'
-    ];
+    <div id="desserts-popup" class="popup">
+        <span class="close" onclick="closePopup('desserts-popup')">×</span>
+        <h3>Desserts</h3>
+        <div class="popup-content">
+            <p>End your meal on a sweet note:</p>
+            <ul>
+                <li>Mango Sticky Rice (seasonal)</li>
+                <li>Ice Cream (Vanilla, Chocolate, Strawberry)</li>
+                <li>Fried Banana with Honey</li>
+            </ul>
+            <div class="image-container">
+                <img src="Mango-Sticky-Rice.jpg" alt="Mango Sticky Rice" onclick="openModal(this.src)">
+                <div class="image-overlay"><p>Seasonal favorite: sweet sticky rice with fresh mango.</p></div>
+            </div>
+        </div>
+    </div>
 
-    function openModal(src) {
-      const modalElement = document.getElementById('modal');
-      const modalImg = document.getElementById('modal-img');
+    <div id="special-food-popup" class="popup">
+        <span class="close" onclick="closePopup('special-food-popup')">×</span>
+        <h3>This Week's Special</h3>
+        <div class="popup-content">
+            <p>Ask our staff for today's unique offering!</p>
+            <ul>
+                <li>Chef's daily recommendation</li>
+                <li>Seasonal ingredient highlight</li>
+            </ul>
+            <div class="image-container">
+                <img src="porkroast.jpg" alt="Special dish" onclick="openModal(this.src)">
+                <div class="image-overlay"><p>Don't miss our rotating weekly special!</p></div>
+            </div>
+        </div>
+    </div>
 
-      modalImg.src = src;
-      modalElement.style.display = 'flex'; // Use flex for layout
-      
-      // Find the scrollable content area within the modal and reset its scroll
-      const scrollableContent = modalElement.querySelector('.modal-content');
-      if (scrollableContent) {
-        scrollableContent.scrollTop = 0;
-      }
-      document.getElementById('overlay').style.display = 'block'; // Show overlay
-    }
+    <div id="soft-drinks-popup" class="popup">
+        <span class="close" onclick="closePopup('soft-drinks-popup')">×</span>
+        <h3>Soft Drinks</h3>
+        <div class="popup-content">
+            <p>Cool down with a refreshing soft drink:</p>
+            <ul>
+                <li>Coca-Cola</li>
+                <li>Sprite</li>
+                <li>Fanta</li>
+                <li>Bottled Water</li>
+                <li>Fresh Orange Juice</li>
+            </ul>
+        </div>
+    </div>
 
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-      // Only hide overlay if no other popups are open
-      if (!isAnyPopupOpen()) {
-          document.getElementById('overlay').style.display = 'none';
-      }
-    }
+    <div id="local-beers-popup" class="popup">
+        <span class="close" onclick="closePopup('local-beers-popup')">×</span>
+        <h3>Local Beers</h3>
+        <div class="popup-content">
+            <p>Taste the local brews:</p>
+            <ul>
+                <li>Chang Beer</li>
+                <li>Leo Beer</li>
+                <li>Singha Beer</li>
+            </ul>
+            <div class="image-container">
+                <img src="beergarden.jpg" alt="Local beer glasses" onclick="openModal(this.src)">
+                <div class="image-overlay"><p>Enjoy a cold Thai beer at our Beer Garden.</p></div>
+            </div>
+        </div>
+    </div>
 
-    function openPopup(id) {
-      const popupElement = document.getElementById(id);
-      if (popupElement) {
-        popupElement.style.display = 'flex'; // Use flex for column layout
-        // Find the scrollable content area and reset its scroll
-        const scrollableContent = popupElement.querySelector('.popup-content');
-        if (scrollableContent) {
-          scrollableContent.scrollTop = 0;
+    <div id="alcoholic-drinks-popup" class="popup">
+        <span class="close" onclick="closePopup('alcoholic-drinks-popup')">×</span>
+        <h3>Other Alcoholic Beverages</h3>
+        <div class="popup-content">
+            <p>For something stronger beyond our specialty cocktails:</p>
+            <ul>
+                <li>Whiskey (local and international selection)</li>
+                <li>Rum (local and international selection)</li>
+                <li>Vodka (various brands)</li>
+                <li>Gin (various brands)</li>
+                <li>Tequila</li>
+                <li>Assorted Shots</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="thai-bar-drinks-popup" class="popup">
+        <span class="close" onclick="closePopup('thai-bar-drinks-popup')">×</span>
+        <h3>🍹 Suan Som Bar – Drinks Menu<br>เมนูเครื่องดื่มบาร์สวนสม</h3>
+        <div class="popup-content">
+            <section class="drinks-menu">
+                <h3>🍸 Signature Cocktails – 180 THB<br>ค็อกเทลซิกเนเจอร์</h3>
+                <ul>
+                    <li>🍃 Thai Mojito – ไทยโมฮิโต้ – เหล้ารัม มะนาว โซดา และโหระพาไทย</li>
+                    <li>🌶️ Tom Yum Martini – ต้มยำมาร์ตินี่ – วอดก้า ตะไคร้ ใบมะกรูด พริก</li>
+                    <li>🥭 Mango Tango – แมงโก้ แทงโก้</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Suan Som Resort & Restaurant. All rights reserved.</p>
+    </div>
+
+    <div class="overlay"></div> <script>
+        // NEW: Global constant for transition duration, matches CSS
+        const TRANSITION_DURATION_MS = 500;
+
+        function showMenuSection(sectionId, clickedButton, parentPopupId) {
+            // Deactivate all tab buttons within the same parent popup
+            const parentPopup = document.getElementById(parentPopupId);
+            const tabButtons = parentPopup.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Hide all menu sections within the same parent popup
+            const menuSections = parentPopup.querySelectorAll('.menu-section');
+            menuSections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Activate the clicked button
+            clickedButton.classList.add('active');
+
+            // Show the corresponding menu section
+            document.getElementById(sectionId).classList.add('active');
         }
-        document.getElementById('overlay').style.display = 'block'; // Show overlay
-      }
-      
-      // If opening main gallery or restaurant, ensure default tab is active
-      if (id === 'restaurant-popup') {
-        // Use a timeout to ensure the popup is visible before applying tab logic
-        setTimeout(() => {
-            const firstRestaurantTabButton = document.querySelector('#restaurant-popup .tab-button');
-            if (firstRestaurantTabButton) {
-                showMenuSection('food-menu-section', firstRestaurantTabButton, 'restaurant-popup');
-            }
-        }, 50); // Small delay to ensure popup is rendered
-      } else if (id === 'main-gallery-popup') {
-        setTimeout(() => {
-            const firstGalleryTabButton = document.querySelector('#main-gallery-popup .tab-button');
-            if (firstGalleryTabButton) {
-                showMenuSection('our-resort-section', firstGalleryTabButton, 'main-gallery-popup');
-            }
-        }, 50); // Small delay
-      }
-    }
-    
-    function closePopup(id) {
-      const popupElement = document.getElementById(id);
-      if (popupElement) {
-        popupElement.style.display = 'none';
-      }
-      // Only hide overlay if no other popups (including modal) are open
-      if (!isAnyPopupOpen()) {
-          document.getElementById('overlay').style.display = 'none';
-      }
-    }
 
-    // Function to check if any popup is currently open
-    function isAnyPopupOpen() {
-        // Filter out the 'overlay' itself from the check
-        const activePopups = popupIds.filter(id => {
-            const el = document.getElementById(id);
-            // Check for 'flex' display for general popups, and 'flex' for modal if open (it uses flex for centering)
-            return el && (el.style.display === 'flex');
-        });
-        return activePopups.length > 0;
-    }
+        // NEW: Function to open the full image modal with fade
+        function openModal(imgSrc) {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modal-img');
+            const overlay = document.querySelector('.overlay');
 
-    // Function to close all popups when overlay is clicked
-    function closeAllPopups() {
-        for (const id of popupIds) {
-            const popup = document.getElementById(id);
-            if (popup) { // Check if the element exists
+            closeAllPopups(); // Ensure any other open popups/modal are faded out
+
+            modalImg.src = imgSrc;
+
+            // Make elements visible for layout calculation, then trigger fade-in
+            modal.style.display = 'flex';
+            overlay.style.display = 'block';
+
+            // Allow a tiny delay for the 'display' change to register before starting the CSS transition
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.style.visibility = 'visible';
+                overlay.style.opacity = '1';
+                overlay.style.visibility = 'visible';
+            }, 10); // Small delay, e.g., 10ms
+        }
+
+        // NEW: Function to close the full image modal with fade
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.opacity = '0'; // Start fade out
+
+            // After the CSS transition completes, set display to 'none' and visibility to 'hidden'
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modal.style.visibility = 'hidden';
+                closeOverlayIfNoPopupsOpen(); // Check if the overlay should also be hidden
+            }, TRANSITION_DURATION_MS);
+        }
+
+        // NEW: Function to open any general popup with fade
+        function openPopup(popupId) {
+            const popup = document.getElementById(popupId);
+            const overlay = document.querySelector('.overlay');
+
+            closeAllPopups(); // Ensure any currently open popups/modal are faded out
+
+            // Make elements visible for layout calculation, then trigger fade-in
+            popup.style.display = 'flex';
+            overlay.style.display = 'block';
+
+            // Allow a tiny delay for the 'display' change to register before starting the CSS transition
+            setTimeout(() => {
+                popup.style.opacity = '1';
+                popup.style.visibility = 'visible';
+                overlay.style.opacity = '1';
+                overlay.style.visibility = 'visible';
+            }, 10); // Small delay
+        }
+
+        // NEW: Function to close any general popup with fade
+        function closePopup(popupId) {
+            const popup = document.getElementById(popupId);
+            popup.style.opacity = '0'; // Start fade out
+
+            // After the CSS transition completes, set display to 'none' and visibility to 'hidden'
+            setTimeout(() => {
                 popup.style.display = 'none';
+                popup.style.visibility = 'hidden';
+                closeOverlayIfNoPopupsOpen(); // Check if the overlay should also be hidden
+            }, TRANSITION_DURATION_MS);
+        }
+
+        // NEW: Central function to close all open popups and the modal with fade
+        function closeAllPopups() {
+            const allPopups = document.querySelectorAll('.popup');
+            const modal = document.getElementById('modal');
+            const overlay = document.querySelector('.overlay');
+
+            let anyElementStartedToClose = false;
+
+            // Initiate fade out for all currently visible popups
+            allPopups.forEach(p => {
+                // Check if element is currently active/visible before fading
+                if (p.style.display === 'flex' || p.style.visibility === 'visible') {
+                    p.style.opacity = '0'; // Trigger fade out
+                    anyElementStartedToClose = true;
+                }
+            });
+
+            // Initiate fade out for the modal if it's open
+            if (modal.style.display === 'flex' || modal.style.visibility === 'visible') {
+                modal.style.opacity = '0'; // Trigger fade out
+                anyElementStartedToClose = true;
+            }
+
+            // Only fade out the overlay if any popup/modal was indeed open
+            if (anyElementStartedToClose && (overlay.style.display === 'block' || overlay.style.visibility === 'visible')) {
+                overlay.style.opacity = '0'; // Trigger fade out for overlay
+            }
+
+            // After the fade-out transition, truly hide them by setting display: none
+            setTimeout(() => {
+                allPopups.forEach(p => {
+                    p.style.display = 'none';
+                    p.style.visibility = 'hidden';
+                });
+                modal.style.display = 'none';
+                modal.style.visibility = 'hidden';
+                closeOverlayIfNoPopupsOpen(); // Final check to hide overlay if nothing is open
+            }, TRANSITION_DURATION_MS);
+        }
+
+        // NEW: Helper function to determine if the overlay should be hidden
+        function closeOverlayIfNoPopupsOpen() {
+            const overlay = document.querySelector('.overlay');
+            const allPopups = document.querySelectorAll('.popup');
+            const modal = document.getElementById('modal');
+
+            // Check if any popup or the modal is currently being displayed (flex/block)
+            // or is still visible (during transition to hidden)
+            let anyPopupStillOpen = false;
+            allPopups.forEach(p => {
+                if (p.style.display === 'flex' || p.style.visibility === 'visible') {
+                    anyPopupStillOpen = true;
+                }
+            });
+            const isModalStillOpen = (modal.style.display === 'flex' || modal.style.visibility === 'visible');
+
+            if (!anyPopupStillOpen && !isModalStillOpen) {
+                overlay.style.display = 'none';
+                overlay.style.visibility = 'hidden';
             }
         }
-        document.getElementById('overlay').style.display = 'none'; // Hide overlay
-    }
 
-    // Updated showMenuSection to accept the parent popup ID
-    function showMenuSection(sectionId, clickedButton, parentPopupId) {
-      var parentPopup = document.getElementById(parentPopupId);
-      if (!parentPopup) return; // Exit if parent popup not found
 
-      // Hide all menu sections within the specified parent popup
-      var menuSections = parentPopup.querySelectorAll('.menu-section');
-      menuSections.forEach(function(section) {
-        section.classList.remove('active');
-      });
+        // NEW: Attach event listener to overlay for closing all popups/modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.querySelector('.overlay');
+            if (overlay) {
+                overlay.addEventListener('click', closeAllPopups);
+            }
+        });
 
-      // Deactivate all tab buttons within the specified parent popup
-      var tabButtons = parentPopup.querySelectorAll('.tab-button');
-      tabButtons.forEach(function(button) {
-        button.classList.remove('active');
-      });
+    </script>
 
-      // Show the selected section
-      document.getElementById(sectionId).classList.add('active');
-
-      // Activate the clicked button
-      clickedButton.classList.add('active');
-    }
-  </script>
 </body>
 </html>
