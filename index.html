@@ -5,50 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Suan Som Resort</title>
   <style>
+    /* --- Base Styles (Mobile-First) --- */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f8f4ec;
       color: #333;
+      line-height: 1.6;
+      font-size: 16px; /* Base font size for mobile */
     }
     header {
       background-color: #DC381F;
       color: white;
-      padding: 1rem 2rem;
+      padding: 1rem; /* Reduced padding for mobile */
       text-align: center;
+    }
+    header h1 {
+      font-size: 1.8em; /* Smaller h1 for mobile */
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 0.9em; /* Smaller paragraph for mobile */
+      margin: 0;
     }
     nav {
       display: flex;
+      flex-direction: column; /* Stack vertically by default for mobile */
       justify-content: center;
-      gap: 2rem;
       background: #3B2F2F;
-      padding: 0.5rem;
+      padding: 0.5rem 0; /* Adjusted padding */
     }
     nav a {
       color: white;
       text-decoration: none;
       font-weight: bold;
       cursor: pointer;
+      padding: 0.8rem 1rem; /* Padded links for easier tapping */
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator for stacked links */
+    }
+    nav a:last-child {
+      border-bottom: none; /* No border for the last link */
     }
     .hero {
       background-image: url('Driveway-Outside-04.jpg');
       background-size: cover;
       background-position: center;
-      height: 60vh;
+      height: 40vh; /* Shorter hero on mobile */
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       text-shadow: 0 0 10px rgba(0,0,0,0.7);
-      font-size: 2.5rem;
+      font-size: 1.8rem; /* Smaller font for mobile */
       font-weight: bold;
+      text-align: center; /* Ensure text is centered */
+      padding: 1rem; /* Add some padding to hero text */
     }
     .content {
-      padding: 2rem;
+      padding: 1rem; /* Reduced padding for mobile */
       text-align: center;
     }
     .section {
-      margin: 2rem 0;
+      margin: 1.5rem 0; /* Slightly reduced margin */
     }
     .gallery-images {
       display: flex;
@@ -60,21 +79,21 @@
     
     /* --- Styles for Image Containers and Overlays (Main Gallery) --- */
     .image-container {
-      position: relative; /* This is crucial for positioning the overlay */
-      width: 300px; /* Match your image width */
-      height: 200px; /* Match your image height */
+      position: relative;
+      width: 100%; /* Full width on mobile, will be overridden by media queries */
+      height: 220px; /* Fixed height for consistency, adjust as needed */
       border-radius: 8px;
-      overflow: hidden; /* Ensures overlay content stays within bounds */
+      overflow: hidden;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       cursor: pointer;
       transition: transform 0.3s ease;
     }
 
     .image-container img {
-      width: 100%; /* Make sure the image fills its container */
+      width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block; /* Removes extra space below image */
+      display: block;
     }
 
     .image-overlay {
@@ -83,26 +102,24 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+      background: rgba(0, 0, 0, 0.6);
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0; /* Initially hidden */
+      opacity: 0;
       transition: opacity 0.3s ease;
-      padding: 10px; /* Add some padding around the text */
-      box-sizing: border-box; /* Include padding in element's total width and height */
+      padding: 10px;
+      box-sizing: border-box;
       text-align: center;
-      font-size: 0.9em; /* Adjust font size for better fit */
+      font-size: 0.8em; /* Slightly smaller for mobile overlay */
     }
 
     .image-container:hover .image-overlay {
-      opacity: 1; /* Show overlay on hover */
+      opacity: 1;
     }
-
-    /* Maintain existing gallery image hover effect for the container */
     .image-container:hover {
-      transform: scale(1.05);
+      transform: scale(1.02); /* Less aggressive scale on hover for touch devices */
     }
     /* --- End Styles for Image Containers and Overlays (Main Gallery) --- */
 
@@ -118,9 +135,9 @@
       background-color: rgba(0,0,0,0.8);
     }
     .modal-content {
-      margin: 10% auto;
+      margin: 5% auto; /* Smaller margin for mobile modal */
       display: block;
-      max-width: 90%;
+      max-width: 95%; /* Wider modal for mobile */
     }
     .modal-content img {
       width: 100%;
@@ -129,58 +146,55 @@
     .popup {
       display: none;
       position: fixed;
-      top: 10%;
+      top: 5%; /* Higher up for mobile */
       left: 50%;
       transform: translateX(-50%);
       background: white;
-      padding: 2rem;
+      padding: 1rem; /* Reduced padding for mobile popups */
       border-radius: 12px;
-      max-width: 800px;
+      max-width: 95%; /* Wider popup for mobile */
       width: 90%;
       z-index: 1001;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
       overflow-y: auto;
-      max-height: 80vh;
+      max-height: 90vh; /* More height for mobile popups */
     }
-    /* --- Styles for Popup Image Containers and Overlays --- */
     .popup .image-container {
-        width: 100%; /* Make popup images fill their width */
-        height: auto; /* Allow height to adjust */
-        margin: 1rem 0; /* Add margin as before */
-        box-shadow: none; /* Remove redundant shadow */
-        cursor: default; /* Change cursor for popup images */
-        transition: none; /* No hover scale for popup images */
+        width: 100%;
+        height: auto;
+        margin: 0.8rem 0;
+        box-shadow: none;
+        cursor: default;
+        transition: none;
     }
 
     .popup .image-container img {
-        border-radius: 8px; /* Apply border radius here */
+        border-radius: 8px;
         width: 100%;
         height: auto;
-        object-fit: contain; /* Adjust as needed */
+        object-fit: contain;
     }
 
     .popup .image-overlay {
-        opacity: 1; /* Always show overlay in popup */
-        position: static; /* Remove absolute positioning */
-        background: none; /* No background needed for overlay text in popup */
-        color: #333; /* Text color for popup overlay */
+        opacity: 1;
+        position: static;
+        background: none;
+        color: #333;
         padding: 0;
-        font-size: 1em;
-        text-align: left; /* Align text left in popup */
-        justify-content: flex-start; /* Align content to start */
-        align-items: flex-start; /* Align content to start */
+        font-size: 0.9em; /* Adjust for popup text */
+        text-align: left;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
     .popup .image-overlay p {
-      font-size: 0.9em; /* Slightly smaller font for popup captions */
+      font-size: 0.8em;
       line-height: 1.4;
     }
-    /* --- End Styles for Popup Image Containers and Overlays --- */
-
     .popup .close {
       position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 24px;
+      top: 8px; /* Adjusted position */
+      right: 15px; /* Adjusted position */
+      font-size: 28px; /* Larger tap target */
       cursor: pointer;
     }
     .footer {
@@ -188,40 +202,36 @@
       color: white;
       padding: 1rem;
       text-align: center;
+      font-size: 0.8em;
     }
     .map-container iframe {
       width: 100%;
-      height: 400px;
+      height: 50vh; /* Responsive height */
       border: 0;
-    }
-    /* Moved hero text styling from inline to here */
-    .hero {
-      font-size: 60px;
-      font-weight: bold;
-      text-align: center;
-      color: #fff;
-      margin-top: 40px;
     }
 
     /* --- Restaurant/Gallery Menu Tabs --- */
     .menu-tabs {
       display: flex;
+      flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
+      padding-bottom: 8px;
     }
 
     .tab-button {
       background-color: #f0f0f0;
       border: 1px solid #ccc;
-      padding: 10px 20px;
+      padding: 8px 15px; /* Smaller padding for mobile tabs */
       cursor: pointer;
-      font-size: 1.1em;
+      font-size: 0.9em; /* Smaller font for mobile tabs */
       font-weight: bold;
       border-radius: 5px;
-      margin: 0 5px;
+      margin: 5px; /* Space between wrapped buttons */
       transition: background-color 0.3s ease, border-color 0.3s ease;
+      flex-grow: 1; /* Allow buttons to grow to fill space */
+      max-width: calc(50% - 10px); /* Two columns on mobile for tabs */
     }
 
     .tab-button:hover {
@@ -235,90 +245,203 @@
     }
 
     .menu-section {
-      display: none; /* Hidden by default */
+      display: none;
     }
 
     .menu-section.active {
-      display: block; /* Show active section */
+      display: block;
     }
-    /* --- End Restaurant/Gallery Menu Tabs --- */
 
     /* --- Sub-menu Buttons within Popup Sections --- */
     .submenu-buttons {
       display: flex;
-      flex-wrap: wrap; /* Allow buttons to wrap to the next line */
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 10px; /* Space between buttons */
+      gap: 10px;
       margin-top: 15px;
       margin-bottom: 20px;
     }
 
     .sub-button {
-      background-color: #f8f4ec; /* Lighter background */
-      color: #3B2F2F; /* Darker text */
-      border: 1px solid #DC381F; /* Accent border */
+      background-color: #f8f4ec;
+      color: #3B2F2F;
+      border: 1px solid #DC381F;
       padding: 10px 15px;
       cursor: pointer;
-      font-size: 1em;
+      font-size: 0.9em; /* Slightly smaller for mobile sub-buttons */
       font-weight: bold;
       border-radius: 5px;
       transition: background-color 0.3s ease, color 0.3s ease;
-      flex: 1 1 auto; /* Allows buttons to grow/shrink based on content, but try to fit */
-      min-width: 120px; /* Minimum width for buttons */
-      max-width: 200px; /* Maximum width for buttons */
+      flex: 1 1 calc(50% - 10px); /* Two buttons per row on mobile */
+      max-width: 200px; /* Capped max width */
+      box-sizing: border-box; /* Include padding/border in width */
     }
 
     .sub-button:hover {
       background-color: #DC381F;
       color: white;
     }
-    /* --- End Sub-menu Buttons --- */
 
-    /* --- Styles for Drinks Menu Headers/Lists (Optional, specific to drinks-menu section) --- */
+    /* --- Styles for Drinks Menu Headers/Lists --- */
     .drinks-menu h2 {
-      color: #DC381F; /* Accent color for main title */
-      margin-bottom: 1.5rem;
-      font-size: 1.8em;
+      color: #DC381F;
+      margin-bottom: 1rem;
+      font-size: 1.5em; /* Adjusted for mobile */
     }
     .drinks-menu h3 {
-      color: #3B2F2F; /* Darker color for sub-titles */
+      color: #3B2F2F;
       border-bottom: 2px solid #eee;
       padding-bottom: 0.5rem;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      font-size: 1.4em;
+      margin-top: 1.5rem;
+      margin-bottom: 0.8rem;
+      font-size: 1.2em; /* Adjusted for mobile */
     }
     .drinks-menu ul {
-      list-style: none; /* Remove default bullet points */
+      list-style: none;
       padding: 0;
       margin: 0;
-      text-align: left; /* Align text to the left within the list */
+      text-align: left;
     }
     .drinks-menu li {
-      padding: 0.5rem 0;
-      border-bottom: 1px dotted #ddd; /* Light dotted line for separation */
-      font-size: 1.1em;
+      padding: 0.4rem 0; /* Slightly less padding */
+      border-bottom: 1px dotted #ddd;
+      font-size: 1em; /* Adjusted for mobile */
       line-height: 1.4;
     }
     .drinks-menu li:last-child {
-      border-bottom: none; /* No border for the last item in a list */
+      border-bottom: none;
     }
-    /* --- End Styles for Drinks Menu --- */
 
     /* --- Overlay for closing popups --- */
     .overlay {
-        display: none; /* Hidden by default */
+        display: none;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-        z-index: 999; /* Slightly lower than popups, higher than content */
-        cursor: pointer; /* Indicates it's clickable */
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        cursor: pointer;
     }
-    /* --- End Overlay --- */
 
+    /* --- Media Queries for Larger Screens --- */
+
+    /* Small Tablets and Up (e.g., min-width: 600px) */
+    @media (min-width: 600px) {
+      body {
+        font-size: 17px;
+      }
+      header {
+        padding: 1.5rem 2rem;
+      }
+      header h1 {
+        font-size: 2.2em;
+      }
+      header p {
+        font-size: 1em;
+      }
+      nav {
+        flex-direction: row; /* Horizontal navigation */
+        gap: 1rem;
+        padding: 0.5rem;
+      }
+      nav a {
+        padding: 0.5rem 1rem;
+        border-bottom: none; /* No border for horizontal links */
+      }
+      .hero {
+        height: 50vh;
+        font-size: 2.5rem;
+      }
+      .content {
+        padding: 1.5rem;
+      }
+      .section {
+        margin: 2rem 0;
+      }
+      .gallery-images .image-container {
+        width: calc(50% - 0.5rem); /* Two columns, considering gap */
+      }
+      .modal-content {
+        margin: 7% auto;
+        max-width: 80%;
+      }
+      .popup {
+        top: 8%;
+        padding: 1.5rem;
+        max-width: 700px; /* Limit width */
+        width: 90%;
+      }
+      .popup .close {
+        font-size: 24px;
+      }
+      .tab-button {
+        padding: 10px 20px;
+        font-size: 1.1em;
+        margin: 0 5px; /* Restore original margin for tabs */
+        max-width: none; /* Allow tabs to be their natural width */
+      }
+      .sub-button {
+        flex: 1 1 auto; /* Allow buttons to grow more naturally */
+        max-width: 180px; /* Cap width */
+      }
+      .drinks-menu h2 {
+        font-size: 1.8em;
+      }
+      .drinks-menu h3 {
+        font-size: 1.4em;
+      }
+      .drinks-menu li {
+        font-size: 1.1em;
+      }
+    }
+
+    /* Desktops and Up (e.g., min-width: 900px) */
+    @media (min-width: 900px) {
+      body {
+        font-size: 18px;
+      }
+      header {
+        padding: 1rem 2rem;
+      }
+      header h1 {
+        font-size: 2.5em;
+      }
+      header p {
+        font-size: 1em;
+      }
+      nav {
+        gap: 2rem;
+      }
+      nav a {
+        padding: 0.5rem 1rem;
+      }
+      .hero {
+        height: 60vh;
+        font-size: 3.5rem;
+      }
+      .content {
+        padding: 2rem;
+      }
+      .gallery-images .image-container {
+        width: 300px; /* Restore original width */
+        height: 200px; /* Restore original height */
+      }
+      .image-container:hover {
+        transform: scale(1.05); /* Restore more aggressive scale on hover */
+      }
+      .modal-content {
+        margin: 10% auto;
+        max-width: 90%;
+      }
+      .popup {
+        top: 10%;
+        padding: 2rem;
+        max-width: 800px;
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
