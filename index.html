@@ -203,7 +203,7 @@
       margin-top: 40px;
     }
 
-    /* --- Restaurant Menu Tabs --- */
+    /* --- Restaurant/Gallery Menu Tabs --- */
     .menu-tabs {
       display: flex;
       justify-content: center;
@@ -241,7 +241,7 @@
     .menu-section.active {
       display: block; /* Show active section */
     }
-    /* --- End Restaurant Menu Tabs --- */
+    /* --- End Restaurant/Gallery Menu Tabs --- */
 
     /* --- Sub-menu Buttons within Popup Sections --- */
     .submenu-buttons {
@@ -305,6 +305,20 @@
     }
     /* --- End Styles for Drinks Menu --- */
 
+    /* --- Overlay for closing popups --- */
+    .overlay {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+        z-index: 999; /* Slightly lower than popups, higher than content */
+        cursor: pointer; /* Indicates it's clickable */
+    }
+    /* --- End Overlay --- */
+
   </style>
 </head>
 <body>
@@ -317,8 +331,7 @@
   <nav>
     <a href="#resort">Resort</a>
     <a onclick="openPopup('restaurant-popup')">Restaurant</a>
-    <a onclick="openPopup('gallery-popup')">Gallery</a>
-    <a href="#contact">Contact</a>
+    <a onclick="openPopup('main-gallery-popup')">Gallery</a> <a href="#contact">Contact</a>
   </nav>
 
   <div class="hero">
@@ -370,71 +383,95 @@
     </div>
   </div>
 
-  <div id="modal" class="modal" onclick="closeModal()">
-    <span class="close">×</span>
+  <div id="modal" class="modal">
+    <span class="close" onclick="closeModal()">×</span>
     <div class="modal-content">
       <img id="modal-img" src="" alt="Popup image">
     </div>
   </div>
 
-  <div id="gallery-popup" class="popup">
-    <span class="close" onclick="closePopup('gallery-popup')">×</span>
-    <h2>Photo Gallery</h2>
-    <div class="image-container">
-        <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance">
-        <div class="image-overlay"><p>The main entrance to the resort, welcoming all guests.</p></div>
+  <div id="main-gallery-popup" class="popup"> <span class="close" onclick="closePopup('main-gallery-popup')">×</span>
+    <h2>Our Photo Gallery</h2>
+
+    <div class="menu-tabs">
+      <button class="tab-button active" onclick="showMenuSection('our-resort-section', this, 'main-gallery-popup')">Our Resort</button>
+      <button class="tab-button" onclick="showMenuSection('photo-album-section', this, 'main-gallery-popup')">Photo Album</button>
     </div>
-    <div class="image-container">
-        <img src="Driveway-Outside-02.jpg" alt="Driveway">
-        <div class="image-overlay"><p>Another view of the well-maintained driveway leading to our bungalows.</p></div>
+
+    <div id="our-resort-section" class="menu-section active">
+      <h3>Our Resort Photos</h3>
+      <p>A collection of beautiful moments from around Suan Som Resort.</p>
+      <div class="image-container">
+          <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance">
+          <div class="image-overlay"><p>The main entrance to the resort, welcoming all guests.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Driveway-Outside-02.jpg" alt="Driveway">
+          <div class="image-overlay"><p>Another view of the well-maintained driveway leading to our bungalows.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Driveway-Outside-03.jpg" alt="Driveway">
+          <div class="image-overlay"><p>Experience the peaceful ambiance along our resort pathways.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Driveway-Outside-04.jpg" alt="Driveway">
+          <div class="image-overlay"><p>Scenic views of the resort grounds, perfect for a stroll.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Driveway-Outside-05.jpg" alt="Driveway">
+          <div class="image-overlay"><p>Lush tropical foliage enhances the beauty of our resort's exterior.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Standard-Room-01.jpg" alt="Room 400 Baht">
+          <div class="image-overlay"><p>Discover the comfort of our standard room, priced at just 400 Baht per night.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Standard-Room-02.jpg" alt="Room 400 Baht">
+          <div class="image-overlay"><p>Inside our cozy standard room, designed for relaxation.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Standard-Room-03.jpg" alt="Room 400 Baht">
+          <div class="image-overlay"><p>Enjoy the simplicity and tranquility of our standard accommodation.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Standard-Room-04.jpg" alt="Room 400 Baht">
+          <div class="image-overlay"><p>All standard rooms offer a peaceful retreat from daily life.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Standard-Room-05.jpg" alt="Room 400 Baht">
+          <div class="image-overlay"><p>Spacious and clean, our standard rooms provide great value.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Standard-Room-06.jpg" alt="Room 400 Baht">
+          <div class="image-overlay"><p>Experience authentic Thai hospitality in our charming bungalows.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Standard-Room-07.jpg" alt="Room 400 Baht">
+          <div class="image-overlay"><p>Each standard room is equipped for your comfort and convenience.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Standard-Room-08.jpg" alt="Room 400 Baht">
+          <div class="image-overlay"><p>Unwind in our well-appointed standard rooms, perfect for a peaceful stay.</p></div>
+      </div>
+      <div class="image-container">
+          <img src="beergarden.jpg" alt="Restaurant">
+          <div class="image-overlay"><p>Our inviting Beer Garden, a great spot to relax and socialize.</p></div>
+      </div>
     </div>
-    <div class="image-container">
-        <img src="Driveway-Outside-03.jpg" alt="Driveway">
-        <div class="image-overlay"><p>Experience the peaceful ambiance along our resort pathways.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Driveway-Outside-04.jpg" alt="Driveway">
-        <div class="image-overlay"><p>Scenic views of the resort grounds, perfect for a stroll.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Driveway-Outside-05.jpg" alt="Driveway">
-        <div class="image-overlay"><p>Lush tropical foliage enhances the beauty of our resort's exterior.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Standard-Room-01.jpg" alt="Room 400 Baht">
-        <div class="image-overlay"><p>Discover the comfort of our standard room, priced at just 400 Baht per night.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Standard-Room-02.jpg" alt="Room 400 Baht">
-        <div class="image-overlay"><p>Inside our cozy standard room, designed for relaxation.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Standard-Room-03.jpg" alt="Room 400 Baht">
-        <div class="image-overlay"><p>Enjoy the simplicity and tranquility of our standard accommodation.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Standard-Room-04.jpg" alt="Room 400 Baht">
-        <div class="image-overlay"><p>All standard rooms offer a peaceful retreat from daily life.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Standard-Room-05.jpg" alt="Room 400 Baht">
-        <div class="image-overlay"><p>Spacious and clean, our standard rooms provide great value.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Standard-Room-06.jpg" alt="Room 400 Baht">
-        <div class="image-overlay"><p>Experience authentic Thai hospitality in our charming bungalows.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Standard-Room-07.jpg" alt="Room 400 Baht">
-        <div class="image-overlay"><p>Each standard room is equipped for your comfort and convenience.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Standard-Room-08.jpg" alt="Room 400 Baht">
-        <div class="image-overlay"><p>Unwind in our well-appointed standard rooms, perfect for a peaceful stay.</p></div>
-    </div>
-    <div class="image-container">
-        <img src="beergarden.jpg" alt="Restaurant">
-        <div class="image-overlay"><p>Our inviting Beer Garden, a great spot to relax and socialize.</p></div>
+
+    <div id="photo-album-section" class="menu-section">
+      <h3>Photo Album</h3>
+      <p>Click on a photo to see a larger view!</p>
+      <div class="submenu-buttons">
+        <button class="sub-button" onclick="openModal('Driveway-Outside-01.jpg')">Photo 1</button>
+        <button class="sub-button" onclick="openModal('Standard-Room-03.jpg')">Photo 2</button>
+        <button class="sub-button" onclick="openModal('Driveway-Outside-05.jpg')">Photo 3</button>
+        <button class="sub-button" onclick="openModal('Standard-Room-07.jpg')">Photo 4</button>
+      </div>
+      <div class="image-container">
+          <img src="photogallery.jpg" alt="Photo Album">
+          <div class="image-overlay"><p>Explore more moments in our special Photo Album.</p></div>
+      </div>
     </div>
   </div>
 
@@ -443,8 +480,8 @@
     <h2>Our Restaurant</h2>
 
     <div class="menu-tabs">
-      <button class="tab-button active" onclick="showMenuSection('food-menu-section', this)">Food Menu</button>
-      <button class="tab-button" onclick="showMenuSection('drink-menu-section', this)">Drink Menu</button>
+      <button class="tab-button active" onclick="showMenuSection('food-menu-section', this, 'restaurant-popup')">Food Menu</button>
+      <button class="tab-button" onclick="showMenuSection('drink-menu-section', this, 'restaurant-popup')">Drink Menu</button>
     </div>
 
     <div id="food-menu-section" class="menu-section active">
@@ -609,7 +646,7 @@
         <li>🧊 Long Island Iced Tea – ลองไอซ์แลนด์ – วอดก้า รัม จิน เตกีล่า โคล่า</li>
         <li>🍋 Whiskey Sour – วิสกี้ซาวร์ – วิสกี้ น้ำมะนาว</li>
       </ul>
-
+           
       <div class="image-container">
           <img src="thai_cocktail.jpg" alt="Thai cocktail">
           <div class="image-overlay"><p>Enjoy a perfectly crafted cocktail at our bar!</p></div>
@@ -620,47 +657,116 @@
       </div>
 
     </section>
-    </div>
+  </div>
   <div class="footer">
     © 2025 Suan Som Resort. All rights reserved.
   </div>
 
+  <div id="overlay" class="overlay" onclick="closeAllPopups()"></div>
+
   <script>
+    // List of all popup IDs to manage their state
+    const popupIds = [
+      'modal',
+      'main-gallery-popup',
+      'restaurant-popup',
+      'thai-food-popup',
+      'farang-food-popup',
+      'desserts-popup',
+      'special-food-popup',
+      'soft-drinks-popup',
+      'local-beers-popup',
+      'alcoholic-drinks-popup',
+      'thai-bar-drinks-popup'
+    ];
+
     function openModal(src) {
       document.getElementById('modal-img').src = src;
       document.getElementById('modal').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block'; // Show overlay when modal opens
     }
+
     function closeModal() {
       document.getElementById('modal').style.display = 'none';
+      // Only hide overlay if no other popups are open
+      if (!isAnyPopupOpen()) {
+          document.getElementById('overlay').style.display = 'none';
+      }
     }
 
     function openPopup(id) {
       document.getElementById(id).style.display = 'block';
+      document.getElementById('overlay').style.display = 'block'; // Show overlay
+      
+      // If opening main gallery or restaurant, ensure default tab is active
       if (id === 'restaurant-popup') {
-        const firstRestaurantTabButton = document.querySelector('#restaurant-popup .tab-button');
-        if (firstRestaurantTabButton) {
-          showMenuSection('food-menu-section', firstRestaurantTabButton);
-        }
+        // Use a timeout to ensure the popup is visible before applying tab logic
+        setTimeout(() => {
+            const firstRestaurantTabButton = document.querySelector('#restaurant-popup .tab-button');
+            if (firstRestaurantTabButton) {
+                showMenuSection('food-menu-section', firstRestaurantTabButton, 'restaurant-popup');
+            }
+        }, 50); // Small delay
+      } else if (id === 'main-gallery-popup') { // New: Gallery default tab
+        setTimeout(() => {
+            const firstGalleryTabButton = document.querySelector('#main-gallery-popup .tab-button');
+            if (firstGalleryTabButton) {
+                showMenuSection('our-resort-section', firstGalleryTabButton, 'main-gallery-popup');
+            }
+        }, 50); // Small delay
       }
     }
     
     function closePopup(id) {
       document.getElementById(id).style.display = 'none';
+      // Only hide overlay if no other popups (including modal) are open
+      if (!isAnyPopupOpen()) {
+          document.getElementById('overlay').style.display = 'none';
+      }
     }
 
-    function showMenuSection(sectionId, clickedButton) {
-      var restaurantPopup = document.getElementById('restaurant-popup');
-      var menuSections = restaurantPopup.querySelectorAll('.menu-section');
+    // New: Function to check if any popup is currently open
+    function isAnyPopupOpen() {
+        for (const id of popupIds) {
+            if (document.getElementById(id) && document.getElementById(id).style.display === 'block') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // New: Function to close all popups when overlay is clicked
+    function closeAllPopups() {
+        for (const id of popupIds) {
+            const popup = document.getElementById(id);
+            if (popup) { // Check if the element exists
+                popup.style.display = 'none';
+            }
+        }
+        document.getElementById('overlay').style.display = 'none'; // Hide overlay
+    }
+
+    // Updated showMenuSection to accept the parent popup ID
+    function showMenuSection(sectionId, clickedButton, parentPopupId) {
+      var parentPopup = document.getElementById(parentPopupId);
+      if (!parentPopup) return; // Exit if parent popup not found
+
+      // Hide all menu sections within the specified parent popup
+      var menuSections = parentPopup.querySelectorAll('.menu-section');
       menuSections.forEach(function(section) {
         section.classList.remove('active');
       });
 
-      var tabButtons = restaurantPopup.querySelectorAll('.tab-button');
+      // Deactivate all tab buttons within the specified parent popup
+      var tabButtons = parentPopup.querySelectorAll('.tab-button');
       tabButtons.forEach(function(button) {
         button.classList.remove('active');
       });
 
+      // Show the selected section
       document.getElementById(sectionId).classList.add('active');
+
+      // Activate the clicked button
       clickedButton.classList.add('active');
     }
   </script>
