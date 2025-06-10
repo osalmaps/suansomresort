@@ -331,7 +331,8 @@
   <nav>
     <a href="#resort">Resort</a>
     <a onclick="openPopup('restaurant-popup')">Restaurant</a>
-    <a onclick="openPopup('main-gallery-popup')">Gallery</a> <a href="#contact">Contact</a>
+    <a onclick="openPopup('main-gallery-popup')">Gallery</a>
+    <a href="#contact">Contact</a>
   </nav>
 
   <div class="hero">
@@ -390,7 +391,8 @@
     </div>
   </div>
 
-  <div id="main-gallery-popup" class="popup"> <span class="close" onclick="closePopup('main-gallery-popup')">×</span>
+  <div id="main-gallery-popup" class="popup">
+    <span class="close" onclick="closePopup('main-gallery-popup')">×</span>
     <h2>Our Photo Gallery</h2>
 
     <div class="menu-tabs">
@@ -667,7 +669,7 @@
   <script>
     // List of all popup IDs to manage their state
     const popupIds = [
-      'modal',
+      'modal', // The full-screen image modal
       'main-gallery-popup',
       'restaurant-popup',
       'thai-food-popup',
@@ -681,9 +683,13 @@
     ];
 
     function openModal(src) {
-      document.getElementById('modal-img').src = src;
-      document.getElementById('modal').style.display = 'block';
-      document.getElementById('overlay').style.display = 'block'; // Show overlay when modal opens
+      const modalElement = document.getElementById('modal');
+      const modalImg = document.getElementById('modal-img');
+
+      modalImg.src = src;
+      modalElement.style.display = 'block';
+      modalElement.scrollTop = 0; // Reset scroll position to top
+      document.getElementById('overlay').style.display = 'block'; // Show overlay
     }
 
     function closeModal() {
@@ -695,8 +701,12 @@
     }
 
     function openPopup(id) {
-      document.getElementById(id).style.display = 'block';
-      document.getElementById('overlay').style.display = 'block'; // Show overlay
+      const popupElement = document.getElementById(id);
+      if (popupElement) {
+        popupElement.style.display = 'block';
+        popupElement.scrollTop = 0; // Reset scroll position to top
+        document.getElementById('overlay').style.display = 'block'; // Show overlay
+      }
       
       // If opening main gallery or restaurant, ensure default tab is active
       if (id === 'restaurant-popup') {
@@ -706,8 +716,8 @@
             if (firstRestaurantTabButton) {
                 showMenuSection('food-menu-section', firstRestaurantTabButton, 'restaurant-popup');
             }
-        }, 50); // Small delay
-      } else if (id === 'main-gallery-popup') { // New: Gallery default tab
+        }, 50); // Small delay to ensure popup is rendered
+      } else if (id === 'main-gallery-popup') {
         setTimeout(() => {
             const firstGalleryTabButton = document.querySelector('#main-gallery-popup .tab-button');
             if (firstGalleryTabButton) {
@@ -718,24 +728,27 @@
     }
     
     function closePopup(id) {
-      document.getElementById(id).style.display = 'none';
+      const popupElement = document.getElementById(id);
+      if (popupElement) {
+        popupElement.style.display = 'none';
+      }
       // Only hide overlay if no other popups (including modal) are open
       if (!isAnyPopupOpen()) {
           document.getElementById('overlay').style.display = 'none';
       }
     }
 
-    // New: Function to check if any popup is currently open
+    // Function to check if any popup is currently open
     function isAnyPopupOpen() {
-        for (const id of popupIds) {
-            if (document.getElementById(id) && document.getElementById(id).style.display === 'block') {
-                return true;
-            }
-        }
-        return false;
+        // Filter out the 'overlay' itself from the check
+        const activePopups = popupIds.filter(id => {
+            const el = document.getElementById(id);
+            return el && el.style.display === 'block';
+        });
+        return activePopups.length > 0;
     }
 
-    // New: Function to close all popups when overlay is clicked
+    // Function to close all popups when overlay is clicked
     function closeAllPopups() {
         for (const id of popupIds) {
             const popup = document.getElementById(id);
