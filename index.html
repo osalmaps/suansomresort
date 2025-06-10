@@ -488,15 +488,15 @@
             <p>Our resort boasts lush gardens, a sparkling swimming pool, and direct access to tranquil natural surroundings. Whether you're seeking a relaxing getaway or an adventurous exploration of the local culture, Suan Som is your ideal destination.</p>
             <div class="gallery-images">
                 <div class="image-container">
-                    <img src="resort_view.jpg" alt="Aerial view of the resort" onclick="openModal(this)">
+                    <img src="images/resort_view.jpg" alt="Aerial view of the resort" onclick="openModal(this)">
                     <div class="image-overlay"><p>An aerial view showcasing the expansive beauty of Suan Som Resort.</p></div>
                 </div>
                 <div class="image-container">
-                    <img src="garden.jpg" alt="Lush resort garden" onclick="openModal(this)">
+                    <img src="images/garden.jpg" alt="Lush resort garden" onclick="openModal(this)">
                     <div class="image-overlay"><p>Stroll through our beautifully manicured tropical gardens.</p></div>
                 </div>
                 <div class="image-container">
-                    <img src="pool.jpg" alt="Swimming pool area" onclick="openModal(this)">
+                    <img src="images/pool.jpg" alt="Swimming pool area" onclick="openModal(this)">
                     <div class="image-overlay"><p>Relax by our refreshing swimming pool, perfect for a sunny afternoon.</p></div>
                 </div>
             </div>
@@ -513,15 +513,15 @@
             <p>Our comfortable and elegantly designed rooms offer a peaceful retreat. Each room is equipped with amenities to ensure a pleasant stay, including air conditioning, private bathrooms, and scenic views.</p>
             <div class="gallery-images">
                 <div class="image-container">
-                    <img src="room_interior.jpg" alt="Comfortable room interior" onclick="openModal(this)">
+                    <img src="images/room_interior.jpg" alt="Comfortable room interior" onclick="openModal(this)">
                     <div class="image-overlay"><p>Step into the comfort and elegance of our spacious rooms.</p></div>
                 </div>
                 <div class="image-container">
-                    <img src="balcony_view.jpg" alt="Room balcony view" onclick="openModal(this)">
+                    <img src="images/balcony_view.jpg" alt="Room balcony view" onclick="openModal(this)">
                     <div class="image-overlay"><p>Enjoy breathtaking views from your private balcony.</p></div>
                 </div>
                 <div class="image-container">
-                    <img src="bed.jpg" alt="Cozy bed in a room" onclick="openModal(this)">
+                    <img src="images/bed.jpg" alt="Cozy bed in a room" onclick="openModal(this)">
                     <div class="image-overlay"><p>Sink into the plush comfort of our beds after a day of adventure.</p></div>
                 </div>
             </div>
@@ -532,15 +532,15 @@
             <p>Suan Som Resort offers a range of facilities to enhance your stay, including a fitness center, spa services, and a tour desk to help you explore the local attractions.</p>
             <div class="gallery-images">
                 <div class="image-container">
-                    <img src="spa.jpg" alt="Resort spa" onclick="openModal(this)">
+                    <img src="images/spa.jpg" alt="Resort spa" onclick="openModal(this)">
                     <div class="image-overlay"><p>Indulge in relaxation at our tranquil spa.</p></div>
                 </div>
                 <div class="image-container">
-                    <img src="gym.jpg" alt="Fitness center" onclick="openModal(this)">
+                    <img src="images/gym.jpg" alt="Fitness center" onclick="openModal(this)">
                     <div class="image-overlay"><p>Stay active in our well-equipped fitness center.</p></div>
                 </div>
                 <div class="image-container">
-                    <img src="reception.jpg" alt="Reception area" onclick="openModal(this)">
+                    <img src="images/reception.jpg" alt="Reception area" onclick="openModal(this)">
                     <div class="image-overlay"><p>Our friendly reception staff are ready to assist you.</p></div>
                 </div>
             </div>
@@ -553,7 +553,7 @@
             <p><strong>Email:</strong> info@suansomresort.com</p>
             <p><strong>Address:</strong> 123 Main Road, Khon Kaen, Thailand</p>
             <div class="image-container">
-                <img src="map.jpg" alt="Resort map" onclick="openModal(this)">
+                <img src="images/map.jpg" alt="Resort map" onclick="openModal(this)">
                 <div class="image-overlay"><p>Find us easily on the map.</p></div>
             </div>
         </div>
@@ -578,7 +578,7 @@
                     <button class="sub-button" onclick="openPopup('special-food-popup')">This Week's Special</button>
                 </div>
                 <div class="image-container">
-                    <img src="padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this)">
+                    <img src="images/padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this)">
                     <div class="image-overlay"><p>A glimpse into our delicious range of Thai cuisine.</p></div>
                 </div>
             </div>
@@ -593,7 +593,7 @@
                     <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
                 </div>
                 <div class="image-container">
-                    <img src="beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this)">
+                    <img src="images/beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this)">
                     <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
                 </div>
             </div>
@@ -682,214 +682,426 @@
     <div class="overlay"></div>
 
     <script>
-        // Start of new dynamic menu data and functions
-        const menuData = {
-            food: {
-                thaiFood: {
-                    title: "Thai Food Menu",
-                    sections: [
-                        {
-                            heading: "Curries",
-                            items: [
-                                { name: "Green Curry with Chicken", price: 90 },
-                                { name: "Red Curry with Pork", price: 90 },
-                                { name: "Massaman Curry with Beef", price: 120 },
-                                { name: "Panang Curry with Shrimp", price: 110 }
-                            ]
-                        },
-                        {
-                            heading: "Stir-fries",
-                            items: [
-                                { name: "Pad Krapow (Basil Stir-fry) - Chicken/Pork", price: 80 },
-                                { name: "Pad Krapow (Basil Stir-fry) - Beef", price: 100 },
-                                { name: "Pad Med Mamuang (Cashew Nut Stir-fry) - Chicken", price: 90 },
-                                { name: "Pad Priew Wan (Sweet & Sour) - Chicken/Pork", price: 80 },
-                                { name: "Pad Pak Ruam (Mixed Vegetables)", price: 70 }
-                            ]
-                        },
-                        {
-                            heading: "Soups",
-                            items: [
-                                { name: "Tom Yum Goong (Spicy Shrimp Soup)", price: 120 },
-                                { name: "Tom Kha Gai (Chicken Coconut Soup)", price: 100 },
-                                { name: "Gaeng Jued (Clear Soup with Tofu & Veg)", price: 80 }
-                            ]
-                        },
-                        {
-                            heading: "Noodles & Rice",
-                            items: [
-                                { name: "Pad See Ew (Stir-fried Noodles) - Chicken/Pork", price: 80 },
-                                { name: "Pad Thai - Shrimp", price: 100 },
-                                { name: "Pad Thai - Chicken", price: 80 },
-                                { name: "Fried Rice - Chicken/Pork/Veg", price: 70 },
-                                { name: "Fried Rice - Shrimp", price: 90 },
-                                { name: "Khao Pad Sapparot (Pineapple Fried Rice)", price: 120 }
-                            ]
-                        },
-                        {
-                            heading: "Salads",
-                            items: [
-                                { name: "Som Tum (Papaya Salad)", price: 70 },
-                                { name: "Laab Moo (Spicy Minced Pork Salad)", price: 90 },
-                                { name: "Yum Woon Sen (Glass Noodle Salad)", price: 100 }
-                            ]
-                        }
-                    ]
-                },
-                farangFood: {
-                    title: "Farang (Western) Food Menu",
-                    sections: [
-                        {
-                            heading: "Main Dishes",
-                            items: [
-                                { name: "Hamburger with Fries", price: 150 },
-                                { name: "Cheeseburger with Fries", price: 170 },
-                                { name: "Chicken Nuggets with Fries", price: 120 },
-                                { name: "Fish & Chips", price: 160 },
-                                { name: "Spaghetti Carbonara", price: 130 },
-                                { name: "Spaghetti Bolognese", price: 140 },
-                                { name: "Grilled Chicken Breast with Salad", price: 180 }
-                            ]
-                        },
-                        {
-                            heading: "Sides",
-                            items: [
-                                { name: "French Fries", price: 50 },
-                                { name: "Onion Rings", price: 60 },
-                                { name: "Mixed Green Salad", price: 70 }
-                            ]
-                        }
-                    ]
-                },
-                desserts: {
-                    title: "Desserts Menu",
-                    sections: [
-                        {
-                            heading: "", // No specific heading for desserts in your original HTML
-                            items: [
-                                { name: "Mango Sticky Rice (Seasonal)", price: 80 },
-                                { name: "Fried Banana with Honey", price: 60 },
-                                { name: "Fried Banana with Ice Cream", price: 70 },
-                                { name: "Ice Cream (Vanilla, Chocolate, Strawberry) - per scoop", price: 50 },
-                                { name: "Fresh Fruit Plate", price: 90 }
-                            ]
-                        }
-                    ]
-                },
-                specialFood: {
-                    title: "This Week's Special!",
-                    description: "Ask our staff for today's delicious special!",
-                    items: [
-                        { name: "**Chef's Daily Special**", price: "Varies" },
-                        { name: "(Example: Grilled Snapper with Tamarind Sauce)", price: null }, // Null price for examples
-                        { name: "(Example: Duck Red Curry)", price: null }
-                    ],
-                    imageSrc: "porkroast.jpg",
-                    imageAlt: "Chef's Special Example",
-                    imageOverlayText: "Today's special: A savory Pork Roast. (Image for illustration)"
-                }
-            },
-            drinks: {
-                softDrinks: {
-                    title: "Soft Drinks Menu",
-                    sections: [
-                        {
-                            heading: "Carbonated Drinks",
-                            items: [
-                                { name: "Coca-Cola / Pepsi", price: 25 },
-                                { name: "Sprite / 7-Up", price: 25 },
-                                { name: "Fanta (Orange/Strawberry)", price: 25 },
-                                { name: "Soda Water", price: 20 }
-                            ]
-                        },
-                        {
-                            heading: "Juices",
-                            items: [
-                                { name: "Orange Juice", price: 40 },
-                                { name: "Pineapple Juice", price: 40 },
-                                { name: "Mango Juice", price: 40 },
-                                { name: "Coconut Water (Fresh)", price: 60 }
-                            ]
-                        },
-                        {
-                            heading: "Other",
-                            items: [
-                                { name: "Drinking Water (small bottle)", price: 15 },
-                                { name: "Drinking Water (large bottle)", price: 25 },
-                                { name: "Iced Tea (Lemon/Thai Milk Tea)", price: 30 },
-                                { name: "Hot Coffee", price: 40 },
-                                { name: "Iced Coffee", price: 50 }
-                            ]
-                        }
-                    ]
-                },
-                localBeers: {
-                    title: "Local Beers Menu",
-                    sections: [
-                        {
-                            heading: "",
-                            items: [
-                                { name: "Chang Beer (Small Bottle)", price: 60 },
-                                { name: "Chang Beer (Large Bottle)", price: 90 },
-                                { name: "Leo Beer (Small Bottle)", price: 60 },
-                                { name: "Leo Beer (Large Bottle)", price: 90 },
-                                { name: "Singha Beer (Small Bottle)", price: 70 },
-                                { name: "Singha Beer (Large Bottle)", price: 100 },
-                                { name: "Archa Beer (Small Bottle)", price: 55 },
-                                { name: "Archa Beer (Large Bottle)", price: 85 }
-                            ]
-                        }
-                    ],
-                    footer: "<em>Prices may vary slightly.</em>"
-                },
-                alcoholicDrinks: {
-                    title: "Alcoholic Beverages Menu",
-                    sections: [
-                        {
-                            heading: "Spirits (per shot/glass)",
-                            items: [
-                                { name: "Thai Whiskey (Mekong, Sangsom)", price: 80 },
-                                { name: "Local Rum (Chalong Bay, etc.)", price: 90 },
-                                { name: "Imported Whiskey (Basic)", price: "120 Baht+" },
-                                { name: "Vodka (Basic)", price: "100 Baht+" },
-                                { name: "Gin (Basic)", price: "100 Baht+" }
-                            ]
-                        },
-                        {
-                            heading: "Wine (per glass / bottle)",
-                            items: [
-                                { name: "House Red Wine", price: "150 Baht / 700 Baht" },
-                                { name: "House White Wine", price: "150 Baht / 700 Baht" },
-                                { name: "(Ask for our wine list for other selections)", price: null }
-                            ]
-                        },
-                        {
-                            heading: "Other",
-                            items: [
-                                { name: "Cider (Local/Imported)", price: "Prices Vary" },
-                                { name: "Cocktails (see Thai Bar Drinks)", price: null }
-                            ]
-                        }
-                    ]
-                },
-                thaiBarDrinks: {
-                    title: "Thai Bar Drinks (Cocktails)",
-                    description: "Enjoy our refreshing tropical and classic cocktails!",
-                    items: [
-                        { name: "Mekong Cocktail (Thai Whiskey, Lime, Soda)", price: 120 },
-                        { name: "Sangsom Special (Thai Rum, Coke/Soda, Lime)", price: 120 },
-                        { name: "Mojito (Rum, Mint, Lime, Soda)", price: 150 },
-                        { name: "Pina Colada (Rum, Coconut Cream, Pineapple)", price: 150 },
-                        { name: "Margarita (Tequila, Triple Sec, Lime)", price: 150 },
-                        { name: "Long Island Iced Tea", price: 200 },
-                        { name: "Thai Sabai (Thai Basil, Mekong, Lime)", price: 140 }
-                    ],
-                    imageSrc: "thai_cocktail.jpg",
-                    imageAlt: "Thai Cocktail",
-                    imageOverlayText: "A vibrant example of our refreshing Thai cocktails."
-                }
+// public/index.html (inside <script> tag) or public/script.js
+
+let menuData;
+
+async function fetchMenuData() {
+    try {
+        const response = await fetch('/api/menu');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        menuData = await response.json();
+        console.log('Menu data fetched successfully:', menuData);
+
+    } catch (error) {
+        console.error('Failed to fetch menu data:', error);
+        alert('Could not load menu data. Please refresh the page or try again later.');
+    }
+}
+
+// Global constant for transition duration (matches CSS)
+const TRANSITION_DURATION_MS = 1000;
+
+// Global variables for gallery functionality
+let currentGalleryImages = [];
+let currentImageIndex = -1;
+
+// Get modal elements once
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modal-img');
+const modalCaption = document.getElementById('modal-caption');
+const modalPrevBtn = document.getElementById('modal-prev');
+const modalNextBtn = document.getElementById('modal-next');
+const overlay = document.querySelector('.overlay');
+
+// --- Gallery/Swipe functionality variables ---
+let touchStartX = 0;
+let touchEndX = 0;
+const SWIPE_THRESHOLD = 50;
+
+function hideAllImmediately() {
+    const allPopups = document.querySelectorAll('.popup');
+    allPopups.forEach(p => {
+        p.style.opacity = '0';
+        p.style.visibility = 'hidden';
+        p.style.display = 'none';
+    });
+
+    modal.style.opacity = '0';
+    modal.style.visibility = 'hidden';
+    modal.style.display = 'none';
+
+    overlay.style.opacity = '0';
+    overlay.style.visibility = 'hidden';
+    overlay.style.display = 'none';
+
+    currentGalleryImages = [];
+    currentImageIndex = -1;
+    disableGalleryControls();
+    removeGalleryEventListeners();
+}
+
+function showMenuSection(sectionId, clickedButton, parentPopupId) {
+    const parentPopup = document.getElementById(parentPopupId);
+    const tabButtons = parentPopup.querySelectorAll('.tab-button');
+    tabButtons.forEach(button => {
+        button.classList.remove('active');
+    });
+
+    const menuSections = parentPopup.querySelectorAll('.menu-section');
+    menuSections.forEach(section => {
+        section.classList.remove('active');
+    });
+
+    clickedButton.classList.add('active');
+    document.getElementById(sectionId).classList.add('active');
+}
+
+function generateMenuContent(popupId, menuCategoryData) {
+    const contentDiv = document.getElementById(popupId.replace('-popup', '-content'));
+    if (!contentDiv) {
+        console.error(`Content div not found for popup: ${popupId}`);
+        return;
+    }
+
+    contentDiv.innerHTML = '';
+
+    const titleElement = document.getElementById(popupId.replace('-popup', '-title'));
+    if (titleElement) {
+        titleElement.textContent = menuCategoryData.title;
+    }
+
+    if (menuCategoryData.description) {
+        const p = document.createElement('p');
+        p.textContent = menuCategoryData.description;
+        contentDiv.appendChild(p);
+    }
+
+    if (menuCategoryData.sections) {
+        menuCategoryData.sections.forEach(section => {
+            if (section.heading) {
+                const h3 = document.createElement('h3');
+                h3.textContent = section.heading;
+                contentDiv.appendChild(h3);
             }
-        };
+            const ul = document.createElement('ul');
+            section.items.forEach(item => {
+                const li = document.createElement('li');
+                let itemText = item.name;
+                if (item.price !== null) {
+                    itemText += ` - ${item.price} Baht`;
+                }
+                li.textContent = itemText;
+                ul.appendChild(li);
+            });
+            contentDiv.appendChild(ul);
+        });
+    } else if (menuCategoryData.items) {
+        const ul = document.createElement('ul');
+        menuCategoryData.items.forEach(item => {
+            const li = document.createElement('li');
+            let itemText = item.name;
+            if (item.price !== null) {
+                itemText += ` - ${item.price}`;
+            }
+            li.innerHTML = itemText;
+            ul.appendChild(li);
+        });
+        contentDiv.appendChild(ul);
+    }
+
+    if (menuCategoryData.imageSrc) {
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('image-container');
+
+        const img = document.createElement('img');
+        img.src = menuCategoryData.imageSrc;
+        img.alt = menuCategoryData.imageAlt;
+        img.onclick = () => openModal(img);
+
+        const imageOverlay = document.createElement('div');
+        imageOverlay.classList.add('image-overlay');
+        const overlayP = document.createElement('p');
+        overlayP.textContent = menuCategoryData.imageOverlayText;
+        imageOverlay.appendChild(overlayP);
+
+        imageContainer.appendChild(img);
+        imageContainer.appendChild(imageOverlay);
+        contentDiv.appendChild(imageContainer);
+    }
+
+    if (menuCategoryData.footer) {
+        const p = document.createElement('p');
+        p.innerHTML = menuCategoryData.footer;
+        contentDiv.appendChild(p);
+    }
+}
+
+const originalOpenPopup = openPopup;
+
+openPopup = function(popupId) {
+    if (!menuData) {
+        console.warn('Menu data not yet loaded. Please wait and try again.');
+        return;
+    }
+
+    switch (popupId) {
+        case 'thai-food-popup':
+            generateMenuContent(popupId, menuData.food.thaiFood);
+            break;
+        case 'farang-food-popup':
+            generateMenuContent(popupId, menuData.food.farangFood);
+            break;
+        case 'desserts-popup':
+            generateMenuContent(popupId, menuData.food.desserts);
+            break;
+        case 'special-food-popup':
+            generateMenuContent(popupId, menuData.food.specialFood);
+            break;
+        case 'soft-drinks-popup':
+            generateMenuContent(popupId, menuData.drinks.softDrinks);
+            break;
+        case 'local-beers-popup':
+            generateMenuContent(popupId, menuData.drinks.localBeers);
+            break;
+        case 'alcoholic-drinks-popup':
+            generateMenuContent(popupId, menuData.drinks.alcoholicDrinks);
+            break;
+        case 'thai-bar-drinks-popup':
+            generateMenuContent(popupId, menuData.drinks.thaiBarDrinks);
+            break;
+        default:
+            break;
+    }
+    originalOpenPopup(popupId);
+};
+
+function openModal(clickedElementOrSrc) {
+    hideAllImmediately();
+
+    let initialSrc = '';
+    let clickedImageElement = null;
+
+    if (typeof clickedElementOrSrc === 'string') {
+        initialSrc = clickedElementOrSrc;
+        currentGalleryImages = [{ src: initialSrc, alt: '' }];
+        currentImageIndex = 0;
+    } else {
+        clickedImageElement = clickedElementOrSrc;
+        initialSrc = clickedImageElement.src;
+
+        const parentGallery = clickedImageElement.closest('.gallery-images');
+
+        if (parentGallery) {
+            currentGalleryImages = Array.from(parentGallery.querySelectorAll('.image-container img'));
+            currentImageIndex = currentGalleryImages.indexOf(clickedImageElement);
+        } else {
+            currentGalleryImages = [{ src: initialSrc, alt: clickedImageElement.alt }];
+            currentImageIndex = 0;
+        }
+    }
+
+    modalImg.src = initialSrc;
+    modalImg.alt = currentGalleryImages[currentImageIndex]?.alt || 'Image';
+    modalCaption.textContent = currentGalleryImages[currentImageIndex]?.alt || '';
+    modalCaption.style.display = modalCaption.textContent ? 'block' : 'none';
+
+    modal.style.display = 'flex';
+    overlay.style.display = 'block';
+
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.style.visibility = 'visible';
+        overlay.style.opacity = '1';
+        overlay.style.visibility = 'visible';
+    }, 10);
+
+    setupGalleryControls();
+}
+
+function setupGalleryControls() {
+    if (currentGalleryImages.length > 1) {
+        modalPrevBtn.style.display = 'block';
+        modalNextBtn.style.display = 'block';
+        updateGalleryButtons();
+
+        modalPrevBtn.onclick = showPrevImage;
+        modalNextBtn.onclick = showNextImage;
+        document.addEventListener('keydown', handleKeyPress);
+
+        modalImg.addEventListener('touchstart', handleTouchStart, { passive: true });
+        modalImg.addEventListener('touchmove', handleTouchMove, { passive: true });
+        modalImg.addEventListener('touchend', handleTouchEnd);
+    } else {
+        disableGalleryControls();
+    }
+}
+
+function disableGalleryControls() {
+    if (modalPrevBtn) modalPrevBtn.style.display = 'none';
+    if (modalNextBtn) modalNextBtn.style.display = 'none';
+    if (modalCaption) modalCaption.style.display = 'none';
+}
+
+function updateModalImage() {
+    modalImg.src = currentGalleryImages[currentImageIndex].src;
+    modalImg.alt = currentGalleryImages[currentImageIndex].alt;
+    modalCaption.textContent = currentGalleryImages[currentImageIndex].alt;
+    modalCaption.style.display = modalCaption.textContent ? 'block' : 'none';
+
+    updateGalleryButtons();
+}
+
+function updateGalleryButtons() {
+    modalPrevBtn.disabled = currentImageIndex === 0;
+    modalNextBtn.disabled = currentImageIndex === currentGalleryImages.length - 1;
+}
+
+function showNextImage() {
+    if (currentImageIndex < currentGalleryImages.length - 1) {
+        currentImageIndex++;
+        updateModalImage();
+    }
+}
+
+function showPrevImage() {
+    if (currentImageIndex > 0) {
+        currentImageIndex--;
+        updateModalImage();
+    }
+}
+
+function handleKeyPress(event) {
+    if (modal.style.display === 'flex' && modal.style.visibility === 'visible') {
+        if (event.key === 'ArrowRight') {
+            showNextImage();
+        } else if (event.key === 'ArrowLeft') {
+            showPrevImage();
+        }
+    }
+}
+
+function handleTouchStart(event) {
+    touchStartX = event.touches[0].clientX;
+}
+
+function handleTouchMove(event) {
+    touchEndX = event.touches[0].clientX;
+}
+
+function handleTouchEnd() {
+    const swipeDistance = touchEndX - touchStartX;
+
+    if (currentGalleryImages.length > 1) {
+        if (swipeDistance > SWIPE_THRESHOLD) {
+            showPrevImage();
+        } else if (swipeDistance < -SWIPE_THRESHOLD) {
+            showNextImage();
+        }
+    }
+    touchStartX = 0;
+    touchEndX = 0;
+}
+
+function closeModal() {
+    modal.style.opacity = '0';
+
+    setTimeout(() => {
+        modal.style.display = 'none';
+        modal.style.visibility = 'hidden';
+        closeOverlayIfNoPopupsOpen();
+
+        currentGalleryImages = [];
+        currentImageIndex = -1;
+        disableGalleryControls();
+        removeGalleryEventListeners();
+    }, TRANSITION_DURATION_MS);
+}
+
+function closePopup(popupId) {
+    const popup = document.getElementById(popupId);
+    popup.style.opacity = '0';
+
+    setTimeout(() => {
+        popup.style.display = 'none';
+        popup.style.visibility = 'hidden';
+        closeOverlayIfNoPopupsOpen();
+    }, TRANSITION_DURATION_MS);
+}
+
+function closeAllPopups() {
+    const allPopups = document.querySelectorAll('.popup');
+    let anyElementStartedToClose = false;
+
+    allPopups.forEach(p => {
+        if (p.style.display === 'flex' || p.style.visibility === 'visible') {
+            p.style.opacity = '0';
+            anyElementStartedToClose = true;
+        }
+    });
+
+    if (modal.style.display === 'flex' || modal.style.visibility === 'visible') {
+        modal.style.opacity = '0';
+        anyElementStartedToClose = true;
+    }
+
+    if (anyElementStartedToClose && (overlay.style.display === 'block' || overlay.style.visibility === 'visible')) {
+        overlay.style.opacity = '0';
+    }
+
+    setTimeout(() => {
+        allPopups.forEach(p => {
+            p.style.display = 'none';
+            p.style.visibility = 'hidden';
+        });
+        modal.style.display = 'none';
+        modal.style.visibility = 'hidden';
+        closeOverlayIfNoPopupsOpen();
+
+        currentGalleryImages = [];
+        currentImageIndex = -1;
+        disableGalleryControls();
+        removeGalleryEventListeners();
+    }, TRANSITION_DURATION_MS);
+}
+
+function closeOverlayIfNoPopupsOpen() {
+    const allPopups = document.querySelectorAll('.popup');
+
+    let anyPopupStillOpen = false;
+    allPopups.forEach(p => {
+        if (p.style.display === 'flex' || p.style.visibility === 'visible') {
+            anyPopupStillOpen = true;
+        }
+    });
+    const isModalStillOpen = (modal.style.display === 'flex' || modal.style.visibility === 'visible');
+
+    if (!anyPopupStillOpen && !isModalStillOpen) {
+        overlay.style.display = 'none';
+        overlay.style.visibility = 'hidden';
+    }
+}
+
+function removeGalleryEventListeners() {
+    document.removeEventListener('keydown', handleKeyPress);
+    modalImg.removeEventListener('touchstart', handleTouchStart);
+    modalImg.removeEventListener('touchmove', handleTouchMove);
+    modalImg.removeEventListener('touchend', handleTouchEnd);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchMenuData();
+
+    if (overlay) {
+        overlay.addEventListener('click', closeAllPopups);
+    }
+    if (modalPrevBtn) modalPrevBtn.addEventListener('click', showPrevImage);
+    if (modalNextBtn) modalNextBtn.addEventListener('click', showNextImage);
+});
+        // Start of new dynamic menu data and functions
+        
 
         /**
          * Generates and injects menu content into a popup.
