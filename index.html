@@ -128,7 +128,7 @@
             display: none; /* Initially hidden, controlled by JS */
             opacity: 0; /* NEW: Start transparent for fade-in/out */
             visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
-            transition: opacity 0.5s ease, visibility 0.5s ease; /* NEW: Smooth transition for fade */
+            transition: opacity 1.5s ease, visibility 1.5s ease; /* NEW: Smooth transition for fade */
 
             position: fixed;
             z-index: 1000;
@@ -175,7 +175,7 @@
             display: none; /* Initially hidden, controlled by JS */
             opacity: 0; /* NEW: Start transparent for fade-in/out */
             visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
-            transition: opacity 0.5s ease, visibility 0.5s ease; /* NEW: Smooth transition for fade */
+            transition: opacity 1.5s ease, visibility 1.5s ease; /* NEW: Smooth transition for fade */
 
             position: fixed; /* Keep it fixed in the viewport */
             top: 5%; /* Higher up for mobile */
@@ -369,7 +369,7 @@
             display: none; /* Initially hidden, controlled by JS */
             opacity: 0; /* NEW: Start transparent for fade-in/out */
             visibility: hidden; /* NEW: Also hidden for accessibility/interactions */
-            transition: opacity 0.5s ease, visibility 0.5s ease; /* NEW: Smooth transition for fade */
+            transition: opacity 1.5s ease, visibility 1.5s ease; /* NEW: Smooth transition for fade */
 
             position: fixed;
             top: 0;
@@ -960,7 +960,7 @@
 
     <script>
         // NEW: Global constant for transition duration
-        const TRANSITION_DURATION_MS = 500; // Matches CSS transition time
+        const TRANSITION_DURATION_MS = 1500; // Matches CSS transition time
 
         // NEW: Function to close all currently visible popups and the modal immediately without waiting for fade-out,
         // This is for use when opening a new one, to ensure only one is active at a time.
