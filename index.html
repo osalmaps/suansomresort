@@ -143,60 +143,84 @@
       width: 100%;
       border-radius: 8px;
     }
+
+    /* --- Popup Styles --- */
     .popup {
       display: none;
-      position: fixed;
+      position: fixed; /* Keep it fixed in the viewport */
       top: 5%; /* Higher up for mobile */
       left: 50%;
       transform: translateX(-50%);
       background: white;
-      padding: 1rem; /* Reduced padding for mobile popups */
       border-radius: 12px;
       max-width: 95%; /* Wider popup for mobile */
       width: 90%;
       z-index: 1001;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-      overflow-y: auto;
-      max-height: 90vh; /* More height for mobile popups */
-    }
-    .popup .image-container {
-        width: 100%;
-        height: auto;
-        margin: 0.8rem 0;
-        box-shadow: none;
-        cursor: default;
-        transition: none;
+      /* Remove overflow-y and max-height from here */
+      display: flex; /* Use flexbox for vertical layout */
+      flex-direction: column;
+      max-height: 90vh; /* Max height for the entire popup */
     }
 
-    .popup .image-container img {
-        border-radius: 8px;
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-    }
-
-    .popup .image-overlay {
-        opacity: 1;
-        position: static;
-        background: none;
-        color: #333;
-        padding: 0;
-        font-size: 0.9em; /* Adjust for popup text */
-        text-align: left;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-    .popup .image-overlay p {
-      font-size: 0.8em;
-      line-height: 1.4;
-    }
     .popup .close {
       position: absolute;
       top: 8px; /* Adjusted position */
       right: 15px; /* Adjusted position */
       font-size: 28px; /* Larger tap target */
       cursor: pointer;
+      z-index: 1002; /* Ensure it's above popup content */
     }
+
+    .popup h2 {
+      padding: 0.5rem 1rem; /* Padding for the title */
+      margin-top: 0.5rem; /* Space from top */
+      margin-bottom: 0.5rem; /* Space from content */
+      text-align: center;
+      /* Add a border-bottom or shadow if desired for header separation */
+    }
+
+    /* New div for scrollable content */
+    .popup-content {
+      flex-grow: 1; /* Allow content to take available space */
+      overflow-y: auto; /* Make only this part scrollable */
+      padding: 0 1rem 1rem; /* Padding for the scrollable content */
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+    .popup .image-container {
+        width: 100%;
+        height: auto; /* Allow height to adjust based on aspect ratio */
+        min-height: 180px; /* Minimum height for small images */
+        margin: 0.8rem 0;
+        box-shadow: none;
+        cursor: pointer; /* Changed to pointer so images in popup are clickable */
+        transition: none;
+    }
+    .popup .image-container img {
+        border-radius: 8px;
+        width: 100%;
+        height: 100%; /* Fill the container */
+        object-fit: cover; /* Cover the container, cropping if necessary */
+    }
+    .popup .image-overlay {
+        opacity: 1; /* Always show overlay in popup */
+        position: static; /* Remove absolute positioning */
+        background: none; /* No background needed for overlay text in popup */
+        color: #333; /* Text color for popup overlay */
+        padding: 0.5rem 0; /* Add some padding around the text */
+        font-size: 0.9em; /* Adjust for popup text */
+        text-align: left; /* Align text left in popup */
+        justify-content: flex-start; /* Align content to start */
+        align-items: flex-start; /* Align content to start */
+    }
+    .popup .image-overlay p {
+      font-size: 0.8em;
+      line-height: 1.4;
+      margin: 0; /* Remove default paragraph margin */
+    }
+    /* --- End Popup Styles --- */
+
     .footer {
       background: #3B2F2F;
       color: white;
@@ -369,9 +393,15 @@
       }
       .popup {
         top: 8%;
-        padding: 1.5rem;
-        max-width: 700px; /* Limit width */
+        padding: 0; /* No direct padding on popup itself */
+        max-width: 700px;
         width: 90%;
+      }
+      .popup h2 {
+        padding: 0.8rem 2rem;
+      }
+      .popup-content {
+        padding: 0 2rem 2rem; /* Adjusted padding for scrollable content */
       }
       .popup .close {
         font-size: 24px;
@@ -394,6 +424,11 @@
       }
       .drinks-menu li {
         font-size: 1.1em;
+      }
+      /* Ensure popup image containers scale appropriately on tablets */
+      .popup .image-container {
+        width: calc(50% - 1rem); /* Example: Two columns in popup */
+        height: 200px; /* Consistent height */
       }
     }
 
@@ -437,9 +472,19 @@
       }
       .popup {
         top: 10%;
-        padding: 2rem;
         max-width: 800px;
         width: 90%;
+      }
+      .popup h2 {
+        padding: 1rem 2rem;
+      }
+      .popup-content {
+        padding: 0 2rem 2rem;
+      }
+      /* Ensure popup image containers restore to desired desktop layout */
+      .popup .image-container {
+        width: calc(33.33% - 1rem); /* Example: Three columns in popup */
+        height: 200px; /* Consistent height */
       }
     }
   </style>
@@ -517,271 +562,296 @@
   <div id="main-gallery-popup" class="popup">
     <span class="close" onclick="closePopup('main-gallery-popup')">×</span>
     <h2>Our Photo Gallery</h2>
+    <div class="popup-content"> <div class="menu-tabs">
+        <button class="tab-button active" onclick="showMenuSection('our-resort-section', this, 'main-gallery-popup')">Our Resort</button>
+        <button class="tab-button" onclick="showMenuSection('photo-album-section', this, 'main-gallery-popup')">Photo Album</button>
+      </div>
 
-    <div class="menu-tabs">
-      <button class="tab-button active" onclick="showMenuSection('our-resort-section', this, 'main-gallery-popup')">Our Resort</button>
-      <button class="tab-button" onclick="showMenuSection('photo-album-section', this, 'main-gallery-popup')">Photo Album</button>
-    </div>
+      <div id="our-resort-section" class="menu-section active">
+        <h3>Our Resort Photos</h3>
+        <p>A collection of beautiful moments from around Suan Som Resort.</p>
+        <div class="image-container">
+            <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>The main entrance to the resort, welcoming all guests.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Driveway-Outside-02.jpg" alt="Driveway" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Another view of the well-maintained driveway leading to our bungalows.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Driveway-Outside-03.jpg" alt="Driveway" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Experience the peaceful ambiance along our resort pathways.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Driveway-Outside-04.jpg" alt="Driveway" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Scenic views of the resort grounds, perfect for a stroll.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Driveway-Outside-05.jpg" alt="Driveway" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Lush tropical foliage enhances the beauty of our resort's exterior.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Standard-Room-01.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Discover the comfort of our standard room, priced at just 400 Baht per night.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Standard-Room-02.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Inside our cozy standard room, designed for relaxation.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Standard-Room-03.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Enjoy the simplicity and tranquility of our standard accommodation.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Standard-Room-04.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>All standard rooms offer a peaceful retreat from daily life.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Standard-Room-05.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Spacious and clean, our standard rooms provide great value.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Standard-Room-06.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Experience authentic Thai hospitality in our charming bungalows.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Standard-Room-07.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Each standard room is equipped for your comfort and convenience.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="Standard-Room-08.jpg" alt="Room 400 Baht" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Unwind in our well-appointed standard rooms, perfect for a peaceful stay.</p></div>
+        </div>
+        <div class="image-container">
+            <img src="beergarden.jpg" alt="Restaurant" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Our inviting Beer Garden, a great spot to relax and socialize.</p></div>
+        </div>
+      </div>
 
-    <div id="our-resort-section" class="menu-section active">
-      <h3>Our Resort Photos</h3>
-      <p>A collection of beautiful moments from around Suan Som Resort.</p>
-      <div class="image-container">
-          <img src="Driveway-Outside-01.jpg" alt="Driveway Entrance">
-          <div class="image-overlay"><p>The main entrance to the resort, welcoming all guests.</p></div>
+      <div id="photo-album-section" class="menu-section">
+        <h3>Photo Album</h3>
+        <p>A curated collection of special moments. Click any image to view it larger.</p>
+        <p>You can also use the buttons below to open specific highlights.</p>
+        <div class="submenu-buttons">
+          <button class="sub-button" onclick="openModal('Driveway-Outside-01.jpg')">Driveway View</button>
+          <button class="sub-button" onclick="openModal('Standard-Room-03.jpg')">Room Detail</button>
+          <button class="sub-button" onclick="openModal('Driveway-Outside-05.jpg')">Garden Pathway</button>
+          <button class="sub-button" onclick="openModal('Standard-Room-07.jpg')">Bungalow Interior</button>
+        </div>
+        <div class="gallery-images">
+          <div class="image-container">
+              <img src="photogallery.jpg" alt="Photo Album Main" onclick="openModal(this.src)">
+              <div class="image-overlay"><p>Explore more moments in our special Photo Album.</p></div>
+          </div>
+          <div class="image-container">
+              <img src="thai_cocktail.jpg" alt="Refreshing Cocktail" onclick="openModal(this.src)">
+              <div class="image-overlay"><p>Enjoy a refreshing cocktail from our bar.</p></div>
+          </div>
+          <div class="image-container">
+              <img src="Green-Curry.jpg" alt="Delicious Green Curry" onclick="openModal(this.src)">
+              <div class="image-overlay"><p>Taste our aromatic Green Curry.</p></div>
+          </div>
+          <div class="image-container">
+              <img src="Burger.jpg" alt="Hearty Burger" onclick="openModal(this.src)">
+              <div class="image-overlay"><p>Our classic Burger and Fries, a Western favorite.</p></div>
+          </div>
+          <div class="image-container">
+              <img src="Mango-Sticky-Rice.jpg" alt="Sweet Mango Sticky Rice" onclick="openModal(this.src)">
+              <div class="image-overlay"><p>Indulge in seasonal Mango Sticky Rice.</p></div>
+          </div>
+          <div class="image-container">
+              <img src="porkroast.jpg" alt="Chef's Special" onclick="openModal(this.src)">
+              <div class="image-overlay"><p>A look at one of our delicious chef's specials.</p></div>
+          </div>
+          </div>
       </div>
-      <div class="image-container">
-          <img src="Driveway-Outside-02.jpg" alt="Driveway">
-          <div class="image-overlay"><p>Another view of the well-maintained driveway leading to our bungalows.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Driveway-Outside-03.jpg" alt="Driveway">
-          <div class="image-overlay"><p>Experience the peaceful ambiance along our resort pathways.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Driveway-Outside-04.jpg" alt="Driveway">
-          <div class="image-overlay"><p>Scenic views of the resort grounds, perfect for a stroll.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Driveway-Outside-05.jpg" alt="Driveway">
-          <div class="image-overlay"><p>Lush tropical foliage enhances the beauty of our resort's exterior.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Standard-Room-01.jpg" alt="Room 400 Baht">
-          <div class="image-overlay"><p>Discover the comfort of our standard room, priced at just 400 Baht per night.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Standard-Room-02.jpg" alt="Room 400 Baht">
-          <div class="image-overlay"><p>Inside our cozy standard room, designed for relaxation.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Standard-Room-03.jpg" alt="Room 400 Baht">
-          <div class="image-overlay"><p>Enjoy the simplicity and tranquility of our standard accommodation.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Standard-Room-04.jpg" alt="Room 400 Baht">
-          <div class="image-overlay"><p>All standard rooms offer a peaceful retreat from daily life.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Standard-Room-05.jpg" alt="Room 400 Baht">
-          <div class="image-overlay"><p>Spacious and clean, our standard rooms provide great value.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Standard-Room-06.jpg" alt="Room 400 Baht">
-          <div class="image-overlay"><p>Experience authentic Thai hospitality in our charming bungalows.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Standard-Room-07.jpg" alt="Room 400 Baht">
-          <div class="image-overlay"><p>Each standard room is equipped for your comfort and convenience.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="Standard-Room-08.jpg" alt="Room 400 Baht">
-          <div class="image-overlay"><p>Unwind in our well-appointed standard rooms, perfect for a peaceful stay.</p></div>
-      </div>
-      <div class="image-container">
-          <img src="beergarden.jpg" alt="Restaurant">
-          <div class="image-overlay"><p>Our inviting Beer Garden, a great spot to relax and socialize.</p></div>
-      </div>
-    </div>
-
-    <div id="photo-album-section" class="menu-section">
-      <h3>Photo Album</h3>
-      <p>Click on a photo to see a larger view!</p>
-      <div class="submenu-buttons">
-        <button class="sub-button" onclick="openModal('Driveway-Outside-01.jpg')">Photo 1</button>
-        <button class="sub-button" onclick="openModal('Standard-Room-03.jpg')">Photo 2</button>
-        <button class="sub-button" onclick="openModal('Driveway-Outside-05.jpg')">Photo 3</button>
-        <button class="sub-button" onclick="openModal('Standard-Room-07.jpg')">Photo 4</button>
-      </div>
-      <div class="image-container">
-          <img src="photogallery.jpg" alt="Photo Album">
-          <div class="image-overlay"><p>Explore more moments in our special Photo Album.</p></div>
-      </div>
-    </div>
-  </div>
+    </div> </div>
 
   <div id="restaurant-popup" class="popup">
     <span class="close" onclick="closePopup('restaurant-popup')">×</span>
     <h2>Our Restaurant</h2>
+    <div class="popup-content"> <div class="menu-tabs">
+        <button class="tab-button active" onclick="showMenuSection('food-menu-section', this, 'restaurant-popup')">Food Menu</button>
+        <button class="tab-button" onclick="showMenuSection('drink-menu-section', this, 'restaurant-popup')">Drink Menu</button>
+      </div>
 
-    <div class="menu-tabs">
-      <button class="tab-button active" onclick="showMenuSection('food-menu-section', this, 'restaurant-popup')">Food Menu</button>
-      <button class="tab-button" onclick="showMenuSection('drink-menu-section', this, 'restaurant-popup')">Drink Menu</button>
-    </div>
+      <div id="food-menu-section" class="menu-section active">
+        <h3>Food Menu</h3>
+        <p>Explore our culinary delights:</p>
+        <div class="submenu-buttons">
+          <button class="sub-button" onclick="openPopup('thai-food-popup')">Thai Food</button>
+          <button class="sub-button" onclick="openPopup('farang-food-popup')">Farang Food</button>
+          <button class="sub-button" onclick="openPopup('desserts-popup')">Desserts</button>
+          <button class="sub-button" onclick="openPopup('special-food-popup')">This Week's Special</button>
+        </div>
+        <div class="image-container">
+            <img src="padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>A glimpse into our delicious range of Thai cuisine.</p></div>
+        </div>
+      </div>
 
-    <div id="food-menu-section" class="menu-section active">
-      <h3>Food Menu</h3>
-      <p>Explore our culinary delights:</p>
-      <div class="submenu-buttons">
-        <button class="sub-button" onclick="openPopup('thai-food-popup')">Thai Food</button>
-        <button class="sub-button" onclick="openPopup('farang-food-popup')">Farang Food</button>
-        <button class="sub-button" onclick="openPopup('desserts-popup')">Desserts</button>
-        <button class="sub-button" onclick="openPopup('special-food-popup')">This Week's Special</button>
+      <div id="drink-menu-section" class="menu-section">
+        <h3>Drink Menu</h3>
+        <p>Quench your thirst with our wide selection:</p>
+        <div class="submenu-buttons">
+          <button class="sub-button" onclick="openPopup('soft-drinks-popup')">Soft Drinks</button>
+          <button class="sub-button" onclick="openPopup('local-beers-popup')">Local Beers</button>
+          <button class="sub-button" onclick="openPopup('alcoholic-drinks-popup')">Alcoholic Beverages</button>
+          <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
+        </div>
+        <div class="image-container">
+            <img src="beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
+        </div>
       </div>
-      <div class="image-container">
-          <img src="padthai.jpg" alt="Variety of Thai dishes">
-          <div class="image-overlay"><p>A glimpse into our delicious range of Thai cuisine.</p></div>
-      </div>
-    </div>
-
-    <div id="drink-menu-section" class="menu-section">
-      <h3>Drink Menu</h3>
-      <p>Quench your thirst with our wide selection:</p>
-      <div class="submenu-buttons">
-        <button class="sub-button" onclick="openPopup('soft-drinks-popup')">Soft Drinks</button>
-        <button class="sub-button" onclick="openPopup('local-beers-popup')">Local Beers</button>
-        <button class="sub-button" onclick="openPopup('alcoholic-drinks-popup')">Alcoholic Beverages</button>
-        <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
-      </div>
-      <div class="image-container">
-          <img src="beergarden.jpg" alt="Refreshing drinks">
-          <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
-      </div>
-    </div>
-  </div>
+    </div> </div>
 
   <div id="thai-food-popup" class="popup">
     <span class="close" onclick="closePopup('thai-food-popup')">×</span>
     <h3>Thai Food Menu</h3>
-    <p>Authentic Thai flavors cooked to perfection:</p>
-    <ul>
-      <li>Som Tum (Papaya Salad) - Spicy and refreshing!</li>
-      <li>Pad Thai - Classic stir-fried noodles.</li>
-      <li>Tom Yum Goong - Famous hot and sour shrimp soup.</li>
-      <li>Green Curry with Chicken - Rich and aromatic.</li>
-      <li>Laab Moo (Minced Pork Salad) - Savory and spicy.</li>
-    </ul>
-    <div class="image-container">
-        <img src="padthai.jpg" alt="Pad Thai dish">
-        <div class="image-overlay"><p>Our signature Pad Thai, a must-try!</p></div>
-    </div>
-    <div class="image-container">
-        <img src="Green-Curry.jpg" alt="Green Curry dish">
-        <div class="image-overlay"><p>Rich and fragrant Green Curry with fresh ingredients.</p></div>
+    <div class="popup-content">
+      <p>Authentic Thai flavors cooked to perfection:</p>
+      <ul>
+        <li>Som Tum (Papaya Salad) - Spicy and refreshing!</li>
+        <li>Pad Thai - Classic stir-fried noodles.</li>
+        <li>Tom Yum Goong - Famous hot and sour shrimp soup.</li>
+        <li>Green Curry with Chicken - Rich and aromatic.</li>
+        <li>Laab Moo (Minced Pork Salad) - Savory and spicy.</li>
+      </ul>
+      <div class="image-container">
+          <img src="padthai.jpg" alt="Pad Thai dish" onclick="openModal(this.src)">
+          <div class="image-overlay"><p>Our signature Pad Thai, a must-try!</p></div>
+      </div>
+      <div class="image-container">
+          <img src="Green-Curry.jpg" alt="Green Curry dish" onclick="openModal(this.src)">
+          <div class="image-overlay"><p>Rich and fragrant Green Curry with fresh ingredients.</p></div>
+      </div>
     </div>
   </div>
 
   <div id="farang-food-popup" class="popup">
     <span class="close" onclick="closePopup('farang-food-popup')">×</span>
     <h3>Farang Food Menu</h3>
-    <p>Western comfort food options:</p>
-    <ul>
-      <li>Burger and Fries</li>
-      <li>Chicken Schnitzel with Salad</li>
-      <li>Spaghetti Carbonara</li>
-      <li>Club Sandwich</li>
-    </ul>
-    <div class="image-container">
-        <img src="Burger.jpg" alt="Burger and fries">
-        <div class="image-overlay"><p>Satisfy your cravings with our juicy burger and crispy fries.</p></div>
+    <div class="popup-content">
+      <p>Western comfort food options:</p>
+      <ul>
+        <li>Burger and Fries</li>
+        <li>Chicken Schnitzel with Salad</li>
+        <li>Spaghetti Carbonara</li>
+        <li>Club Sandwich</li>
+      </ul>
+      <div class="image-container">
+          <img src="Burger.jpg" alt="Burger and fries" onclick="openModal(this.src)">
+          <div class="image-overlay"><p>Satisfy your cravings with our juicy burger and crispy fries.</p></div>
+      </div>
     </div>
   </div>
 
   <div id="desserts-popup" class="popup">
     <span class="close" onclick="closePopup('desserts-popup')">×</span>
     <h3>Desserts</h3>
-    <p>End your meal on a sweet note:</p>
-    <ul>
-      <li>Mango Sticky Rice (seasonal)</li>
-      <li>Ice Cream (Vanilla, Chocolate, Strawberry)</li>
-      <li>Fried Banana with Honey</li>
-    </ul>
-    <div class="image-container">
-        <img src="Mango-Sticky-Rice.jpg" alt="Mango Sticky Rice">
-        <div class="image-overlay"><p>Seasonal favorite: sweet sticky rice with fresh mango.</p></div>
+    <div class="popup-content">
+      <p>End your meal on a sweet note:</p>
+      <ul>
+        <li>Mango Sticky Rice (seasonal)</li>
+        <li>Ice Cream (Vanilla, Chocolate, Strawberry)</li>
+        <li>Fried Banana with Honey</li>
+      </ul>
+      <div class="image-container">
+          <img src="Mango-Sticky-Rice.jpg" alt="Mango Sticky Rice" onclick="openModal(this.src)">
+          <div class="image-overlay"><p>Seasonal favorite: sweet sticky rice with fresh mango.</p></div>
+      </div>
     </div>
   </div>
 
   <div id="special-food-popup" class="popup">
     <span class="close" onclick="closePopup('special-food-popup')">×</span>
     <h3>This Week's Special</h3>
-    <p>Ask our staff for today's unique offering!</p>
-    <ul>
-      <li>Chef's daily recommendation</li>
-      <li>Seasonal ingredient highlight</li>
-    </ul>
-    <div class="image-container">
-        <img src="porkroast.jpg" alt="Special dish">
-        <div class="image-overlay"><p>Don't miss our rotating weekly special!</p></div>
+    <div class="popup-content">
+      <p>Ask our staff for today's unique offering!</p>
+      <ul>
+        <li>Chef's daily recommendation</li>
+        <li>Seasonal ingredient highlight</li>
+      </ul>
+      <div class="image-container">
+          <img src="porkroast.jpg" alt="Special dish" onclick="openModal(this.src)">
+          <div class="image-overlay"><p>Don't miss our rotating weekly special!</p></div>
+      </div>
     </div>
   </div>
 
   <div id="soft-drinks-popup" class="popup">
     <span class="close" onclick="closePopup('soft-drinks-popup')">×</span>
     <h3>Soft Drinks</h3>
-    <p>Cool down with a refreshing soft drink:</p>
-    <ul>
-      <li>Coca-Cola</li>
-      <li>Sprite</li>
-      <li>Fanta</li>
-      <li>Bottled Water</li>
-      <li>Fresh Orange Juice</li>
-    </ul>
+    <div class="popup-content">
+      <p>Cool down with a refreshing soft drink:</p>
+      <ul>
+        <li>Coca-Cola</li>
+        <li>Sprite</li>
+        <li>Fanta</li>
+        <li>Bottled Water</li>
+        <li>Fresh Orange Juice</li>
+      </ul>
+    </div>
   </div>
 
   <div id="local-beers-popup" class="popup">
     <span class="close" onclick="closePopup('local-beers-popup')">×</span>
     <h3>Local Beers</h3>
-    <p>Taste the local brews:</p>
-    <ul>
-      <li>Chang Beer</li>
-      <li>Leo Beer</li>
-      <li>Singha Beer</li>
-    </ul>
-    <div class="image-container">
-        <img src="beergarden.jpg" alt="Local beer glasses">
-        <div class="image-overlay"><p>Enjoy a cold Thai beer at our Beer Garden.</p></div>
+    <div class="popup-content">
+      <p>Taste the local brews:</p>
+      <ul>
+        <li>Chang Beer</li>
+        <li>Leo Beer</li>
+        <li>Singha Beer</li>
+      </ul>
+      <div class="image-container">
+          <img src="beergarden.jpg" alt="Local beer glasses" onclick="openModal(this.src)">
+          <div class="image-overlay"><p>Enjoy a cold Thai beer at our Beer Garden.</p></div>
+      </div>
     </div>
   </div>
 
   <div id="alcoholic-drinks-popup" class="popup">
     <span class="close" onclick="closePopup('alcoholic-drinks-popup')">×</span>
     <h3>Other Alcoholic Beverages</h3>
-    <p>For something stronger beyond our specialty cocktails:</p>
-    <ul>
-      <li>Whiskey (local and international selection)</li>
-      <li>Rum (local and international selection)</li>
-      <li>Vodka (various brands)</li>
-      <li>Gin (various brands)</li>
-      <li>Tequila</li>
-      <li>Assorted Shots</li>
-    </ul>
+    <div class="popup-content">
+      <p>For something stronger beyond our specialty cocktails:</p>
+      <ul>
+        <li>Whiskey (local and international selection)</li>
+        <li>Rum (local and international selection)</li>
+        <li>Vodka (various brands)</li>
+        <li>Gin (various brands)</li>
+        <li>Tequila</li>
+        <li>Assorted Shots</li>
+      </ul>
+    </div>
   </div>
 
   <div id="thai-bar-drinks-popup" class="popup">
     <span class="close" onclick="closePopup('thai-bar-drinks-popup')">×</span>
-    
-    <section class="drinks-menu">
-      <h2>🍹 Suan Som Bar – Drinks Menu<br>เมนูเครื่องดื่มบาร์สวนสม</h2>
-
-      <h3>🍸 Signature Cocktails – 180 THB<br>ค็อกเทลซิกเนเจอร์</h3>
-      <ul>
-        <li>🍃 Thai Mojito – ไทยโมฮิโต้ – เหล้ารัม มะนาว โซดา และโหระพาไทย</li>
-        <li>🌶️ Tom Yum Martini – ต้มยำมาร์ตินี่ – วอดก้า ตะไคร้ ใบมะกรูด พริก</li>
-        <li>🥭 Mango Tango – แมงโก้แทงโก้ – มะม่วง วอดก้า น้ำมะนาว</li>
-        <li>🍈 Lychee Martini – ลิ้นจี่มาร์ตินี่ – วอดก้า น้ำลิ้นจี่</li>
-        <li>🔥 Spicy Siam – สไปซี่สยาม – เตกีล่า น้ำมะนาว น้ำเชื่อมพริก</li>
-      </ul>
-
-      <h3>🍹 Classic Cocktails – 160 THB<br>ค็อกเทลคลาสสิก</h3>
-      <ul>
-        <li>🍋 Margarita – มาการิต้า – เตกีล่า น้ำมะนาว</li>
-        <li>🍍 Pina Colada – พินาโคลาด้า – รัม ครีมมะพร้าว น้ำสับปะรด</li>
-        <li>🍊 Mai Tai – ไมไท – รัม มะนาว น้ำเชื่อมอัลมอนด์</li>
-        <li>🧊 Long Island Iced Tea – ลองไอซ์แลนด์ – วอดก้า รัม จิน เตกีล่า โคล่า</li>
-        <li>🍋 Whiskey Sour – วิสกี้ซาวร์ – วิสกี้ น้ำมะนาว</li>
-      </ul>
-           
-      <div class="image-container">
-          <img src="thai_cocktail.jpg" alt="Thai cocktail">
-          <div class="image-overlay"><p>Enjoy a perfectly crafted cocktail at our bar!</p></div>
-      </div>
-      <div class="image-container">
-          <img src="thai_beer.jpg" alt="Thai beer bottles">
-          <div class="image-overlay"><p>Cool down with a crisp, cold Thai beer.</p></div>
-      </div>
-
-    </section>
+    <h3>🍹 Suan Som Bar – Drinks Menu<br>เมนูเครื่องดื่มบาร์สวนสม</h3>
+    <div class="popup-content">
+      <section class="drinks-menu">
+        <h3>🍸 Signature Cocktails – 180 THB<br>ค็อกเทลซิกเนเจอร์</h3>
+        <ul>
+          <li>🍃 Thai Mojito – ไทยโมฮิโต้ – เหล้ารัม มะนาว โซดา และโหระพาไทย</li>
+          <li>🌶️ Tom Yum Martini – ต้มยำมาร์ตินี่ – วอดก้า ตะไคร้ ใบมะกรูด พริก</li>
+          <li>🥭 Mango Tango – แมงโก้แทงโก้ – มะม่วง วอดก้า น้ำมะนาว</li>
+          <li>🍈 Lychee Martini – ลิ้นจี่มาร์ตินี่ – วอดก้า น้ำลิ้นจี่</li>
+          <li>🔥 Spicy Siam – สไปซี่สยาม – เตกีล่า น้ำมะนาว น้ำเชื่อมพริก</li>
+        </ul>
+             
+        <div class="image-container">
+            <img src="thai_cocktail.jpg" alt="Thai cocktail" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Enjoy a perfectly crafted cocktail at our bar!</p></div>
+        </div>
+        <div class="image-container">
+            <img src="thai_beer.jpg" alt="Thai beer bottles" onclick="openModal(this.src)">
+            <div class="image-overlay"><p>Cool down with a crisp, cold Thai beer.</p></div>
+        </div>
+      </section>
+    </div>
   </div>
   <div class="footer">
     © 2025 Suan Som Resort. All rights reserved.
@@ -826,8 +896,12 @@
     function openPopup(id) {
       const popupElement = document.getElementById(id);
       if (popupElement) {
-        popupElement.style.display = 'block';
-        popupElement.scrollTop = 0; // Reset scroll position to top
+        popupElement.style.display = 'flex'; // Use flex for column layout
+        // Find the scrollable content area and reset its scroll
+        const scrollableContent = popupElement.querySelector('.popup-content');
+        if (scrollableContent) {
+          scrollableContent.scrollTop = 0;
+        }
         document.getElementById('overlay').style.display = 'block'; // Show overlay
       }
       
@@ -866,7 +940,7 @@
         // Filter out the 'overlay' itself from the check
         const activePopups = popupIds.filter(id => {
             const el = document.getElementById(id);
-            return el && el.style.display === 'block';
+            return el && el.style.display === 'flex'; // Check for 'flex' display
         });
         return activePopups.length > 0;
     }
