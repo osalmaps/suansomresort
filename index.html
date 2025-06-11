@@ -83,6 +83,18 @@
 }
 
 .book-button {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.book-button.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.book-button {
     display: inline-block;
     padding: 12px 24px;
     background-color: #4CAF50;
@@ -632,7 +644,7 @@
 <div class="divider"></div>
 
 <div class="button-container">
-    <a href="mailto:peterspliid.schmidt@gmail.com?subject=Room Booking Request" class="book-button">
+    <a href="mailto:info@suansom.com?subject=Room Booking Request" class="book-button">
         ✉️ Book Room Here
     </a>
 </div>
