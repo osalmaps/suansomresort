@@ -90,12 +90,26 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1.1rem;
-            /* transition is handled by .fade-in-hidden / .fade-in-visible classes */
+            /* Define ALL transitions here, so they are always active on the button */
+            transition: opacity 5s ease-in-out, visibility 0s linear 5s, background-color 0.3s, color 0.3s;
         }
 
         .hero-content button:hover {
             background-color: #f66d48;
         }
+
+        /* Initial state for the fade-in button (set by JavaScript on page load) */
+        .fade-in-hidden {
+            opacity: 0.05; /* Barely visible */
+            visibility: hidden; /* Prevents interaction/clicks until fully visible */
+        }
+
+        /* Final state for the fade-in button (applied by JavaScript after delay) */
+        .fade-in-visible {
+            opacity: 1; /* Fully opaque */
+            visibility: visible; /* Allows interaction/clicks */
+        }
+
 
         .section {
             padding: 40px 20px;
@@ -228,11 +242,33 @@
             font-size: 30px;
             cursor: pointer;
             color: #888;
+            z-index: 1002; /* Ensure close button is on top */
         }
 
         .popup .close:hover, .modal .close:hover {
             color: #333;
         }
+
+        /* Styling for the new Email Us button */
+        #contact-popup #emailContactButton {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background-color: #007bff; /* A nice blue for email */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 1001; /* Ensure it's above other popup content but below close */
+            transition: background-color 0.3s;
+        }
+
+        #contact-popup #emailContactButton:hover {
+            background-color: #0056b3;
+        }
+
 
         .popup-content {
             width: 100%;
@@ -396,18 +432,6 @@
             margin-right: 10px;
         }
 
-        /* Fade-in for "Book Room Here" button */
-        .fade-in-hidden {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-        }
-
-        .fade-in-visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -435,6 +459,19 @@
 
             .popup h2 {
                 font-size: 1.5rem;
+            }
+
+            /* Adjust button positions slightly for smaller screens if needed */
+            #contact-popup .close {
+                top: 10px;
+                right: 15px;
+                font-size: 24px;
+            }
+            #contact-popup #emailContactButton {
+                top: 10px;
+                left: 15px;
+                padding: 6px 10px;
+                font-size: 0.8rem;
             }
 
             .tab-button, .sub-button {
@@ -583,6 +620,7 @@
 
     <div id="contact-popup" class="popup">
         <span class="close" onclick="closePopup('contact-popup')">×</span>
+        <button id="emailContactButton">Email Us</button>
         <h2>Contact Us</h2>
         <div class="popup-content">
             <p>We'd love to hear from you! Reach out to us for reservations, inquiries, or feedback.</p>
@@ -1202,6 +1240,18 @@
                     bookRoomButton.classList.remove('fade-in-hidden');
                     bookRoomButton.classList.add('fade-in-visible');
                 }, 10000); // 10 seconds
+            }
+
+            // --- New: Email button functionality ---
+            const emailContactButton = document.getElementById('emailContactButton');
+            if (emailContactButton) {
+                emailContactButton.addEventListener('click', () => {
+                    const email = 'info@suansomresort.com'; // Your resort's email address
+                    const subject = encodeURIComponent('Room Inquiry from Suan Som Resort Website');
+                    const body = encodeURIComponent('Dear Suan Som Resort Team,\n\nI am writing to inquire about room availability and rates.\n\nPlease let me know what information you require from me.\n\nThank you,\n[Your Name]');
+                    
+                    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+                });
             }
         });
 
