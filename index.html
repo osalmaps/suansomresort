@@ -1415,6 +1415,14 @@
             if (modalPrevBtn) modalPrevBtn.addEventListener('click', showPrevImage);
             if (modalNextBtn) modalNextBtn.addEventListener('click', showNextImage);
         });
+        
+  document.addEventListener("DOMContentLoaded", function () {
+    const button = document.querySelector(".book-button");
+    if (button) {
+      button.classList.add("visible");
+    }
+  });
+</script>
 
     </script>
 
