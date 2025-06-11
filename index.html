@@ -63,6 +63,41 @@
             text-align: center; /* Ensure text is centered */
             padding: 1rem; /* Add some padding to hero text */
         }
+.hero {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 40px;
+    font-weight: bold;
+}
+
+.divider {
+    width: 80px;
+    height: 4px;
+    background-color: #4CAF50;
+    margin: 10px auto 20px;
+    border-radius: 2px;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.book-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.book-button:hover {
+    background-color: #45a049;
+}
+
         .content {
             padding: 1rem; /* Reduced padding for mobile */
             text-align: center;
@@ -590,9 +625,17 @@
         <a href="#contact">Contact</a>
     </nav>
 
-    <div class="hero">
-        Welcome to Suan Som
-    </div>
+<div class="hero">
+    Welcome to Suan Som
+</div>
+
+<div class="divider"></div>
+
+<div class="button-container">
+    <a href="mailto:info@suansom.com?subject=Room Booking Request" class="book-button">
+        ✉️ Book Room Here
+    </a>
+</div>
 
     <div class="content">
         <div id="resort" class="section">
