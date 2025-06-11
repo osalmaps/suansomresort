@@ -68,6 +68,7 @@
         .hero-content {
             position: relative; /* Needed for z-index or other positioning within hero */
             z-index: 2; /* Ensure content is above any potential hero overlays */
+            text-align: center; /* <<< ADDED THIS FOR CENTERING BUTTON >>> */
         }
 
         .hero-content h1 {
@@ -109,7 +110,7 @@
         #bookRoomButton.fade-in-visible {
             opacity: 1; /* Fully opaque */
             visibility: visible; /* Makes it clickable */
-            /* Display is handled by JS before adding this class */
+            /* Display is handled by JS BEFORE adding this class */
         }
         /* --- END OF FADE-IN BUTTON CORRECTION --- */
 
@@ -1242,8 +1243,8 @@
             const bookRoomButton = document.getElementById('bookRoomButton');
             if (bookRoomButton) {
                 setTimeout(() => {
-                    // First, make it display: block; so it takes up space and can be transitioned
-                    bookRoomButton.style.display = 'block';
+                    // First, make it display: inline-block; so it takes up space and can be centered
+                    bookRoomButton.style.display = 'inline-block'; // <<< CHANGED TO INLINE-BLOCK >>>
                     // Then, after a very slight delay, add the class that triggers the fade-in
                     setTimeout(() => {
                         bookRoomButton.classList.add('fade-in-visible');
