@@ -85,8 +85,6 @@
         /* --- START OF FADE-IN BUTTON CORRECTION --- */
         /* General button styles for .hero-content section */
         .hero-content button {
-            /* Any styles common to ALL buttons in hero-content */
-            /* But specific fade-in properties are handled by #bookRoomButton */
             background-color: #e44d26; /* Example button color */
             color: white;
             padding: 15px 30px;
@@ -94,23 +92,24 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1.1rem;
-            /* Only general transitions for hover effects here if desired */
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s; /* General hover transitions */
         }
 
         /* Specific styles for the "Book Room Here" button, including its initial state and unique transition */
         #bookRoomButton {
-            opacity: 0.05; /* Start barely visible */
+            opacity: 0; /* Start fully transparent */
             visibility: hidden; /* Prevent interaction until visible */
+            display: none; /* Crucially remove from layout initially */
+            
             /* These are the transitions for opacity and visibility specifically for THIS button */
             transition: opacity 5s ease-in-out, visibility 0s linear 5s;
         }
 
-        /* This class will be added by JavaScript to make it fully visible */
-        /* It needs to be more specific than #bookRoomButton to override its initial state */
+        /* This class will be added by JavaScript to make it fully visible and trigger the fade-in */
         #bookRoomButton.fade-in-visible {
             opacity: 1; /* Fully opaque */
             visibility: visible; /* Makes it clickable */
+            /* Display is handled by JS before adding this class */
         }
         /* --- END OF FADE-IN BUTTON CORRECTION --- */
 
@@ -1242,13 +1241,13 @@
             // Fade in "Book Room Here" button after 10 seconds
             const bookRoomButton = document.getElementById('bookRoomButton');
             if (bookRoomButton) {
-                // Add console logs for debugging
-                console.log('Book Room Button found. Initial opacity:', getComputedStyle(bookRoomButton).opacity, 'visibility:', getComputedStyle(bookRoomButton).visibility);
                 setTimeout(() => {
-                    console.log('Timeout fired for Book Room Here button.');
-                    bookRoomButton.classList.add('fade-in-visible');
-                    console.log('Classes after adding fade-in-visible:', bookRoomButton.className);
-                    console.log('Final opacity:', getComputedStyle(bookRoomButton).opacity, 'visibility:', getComputedStyle(bookRoomButton).visibility);
+                    // First, make it display: block; so it takes up space and can be transitioned
+                    bookRoomButton.style.display = 'block';
+                    // Then, after a very slight delay, add the class that triggers the fade-in
+                    setTimeout(() => {
+                        bookRoomButton.classList.add('fade-in-visible');
+                    }, 10); // A small delay (e.g., 10ms) to allow browser to register display change
                 }, 10000); // 10 seconds
             }
 
