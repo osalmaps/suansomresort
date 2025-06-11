@@ -83,7 +83,10 @@
         }
 
         /* --- START OF FADE-IN BUTTON CORRECTION --- */
+        /* General button styles for .hero-content section */
         .hero-content button {
+            /* Any styles common to ALL buttons in hero-content */
+            /* But specific fade-in properties are handled by #bookRoomButton */
             background-color: #e44d26; /* Example button color */
             color: white;
             padding: 15px 30px;
@@ -91,29 +94,29 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1.1rem;
-            /* Define ALL transitions here, so they are always active on the button */
-            transition: opacity 5s ease-in-out, visibility 0s linear 5s, background-color 0.3s, color 0.3s;
-            /* opacity: 5s duration, ease-in-out timing */
-            /* visibility: 0s duration, but starts after opacity transition is done (5s delay) */
-            /* background-color and color transitions are quick for hover effects */
+            /* Only general transitions for hover effects here if desired */
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        /* Specific styles for the "Book Room Here" button, including its initial state and unique transition */
+        #bookRoomButton {
+            opacity: 0.05; /* Start barely visible */
+            visibility: hidden; /* Prevent interaction until visible */
+            /* These are the transitions for opacity and visibility specifically for THIS button */
+            transition: opacity 5s ease-in-out, visibility 0s linear 5s;
+        }
+
+        /* This class will be added by JavaScript to make it fully visible */
+        /* It needs to be more specific than #bookRoomButton to override its initial state */
+        #bookRoomButton.fade-in-visible {
+            opacity: 1; /* Fully opaque */
+            visibility: visible; /* Makes it clickable */
+        }
+        /* --- END OF FADE-IN BUTTON CORRECTION --- */
 
         .hero-content button:hover {
             background-color: #f66d48;
         }
-
-        /* Initial state for the fade-in button (set by JavaScript on page load) */
-        .fade-in-hidden {
-            opacity: 0.05; /* Barely visible */
-            visibility: hidden; /* Prevents interaction/clicks until fully visible */
-        }
-
-        /* Final state for the fade-in button (applied by JavaScript after delay) */
-        .fade-in-visible {
-            opacity: 1; /* Fully opaque */
-            visibility: visible; /* Allows interaction/clicks */
-        }
-        /* --- END OF FADE-IN BUTTON CORRECTION --- */
 
 
         .section {
@@ -247,11 +250,33 @@
             font-size: 30px;
             cursor: pointer;
             color: #888;
+            z-index: 1002; /* Ensure close button is on top */
         }
 
         .popup .close:hover, .modal .close:hover {
             color: #333;
         }
+
+        /* Styling for the new Email Us button */
+        #contact-popup #emailContactButton {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background-color: #007bff; /* A nice blue for email */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 1001; /* Ensure it's above other popup content but below close */
+            transition: background-color 0.3s;
+        }
+
+        #contact-popup #emailContactButton:hover {
+            background-color: #0056b3;
+        }
+
 
         .popup-content {
             width: 100%;
@@ -444,6 +469,19 @@
                 font-size: 1.5rem;
             }
 
+            /* Adjust button positions slightly for smaller screens if needed */
+            #contact-popup .close {
+                top: 10px;
+                right: 15px;
+                font-size: 24px;
+            }
+            #contact-popup #emailContactButton {
+                top: 10px;
+                left: 15px;
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+
             .tab-button, .sub-button {
                 padding: 8px 12px;
                 font-size: 0.85rem;
@@ -494,7 +532,7 @@
             <div class="hero-content">
                 <h1>Welcome to Suan Som Resort</h1>
                 <p>Your perfect getaway in the heart of Thailand.</p>
-                <button id="bookRoomButton" class="fade-in-hidden" onclick="openPopup('rooms-popup')">Book Room Here</button>
+                <button id="bookRoomButton" onclick="openPopup('rooms-popup')">Book Room Here</button>
             </div>
         </section>
 
@@ -590,6 +628,7 @@
 
     <div id="contact-popup" class="popup">
         <span class="close" onclick="closePopup('contact-popup')">×</span>
+        <button id="emailContactButton">Email Us</button>
         <h2>Contact Us</h2>
         <div class="popup-content">
             <p>We'd love to hear from you! Reach out to us for reservations, inquiries, or feedback.</p>
@@ -1197,19 +1236,32 @@
                 overlay.addEventListener('click', closeAllPopups);
             }
             // Ensure modal nav buttons have event listeners (initially hidden)
-            // Note: These are now set in setupGalleryControls and removed in removeGalleryEventListeners
-            // but keeping DOMContentLoaded attachment for robustness
             if (modalPrevBtn) modalPrevBtn.addEventListener('click', showPrevImage);
             if (modalNextBtn) modalNextBtn.addEventListener('click', showNextImage);
 
             // Fade in "Book Room Here" button after 10 seconds
             const bookRoomButton = document.getElementById('bookRoomButton');
             if (bookRoomButton) {
+                // Add console logs for debugging
+                console.log('Book Room Button found. Initial opacity:', getComputedStyle(bookRoomButton).opacity, 'visibility:', getComputedStyle(bookRoomButton).visibility);
                 setTimeout(() => {
-                    // This will now smoothly transition because the 'transition' property is on the button itself
-                    bookRoomButton.classList.remove('fade-in-hidden');
+                    console.log('Timeout fired for Book Room Here button.');
                     bookRoomButton.classList.add('fade-in-visible');
+                    console.log('Classes after adding fade-in-visible:', bookRoomButton.className);
+                    console.log('Final opacity:', getComputedStyle(bookRoomButton).opacity, 'visibility:', getComputedStyle(bookRoomButton).visibility);
                 }, 10000); // 10 seconds
+            }
+
+            // Email button functionality
+            const emailContactButton = document.getElementById('emailContactButton');
+            if (emailContactButton) {
+                emailContactButton.addEventListener('click', () => {
+                    const email = 'info@suansomresort.com'; // Your resort's email address
+                    const subject = encodeURIComponent('Room Inquiry from Suan Som Resort Website');
+                    const body = encodeURIComponent('Dear Suan Som Resort Team,\n\nI am writing to inquire about room availability and rates.\n\nPlease let me know what information you require from me.\n\nThank you,\n[Your Name]');
+                    
+                    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+                });
             }
         });
 
