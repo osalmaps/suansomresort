@@ -82,6 +82,7 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
         }
 
+        /* --- START OF FADE-IN BUTTON CORRECTION --- */
         .hero-content button {
             background-color: #e44d26; /* Example button color */
             color: white;
@@ -92,6 +93,9 @@
             font-size: 1.1rem;
             /* Define ALL transitions here, so they are always active on the button */
             transition: opacity 5s ease-in-out, visibility 0s linear 5s, background-color 0.3s, color 0.3s;
+            /* opacity: 5s duration, ease-in-out timing */
+            /* visibility: 0s duration, but starts after opacity transition is done (5s delay) */
+            /* background-color and color transitions are quick for hover effects */
         }
 
         .hero-content button:hover {
@@ -109,6 +113,7 @@
             opacity: 1; /* Fully opaque */
             visibility: visible; /* Allows interaction/clicks */
         }
+        /* --- END OF FADE-IN BUTTON CORRECTION --- */
 
 
         .section {
@@ -242,33 +247,11 @@
             font-size: 30px;
             cursor: pointer;
             color: #888;
-            z-index: 1002; /* Ensure close button is on top */
         }
 
         .popup .close:hover, .modal .close:hover {
             color: #333;
         }
-
-        /* Styling for the new Email Us button */
-        #contact-popup #emailContactButton {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            background-color: #007bff; /* A nice blue for email */
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            z-index: 1001; /* Ensure it's above other popup content but below close */
-            transition: background-color 0.3s;
-        }
-
-        #contact-popup #emailContactButton:hover {
-            background-color: #0056b3;
-        }
-
 
         .popup-content {
             width: 100%;
@@ -461,19 +444,6 @@
                 font-size: 1.5rem;
             }
 
-            /* Adjust button positions slightly for smaller screens if needed */
-            #contact-popup .close {
-                top: 10px;
-                right: 15px;
-                font-size: 24px;
-            }
-            #contact-popup #emailContactButton {
-                top: 10px;
-                left: 15px;
-                padding: 6px 10px;
-                font-size: 0.8rem;
-            }
-
             .tab-button, .sub-button {
                 padding: 8px 12px;
                 font-size: 0.85rem;
@@ -620,7 +590,6 @@
 
     <div id="contact-popup" class="popup">
         <span class="close" onclick="closePopup('contact-popup')">×</span>
-        <button id="emailContactButton">Email Us</button>
         <h2>Contact Us</h2>
         <div class="popup-content">
             <p>We'd love to hear from you! Reach out to us for reservations, inquiries, or feedback.</p>
@@ -1237,21 +1206,10 @@
             const bookRoomButton = document.getElementById('bookRoomButton');
             if (bookRoomButton) {
                 setTimeout(() => {
+                    // This will now smoothly transition because the 'transition' property is on the button itself
                     bookRoomButton.classList.remove('fade-in-hidden');
                     bookRoomButton.classList.add('fade-in-visible');
                 }, 10000); // 10 seconds
-            }
-
-            // --- New: Email button functionality ---
-            const emailContactButton = document.getElementById('emailContactButton');
-            if (emailContactButton) {
-                emailContactButton.addEventListener('click', () => {
-                    const email = 'info@suansomresort.com'; // Your resort's email address
-                    const subject = encodeURIComponent('Room Inquiry from Suan Som Resort Website');
-                    const body = encodeURIComponent('Dear Suan Som Resort Team,\n\nI am writing to inquire about room availability and rates.\n\nPlease let me know what information you require from me.\n\nThank you,\n[Your Name]');
-                    
-                    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-                });
             }
         });
 
