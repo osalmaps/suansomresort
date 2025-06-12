@@ -428,21 +428,10 @@ nav ul li button:hover {
         grid-template-columns: 1fr;
     }
 
-   #contact-popup h2 {
-  font-size: 2em;
-  color: #d35400;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-/* Optional: adjust for large screens only */
-@media (min-width: 993px) {
-  #contact-popup h2 {
-    margin-top: 10px;
-    text-align: left;
-  }
-}
-
+    #contact-popup h2 {
+    margin-top: 40px; /* or try 60px for more space */
+    margin-bottom: 20px; /* space below the heading */
+   }
 
     .popup h2 {
         font-size: 1.5rem;
@@ -587,26 +576,27 @@ nav ul li button:hover {
             <button class="sub-button" onclick="openPopup('contact-popup')">Inquire Now</button>
         </div>
     </div>
-    <div id="contact-popup" class="popup">
+
+   <div class="popup-content">
   <button class="email-button">Email Us</button>
-  
-  <h2>Contact Us</h2> <!-- Move this here -->
+
+  <h2 class="contact-heading">Contact Us</h2>
 
   <p>We'd love to hear from you! Reach out to us for reservations, inquiries, or feedback.</p>
-
   <ul>
     <li><strong>Office Phone:</strong> +66 09 393 56 326</li>
     <li><strong>Som’s Phone:</strong> +66 09 393 56 326</li>
     <li><strong>Email:</strong> peterspliid.schmidt@gmail.com</li>
     <li><strong>Address:</strong> 86/4 Ban Sawsawan, Han Na Ngam, Nong Bua Lamphu Province, 39180, Thailand</li>
   </ul>
-  
-  <img src="your-image.jpg" alt="Suan Som Resort">
-  
-  <p>Our friendly staff are available to assist you during business hours...</p>
+
+  <img src="your-image.jpg" alt="Suan Som Resort" class="contact-image">
+
+  <p>
+    Our friendly staff are available to assist you during business hours. A small selection of drinks and snacks are available on request. Please check the Restaurant Menu.
+  </p>
 </div>
 
-    </div>
 
     <div id="restaurant-popup" class="popup">
         <span class="close" onclick="closePopup('restaurant-popup')">×</span>
