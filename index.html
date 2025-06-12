@@ -485,14 +485,24 @@
         grid-template-columns: 1fr;
     }
 
-    /* ... other styles ... */
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        /* ... other styles ... */
     .popup, .modal {
         padding: 15px;
         max-width: 98%; /* Change from 95% to 98% or even higher if needed */
     }
-    /* ... other styles ... */
+        /* ... other styles ... */
     }
 
+        /* Even smaller screens */
+    @media (max-width: 480px) {
+        /* ... other styles ... */
+    .popup, .modal {
+        padding: 10px;
+        max-width: 98%; /* Change from 95% to 98% or even higher if needed */
+    }
+   
     .popup h2 {
         font-size: 1.5rem;
     }
@@ -502,6 +512,7 @@
         right: 15px;
         font-size: 24px;
     }
+
     #contact-popup #emailContactButton {
         top: 10px;
         left: 15px;
