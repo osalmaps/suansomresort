@@ -440,23 +440,39 @@
         #modal-next {
             margin-right: 10px;
         }
+/* Find this section in your CSS */
 /* Responsive adjustments */
-@media (max-width: 768px) {
-    /* ... other styles ... */
+@media (max-width: 768px) { /* <-- THIS LINE WILL CHANGE */
+    nav ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    /* ... other responsive rules for 768px ... */
     .popup, .modal {
         padding: 15px;
-        max-width: 98%; /* Change from 95% to 98% or even higher if needed */
+        max-width: 98%; /* Keep your previous fix for popup width */
     }
-    /* ... other styles ... */
 }
 
-/* Even smaller screens */
-@media (max-width: 480px) {
-    /* ... other styles ... */
-    .popup, .modal {
-        padding: 10px;
-        max-width: 98%; /* Change from 95% to 98% or even higher if needed */
+/* Now, change the @media (max-width: 768px) to @media (max-width: 992px) */
+/* It will look like this: */
+
+/* Responsive adjustments */
+@media (max-width: 992px) { /* <--- CHANGED FROM 768px to 992px */
+    nav ul li {
+        display: block; /* This rule will now apply for screens up to 992px wide */
+        margin-bottom: 10px;
     }
+
+    /* Keep the other responsive rules you have inside this block. */
+    /* For example, the popup width adjustment should remain in this block if it was there: */
+    .popup, .modal {
+        padding: 15px;
+        max-width: 98%; 
+    }
+    /* You might also have a separate @media (max-width: 480px) block.
+       Keep that one as well for very small phones if you need specific adjustments there. */
 }
     </style>
 </head>
