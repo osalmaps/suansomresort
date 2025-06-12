@@ -441,53 +441,77 @@
             margin-right: 10px;
         }
 
+       /* Find this block in your CSS, likely around line 200 or within your media queries */
+/* Responsive adjustments */
+@media (max-width: 992px) { /* This is your breakpoint for mobile/tablet */
+    
+    /* ADD THIS NEW RULE FOR THE UL CONTAINER */
+    nav ul {
+        display: grid; /* Make the ul a grid container */
+        grid-template-columns: 1fr 1fr; /* Create two equal columns */
+        gap: 10px; /* Add space between the grid items (buttons) */
+        padding: 0; /* Remove default ul padding if present */
+        margin: 0 auto; /* Center the grid container horizontally */
+        max-width: 400px; /* Optional: Limit the total width of the 2x2 grid */
+    }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            nav ul li {
-                display: block;
-                margin-bottom: 10px;
-            }
+    /* MODIFY THIS EXISTING RULE FOR THE LI ITEMS */
+    nav ul li {
+        /* These properties are no longer needed, as grid handles the layout */
+        /* display: block; */ /* Remove or comment out this line */
+        /* margin-bottom: 10px; */ /* Remove or comment out this line */
+        
+        margin: 0; /* Ensure no extra margins interfere with the grid gap */
+        display: flex; /* Use flex to center the button inside its grid cell */
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+    }
 
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
+    /* Optional: Ensure buttons fill their grid cells */
+    nav ul li button {
+        width: 100%; /* Make the button take full width of its grid cell */
+        box-sizing: border-box; /* Include padding and border in the width */
+    }
 
-            .section h2 {
-                font-size: 2rem;
-            }
+    /* Your other mobile/tablet rules that were already in this media query */
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
 
-            .gallery-images, .about-images {
-                grid-template-columns: 1fr;
-            }
+    .section h2 {
+        font-size: 2rem;
+    }
 
-            .popup, .modal {
-                padding: 15px;
-                max-width: 95%; /* Adjust for smaller screens */
-            }
+    .gallery-images, .about-images {
+        grid-template-columns: 1fr;
+    }
 
-            .popup h2 {
-                font-size: 1.5rem;
-            }
+    .popup, .modal {
+        padding: 15px;
+        max-width: 98%; /* Your previous popup width fix */
+    }
 
-            /* Adjust button positions slightly for smaller screens if needed */
-            #contact-popup .close {
-                top: 10px;
-                right: 15px;
-                font-size: 24px;
-            }
-            #contact-popup #emailContactButton {
-                top: 10px;
-                left: 15px;
-                padding: 6px 10px;
-                font-size: 0.8rem;
-            }
+    .popup h2 {
+        font-size: 1.5rem;
+    }
 
-            .tab-button, .sub-button {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-        }
+    #contact-popup .close {
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+    }
+    #contact-popup #emailContactButton {
+        top: 10px;
+        left: 15px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .tab-button, .sub-button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
 
         /* Even smaller screens */
         @media (max-width: 480px) {
