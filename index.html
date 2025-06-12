@@ -440,40 +440,46 @@
         #modal-next {
             margin-right: 10px;
         }
-
-       /* Find this block in your CSS, likely around line 200 or within your media queries */
-/* Responsive adjustments */
-@media (max-width: 992px) { /* This is your breakpoint for mobile/tablet */
-    
-    /* ADD THIS NEW RULE FOR THE UL CONTAINER */
-    nav ul {
-        display: grid; /* Make the ul a grid container */
-        grid-template-columns: 1fr 1fr; /* Create two equal columns */
-        gap: 10px; /* Add space between the grid items (buttons) */
-        padding: 0; /* Remove default ul padding if present */
-        margin: 0 auto; /* Center the grid container horizontally */
-        max-width: 300px; /* Optional: Limit the total width of the 2x2 grid */
-    }
-
-    /* MODIFY THIS EXISTING RULE FOR THE LI ITEMS */
-    nav ul li {
-        /* These properties are no longer needed, as grid handles the layout */
-        /* display: block; */ /* Remove or comment out this line */
-        /* margin-bottom: 10px; */ /* Remove or comment out this line */
         
-        margin: 0; /* Ensure no extra margins interfere with the grid gap */
-        display: flex; /* Use flex to center the button inside its grid cell */
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically */
+@media (max-width: 992px) {
+    nav ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 300px;
     }
 
-    /* Optional: Ensure buttons fill their grid cells */
+    nav ul li {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     nav ul li button {
-        width: 100%; /* Make the button take full width of its grid cell */
-        box-sizing: border-box; /* Include padding and border in the width */
+        width: 100%;
+        box-sizing: border-box;
     }
 
-    /* Your other mobile/tablet rules that were already in this media query */
+    /* Popup and Modal: slightly smaller than full screen */
+    .popup, .modal {
+        padding: 15px;
+        width: 90vw;
+        max-height: 85vh;
+        overflow-y: auto;
+        border-radius: 10px;
+    }
+
+    /* Specific override for contact popup */
+    #contact-popup {
+        width: 90vw;
+        max-width: 400px;
+        max-height: 80vh;
+        padding: 20px;
+    }
+
     .hero-content h1 {
         font-size: 2.5rem;
     }
@@ -486,11 +492,6 @@
         grid-template-columns: 1fr;
     }
 
-    .popup, .modal {
-        padding: 15px;
-        max-width: 98%; /* Your previous popup width fix */
-    }
-
     .popup h2 {
         font-size: 1.5rem;
     }
@@ -500,6 +501,7 @@
         right: 15px;
         font-size: 24px;
     }
+
     #contact-popup #emailContactButton {
         top: 10px;
         left: 15px;
@@ -518,7 +520,7 @@
         max-width: 100%;
         padding: 0 10px;
     }
-}
+}    
           </style>
 </head>
 <body>
