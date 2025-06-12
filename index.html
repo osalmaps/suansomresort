@@ -217,7 +217,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: white;
-            padding: 10px;
+            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
             z-index: 1000;
@@ -282,7 +282,7 @@
         .popup-content {
             width: 100%;
             /* Max width within popup to prevent content from stretching too wide */
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto; /* Center content within popup */
         }
 
@@ -519,8 +519,8 @@
 @media (max-width: 480px) {
     /* ... other rules specific to very small screens ... */
     .popup, .modal {
-        padding: 0px; /* Might want less padding on very small screens */
-        max-width: calc(100% - 40px); /* Use this here too */
+        padding: 5px; /* Might want less padding on very small screens */
+        max-width: calc(100% - 20px); /* Use this here too */
     }
     /* ... rest of your 480px rules ... */
 }
