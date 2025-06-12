@@ -410,9 +410,11 @@ nav ul li button:hover {
     }
 
     .popup, .modal {
-        padding: 20px;
-        width: 90vw;
-        max-width: 90vw; /* Fix: prevent popups from becoming too narrow */
+        padding: 15px;
+        width: 90vw;              /* Slightly narrower than full screen */
+        max-height: 85vh;         /* Leave space at top/bottom */
+        overflow-y: auto;         /* Scroll if content is too tall */
+        border-radius: 10px;
     }
 
     #contact-popup .close {
