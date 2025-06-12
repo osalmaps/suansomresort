@@ -1252,13 +1252,13 @@
             if (modalPrevBtn) modalPrevBtn.addEventListener('click', showPrevImage);
             if (modalNextBtn) modalNextBtn.addEventListener('click', showNextImage);
 
-            // Fade in "Book Room Here" button after 3 seconds
+            // Fade in "Book Room Here" button after 1 seconds
             const bookRoomButton = document.getElementById('bookRoomButton');
             if (bookRoomButton) {
                 setTimeout(() => {
                     // Directly add the class. Button is already in layout (opacity 0, visibility hidden).
                     bookRoomButton.classList.add('fade-in-visible');
-                }, 3000); // 3 seconds
+                }, 1000); // 1 seconds
             }
 
             // Email button functionality
