@@ -440,7 +440,7 @@
         #modal-next {
             margin-right: 10px;
         }
-/* Find this block in your CSS, likely around line 200 or within your media queries */
+
 /* Responsive adjustments */
 @media (max-width: 992px) { /* This is your breakpoint for mobile/tablet */
     
@@ -453,6 +453,26 @@
         margin: 0 auto; /* Center the grid container horizontally */
         max-width: 400px; /* Optional: Limit the total width of the 2x2 grid */
     }
+
+/* Inside your @media (max-width: 992px) block: */
+@media (max-width: 992px) {
+    /* ... other rules ... */
+    .popup, .modal {
+        padding: 15px; /* Keep or adjust as desired */
+        max-width: calc(100% - 20px); /* <-- CHANGE THIS LINE */
+    }
+    /* ... other rules ... */
+}
+
+/* If you also have an @media (max-width: 480px) block, apply the same change there: */
+@media (max-width: 480px) {
+    /* ... other rules ... */
+    .popup, .modal {
+        padding: 10px; /* Keep or adjust as desired */
+        max-width: calc(100% - 20px); /* <-- CHANGE THIS LINE */
+    }
+    /* ... other rules ... */
+}
 
     /* MODIFY THIS EXISTING RULE FOR THE LI ITEMS */
     nav ul li {
