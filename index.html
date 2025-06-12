@@ -440,41 +440,91 @@
         #modal-next {
             margin-right: 10px;
         }
-/* Find this section in your CSS */
-/* Responsive adjustments */
-@media (max-width: 768px) { /* <-- THIS LINE WILL CHANGE */
-    nav ul li {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    /* ... other responsive rules for 768px ... */
-    .popup, .modal {
-        padding: 15px;
-        max-width: 98%; /* Keep your previous fix for popup width */
-    }
-}
-
-/* Now, change the @media (max-width: 768px) to @media (max-width: 992px) */
-/* It will look like this: */
 
 /* Responsive adjustments */
-@media (max-width: 992px) { /* <--- CHANGED FROM 768px to 992px */
-    nav ul li {
-        display: block; /* This rule will now apply for screens up to 992px wide */
-        margin-bottom: 10px;
+@media (max-width: 992px) {
+    /* --- START OF nav buttons (2x2 grid) --- */
+    nav ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 400px; /* Optional: limit the total width of the 2x2 grid */
     }
 
-    /* Keep the other responsive rules you have inside this block. */
-    /* For example, the popup width adjustment should remain in this block if it was there: */
-    .popup, .modal {
-        padding: 15px;
-        max-width: 98%; 
+    nav ul li {
+        margin: 0; /* Ensures no extra margins interfere with the grid gap */
+        display: flex; /* Use flex to center the button inside its grid cell */
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
     }
-    /* You might also have a separate @media (max-width: 480px) block.
-       Keep that one as well for very small phones if you need specific adjustments there. */
+
+    nav ul li button {
+        width: 100%; /* Make the button take full width of its grid cell */
+        box-sizing: border-box; /* Include padding and border in the width */
+    }
+    /* --- END OF nav buttons (2x2 grid) --- */
+
+
+    /* --- START OF POPUP/MODAL WIDTH FIX --- */
+    /* THIS IS THE ONLY .popup, .modal rule you should have in this @media query */
+    .popup, .modal {
+        padding: 15px; /* Keep or adjust as desired */
+        max-width: calc(100% - 20px); /* Use this for wider popups */
+    }
+    /* --- END OF POPUP/MODAL WIDTH FIX --- */
+
+
+    /* --- START OF OTHER MOBILE/TABLET RULES (consolidated) --- */
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .section h2 {
+        font-size: 2rem;
+    }
+
+    .gallery-images, .about-images {
+        grid-template-columns: 1fr;
+    }
+    
+    .popup h2 {
+        font-size: 1.5rem;
+    }
+
+    #contact-popup .close {
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+    }
+    #contact-popup #emailContactButton {
+        top: 10px;
+        left: 15px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .tab-button, .sub-button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    /* --- END OF OTHER MOBILE/TABLET RULES --- */
+
+} /* This single closing brace closes the entire @media (max-width: 992px) block */
+
+
+/* If you also have an @media (max-width: 480px) block, ensure it's separate
+   and also uses max-width: calc(100% - 20px); for popups: */
+@media (max-width: 480px) {
+    /* ... other rules specific to very small screens ... */
+    .popup, .modal {
+        padding: 10px; /* Might want less padding on very small screens */
+        max-width: calc(100% - 20px); /* Use this here too */
+    }
+    /* ... rest of your 480px rules ... */
 }
-   
+
     </style>
 </head>
 <body>
