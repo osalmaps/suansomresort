@@ -442,57 +442,41 @@
         }
 
 /* Responsive adjustments */
-@media (max-width: 992px) { /* This is your breakpoint for mobile/tablet */
-    
-    /* ADD THIS NEW RULE FOR THE UL CONTAINER */
-    nav ul {
-        display: grid; /* Make the ul a grid container */
-        grid-template-columns: 1fr 1fr; /* Create two equal columns */
-        gap: 10px; /* Add space between the grid items (buttons) */
-        padding: 0; /* Remove default ul padding if present */
-        margin: 0 auto; /* Center the grid container horizontally */
-        max-width: 400px; /* Optional: Limit the total width of the 2x2 grid */
-    }
-
-/* Inside your @media (max-width: 992px) block: */
 @media (max-width: 992px) {
-    /* ... other rules ... */
-    .popup, .modal {
-        padding: 15px; /* Keep or adjust as desired */
-        max-width: calc(100% - 20px); /* <-- CHANGE THIS LINE */
+    /* --- START OF nav buttons (2x2 grid) --- */
+    nav ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 400px; /* Optional: limit the total width of the 2x2 grid */
     }
-    /* ... other rules ... */
-}
 
-/* If you also have an @media (max-width: 480px) block, apply the same change there: */
-@media (max-width: 480px) {
-    /* ... other rules ... */
-    .popup, .modal {
-        padding: 10px; /* Keep or adjust as desired */
-        max-width: calc(100% - 20px); /* <-- CHANGE THIS LINE */
-    }
-    /* ... other rules ... */
-}
-
-    /* MODIFY THIS EXISTING RULE FOR THE LI ITEMS */
     nav ul li {
-        /* These properties are no longer needed, as grid handles the layout */
-        /* display: block; */ /* Remove or comment out this line */
-        /* margin-bottom: 10px; */ /* Remove or comment out this line */
-        
-        margin: 0; /* Ensure no extra margins interfere with the grid gap */
+        margin: 0; /* Ensures no extra margins interfere with the grid gap */
         display: flex; /* Use flex to center the button inside its grid cell */
         justify-content: center; /* Center horizontally */
         align-items: center; /* Center vertically */
     }
 
-    /* Optional: Ensure buttons fill their grid cells */
     nav ul li button {
         width: 100%; /* Make the button take full width of its grid cell */
         box-sizing: border-box; /* Include padding and border in the width */
     }
+    /* --- END OF nav buttons (2x2 grid) --- */
 
-    /* Your other mobile/tablet rules that were already in this media query */
+
+    /* --- START OF POPUP/MODAL WIDTH FIX --- */
+    /* THIS IS THE ONLY .popup, .modal rule you should have in this @media query */
+    .popup, .modal {
+        padding: 15px; /* Keep or adjust as desired */
+        max-width: calc(100% - 20px); /* Use this for wider popups */
+    }
+    /* --- END OF POPUP/MODAL WIDTH FIX --- */
+
+
+    /* --- START OF OTHER MOBILE/TABLET RULES (consolidated) --- */
     .hero-content h1 {
         font-size: 2.5rem;
     }
@@ -504,12 +488,7 @@
     .gallery-images, .about-images {
         grid-template-columns: 1fr;
     }
-
-    .popup, .modal {
-        padding: 15px;
-        max-width: 98%; /* Your previous popup width fix */
-    }
-
+    
     .popup h2 {
         font-size: 1.5rem;
     }
@@ -530,7 +509,22 @@
         padding: 8px 12px;
         font-size: 0.85rem;
     }
+    /* --- END OF OTHER MOBILE/TABLET RULES --- */
+
+} /* This single closing brace closes the entire @media (max-width: 992px) block */
+
+
+/* If you also have an @media (max-width: 480px) block, ensure it's separate
+   and also uses max-width: calc(100% - 20px); for popups: */
+@media (max-width: 480px) {
+    /* ... other rules specific to very small screens ... */
+    .popup, .modal {
+        padding: 10px; /* Might want less padding on very small screens */
+        max-width: calc(100% - 20px); /* Use this here too */
+    }
+    /* ... rest of your 480px rules ... */
 }
+
     </style>
 </head>
 <body>
