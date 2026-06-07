@@ -344,30 +344,26 @@ async function loadAll() {
   const txt = document.getElementById('statusText');
   const lbl = document.getElementById('liveLabel');
 
-  // ── TEST MODE ──
+
+  // ── TEST MODE (fully local — no API call, no key needed) ──
   if (TEST_MODE) {
-    bar.className = 'status-bar idle';
-    txt.textContent = '🧪 TEST MODE — waiting for live data…';
-    try {
-      const testMatch = await fetch(BASE_URL + '/test/match').then(r => r.json());
-      const { liveMatches, upcomingMatches, standingsData } = buildTestData(testMatch);
-
-      const live = liveMatches.filter(m => isLivePhase(m.phase));
-      lbl.textContent = 'Live Matches (test)';
-      bar.className = 'status-bar live';
-      txt.innerHTML = `<div class="live-dot"></div> TEST MODE — simulating live match`;
-      document.getElementById('liveSection').innerHTML = live.map(renderMatch).join('');
-      document.getElementById('upcomingSection').innerHTML = upcomingMatches.map(renderUpcoming).join('');
-
-      let standHtml = '';
-      for (const [g, rows] of Object.entries(standingsData)) {
-        standHtml += renderStandingsGroup(g, rows);
-      }
-      document.getElementById('standingsSection').innerHTML = standHtml;
-    } catch(err) {
-      bar.className = 'status-bar error';
-      txt.textContent = '⚠  Test endpoint error: ' + err.message;
-    }
+    const phases = ['1H','1H','1H','HT','2H','2H','2H','FT'];
+    const phase  = phases[Math.floor(Date.now() / 15000) % phases.length];
+    const testMatch = {
+      home_team:'Brazil', away_team:'Argentina',
+      home_score: phase==='FT' ? 2 : phase==='2H' ? 2 : 1,
+      away_score: 1,
+      phase, group_name:'A', stadium:'MetLife Stadium, New Jersey',
+    };
+    const { liveMatches, upcomingMatches, standingsData } = buildTestData(testMatch);
+    lbl.textContent = 'Live Matches';
+    bar.className = 'status-bar live';
+    txt.innerHTML = `<div class="live-dot"></div> TEST MODE — simulating live data`;
+    document.getElementById('liveSection').innerHTML = liveMatches.map(renderMatch).join('');
+    document.getElementById('upcomingSection').innerHTML = upcomingMatches.map(renderUpcoming).join('');
+    let sh = '';
+    for (const [g, rows] of Object.entries(standingsData)) sh += renderStandingsGroup(g, rows);
+    document.getElementById('standingsSection').innerHTML = sh;
     return;
   }
 
