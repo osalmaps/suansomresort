@@ -322,8 +322,11 @@ function buildTestData(testMatch) {
   ];
 
   const upcomingMatches = [
-    { home_team:'England',    away_team:'Senegal',   kickoff_utc:'2026-06-08T21:00:00Z', stadium:"AT&T Stadium, Dallas",        group_name:'C' },
-    { home_team:'Spain',      away_team:'Japan',     kickoff_utc:'2026-06-09T18:00:00Z', stadium:'Rose Bowl, Los Angeles',      group_name:'D' },
+    { home_team:'England',    away_team:'Senegal',   kickoff_utc:'2026-06-08T21:00:00Z', stadium:"AT&T Stadium, Dallas",          group_name:'C' },
+    { home_team:'Spain',      away_team:'Japan',     kickoff_utc:'2026-06-09T18:00:00Z', stadium:'Rose Bowl, Los Angeles',        group_name:'D' },
+    { home_team:'USA',        away_team:'Cameroon',  kickoff_utc:'2026-06-09T21:00:00Z', stadium:"Levi's Stadium, San Francisco", group_name:'E' },
+    { home_team:'Portugal',   away_team:'Uruguay',   kickoff_utc:'2026-06-10T18:00:00Z', stadium:'Mercedes-Benz Stadium, Atlanta', group_name:'E' },
+    { home_team:'Argentina',  away_team:'Poland',    kickoff_utc:'2026-06-10T21:00:00Z', stadium:'NRG Stadium, Houston',          group_name:'G' },
   ];
 
   const standingsData = {
@@ -522,7 +525,7 @@ async function loadAll() {
     const nextUp = scheduled
       .filter(m => m.kickoff_utc)
       .sort((a,b) => new Date(a.kickoff_utc) - new Date(b.kickoff_utc))
-      .slice(0, 3);
+      .slice(0, 5);
     document.getElementById('upcomingSection').innerHTML =
       nextUp.length > 0
         ? nextUp.map(renderUpcoming).join('')
