@@ -69,7 +69,13 @@
 
   /* STANDINGS — compact */
   .standings-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:8px; }
-  .standings-group-label { padding:6px 14px; font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--gold); background:rgba(201,152,42,0.08); border-bottom:1px solid rgba(255,255,255,0.05); }
+  .standings-group-label { padding:6px 14px; font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--gold); background:rgba(201,152,42,0.08); border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:space-between; }
+  .group-dots { display:flex; gap:5px; }
+  .group-dot { width:6px; height:6px; border-radius:50%; background:rgba(201,152,42,0.25); transition:background 0.4s; }
+  .group-dot.active { background:var(--gold); }
+  .standings-carousel { position:relative; min-height:240px; }
+  .standings-card.rotating { position:absolute; top:0; left:0; right:0; opacity:0; transition:opacity 0.6s ease-in-out; pointer-events:none; }
+  .standings-card.rotating.visible { opacity:1; }
   .s-grid { display:grid; grid-template-columns:32px 1fr 36px 36px 36px 36px 48px; }
   .s-header { background:var(--surface2); border-bottom:1px solid rgba(255,255,255,0.08); }
   .s-header > div { padding:6px 6px; font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:1px; color:var(--text2); text-transform:uppercase; }
@@ -270,9 +276,15 @@ function renderUpcoming(m) {
 }
 
 // ─── RENDER STANDINGS GROUP ──────────────────────────────────────────────
-function renderStandingsGroup(groupName, rows) {
+function renderStandingsGroup(groupName, rows, allGroupNames, currentIndex) {
+  const dots = (allGroupNames || []).map((g, i) =>
+    `<div class="group-dot ${i === currentIndex ? 'active' : ''}"></div>`
+  ).join('');
   const header = `
-    <div class="standings-group-label">GROUP ${groupName}</div>
+    <div class="standings-group-label">
+      <span>GROUP ${groupName}</span>
+      ${dots ? `<div class="group-dots">${dots}</div>` : ''}
+    </div>
     <div class="s-grid s-header">
       <div>#</div><div>Team</div>
       <div style="text-align:center">P</div><div style="text-align:center">W</div>
@@ -327,9 +339,112 @@ function buildTestData(testMatch) {
       { team_name:'Croatia',   played:2, won:0, drawn:1, lost:1, points:1 },
       { team_name:'Canada',    played:2, won:0, drawn:1, lost:1, points:1 },
     ],
+    C: [
+      { team_name:'England',   played:2, won:2, drawn:0, lost:0, points:6 },
+      { team_name:'Senegal',   played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Iran',      played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'USA',       played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    D: [
+      { team_name:'Spain',     played:2, won:1, drawn:1, lost:0, points:4 },
+      { team_name:'Japan',     played:2, won:1, drawn:1, lost:0, points:4 },
+      { team_name:'Mexico',    played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Ghana',     played:2, won:0, drawn:0, lost:2, points:0 },
+    ],
+    E: [
+      { team_name:'Portugal',  played:2, won:2, drawn:0, lost:0, points:6 },
+      { team_name:'Uruguay',   played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Australia', played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Cameroon',  played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    F: [
+      { team_name:'Belgium',     played:2, won:1, drawn:1, lost:0, points:4 },
+      { team_name:'Denmark',     played:2, won:1, drawn:1, lost:0, points:4 },
+      { team_name:'Tunisia',     played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Costa Rica',  played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    G: [
+      { team_name:'Argentina',  played:2, won:2, drawn:0, lost:0, points:6 },
+      { team_name:'Poland',     played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Saudi Arabia', played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Mali',       played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    H: [
+      { team_name:'Italy',     played:2, won:2, drawn:0, lost:0, points:6 },
+      { team_name:'Ecuador',   played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Egypt',     played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Qatar',     played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    I: [
+      { team_name:'Colombia',  played:2, won:1, drawn:1, lost:0, points:4 },
+      { team_name:'Norway',    played:2, won:1, drawn:1, lost:0, points:4 },
+      { team_name:'Nigeria',   played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Honduras',  played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    J: [
+      { team_name:'South Korea', played:2, won:2, drawn:0, lost:0, points:6 },
+      { team_name:'Sweden',      played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Serbia',      played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Panama',      played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    K: [
+      { team_name:'Croatia',   played:2, won:1, drawn:1, lost:0, points:4 },
+      { team_name:'Turkey',    played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Ivory Coast', played:2, won:0, drawn:2, lost:0, points:2 },
+      { team_name:'Indonesia', played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    L: [
+      { team_name:'Czechia',   played:2, won:2, drawn:0, lost:0, points:6 },
+      { team_name:'Austria',   played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Algeria',   played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Cape Verde', played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
   };
 
   return { liveMatches, upcomingMatches, standingsData };
+}
+
+// ─── STANDINGS CAROUSEL ──────────────────────────────────────────────────
+// Stores the currently loaded standings data so rotation can run independently
+// of the 60s data refresh.
+let _standingsData = {};   // { A: [...rows], B: [...rows], ... }
+let _carouselTimer = null;
+let _carouselIndex = 0;
+
+function renderStandingsCarousel(standingsData) {
+  _standingsData = standingsData;
+  const container = document.getElementById('standingsSection');
+  const groupNames = Object.keys(standingsData).sort();
+
+  if (groupNames.length === 0) {
+    container.innerHTML = '<div class="empty-card" style="height:120px"><div class="empty-msg">No standings data</div></div>';
+    return;
+  }
+
+  // Render each group as a complete card, but turn them into rotating slides
+  const cards = groupNames.map((g, i) => {
+    const rows = standingsData[g].sort((a,b) => (b.points??0)-(a.points??0));
+    const cardHtml = renderStandingsGroup(g, rows, groupNames, i);
+    // Inject the 'rotating' classes into the card root
+    return cardHtml.replace(
+      'class="standings-card"',
+      `class="standings-card rotating ${i===0?'visible':''}"`
+    );
+  }).join('');
+
+  container.innerHTML = `<div class="standings-carousel">${cards}</div>`;
+
+  _carouselIndex = 0;
+  if (_carouselTimer) clearInterval(_carouselTimer);
+  if (groupNames.length > 1) {
+    _carouselTimer = setInterval(() => {
+      const cardEls = container.querySelectorAll('.standings-card.rotating');
+      if (cardEls.length === 0) return;
+      cardEls[_carouselIndex].classList.remove('visible');
+      _carouselIndex = (_carouselIndex + 1) % cardEls.length;
+      cardEls[_carouselIndex].classList.add('visible');
+    }, 8000);
+  }
 }
 
 // ─── MAIN LOADER ─────────────────────────────────────────────────────────
@@ -355,9 +470,7 @@ async function loadAll() {
     txt.innerHTML = `<div class="live-dot"></div> TEST MODE — simulating live data`;
     document.getElementById('liveSection').innerHTML = liveMatches.map(renderMatch).join('');
     document.getElementById('upcomingSection').innerHTML = upcomingMatches.map(renderUpcoming).join('');
-    let sh = '';
-    for (const [g, rows] of Object.entries(standingsData)) sh += renderStandingsGroup(g, rows);
-    document.getElementById('standingsSection').innerHTML = sh;
+    renderStandingsCarousel(standingsData);
     return;
   }
 
@@ -415,8 +528,7 @@ async function loadAll() {
         ? nextUp.map(renderUpcoming).join('')
         : `<div class="empty-card" style="height:100px"><div class="empty-msg">No upcoming fixtures found</div></div>`;
 
-    // 3 — Standings
-    let standHtml = '';
+    // 3 — Standings carousel
     try {
       const standings = await apiFetch('/standings');
       const data = Array.isArray(standings) ? standings : (standings.data || standings.standings || []);
@@ -426,13 +538,14 @@ async function loadAll() {
         if (!byGroup[g]) byGroup[g] = [];
         byGroup[g].push(row);
       });
-      for (const g of Object.keys(byGroup).sort()) {
-        standHtml += renderStandingsGroup(g, byGroup[g].sort((a,b) => (b.points??0)-(a.points??0)));
+      if (Object.keys(byGroup).length > 0) {
+        renderStandingsCarousel(byGroup);
+      } else {
+        document.getElementById('standingsSection').innerHTML = `<div class="empty-card" style="height:120px"><div class="empty-msg">No standings data</div></div>`;
       }
     } catch(e) {
-      standHtml = `<div class="empty-card" style="height:120px"><div class="empty-msg">Standings not yet available</div></div>`;
+      document.getElementById('standingsSection').innerHTML = `<div class="empty-card" style="height:120px"><div class="empty-msg">Standings not yet available</div></div>`;
     }
-    document.getElementById('standingsSection').innerHTML = standHtml || `<div class="empty-card" style="height:120px"><div class="empty-msg">No standings data</div></div>`;
 
   } catch(err) {
     bar.className = 'status-bar error';
