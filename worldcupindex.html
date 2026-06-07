@@ -130,8 +130,14 @@
 <script>
 // ─── CONFIG ──────────────────────────────────────────────────────────────
 // Get your key at https://wc2026api.com  ($4.99 one-time for the full tournament)
-const API_KEY  = 'e0dc9dd7d18440ba870d4916dd774519';
+const API_KEY  = 'YOUR_API_KEY_HERE';
 const BASE_URL = 'https://api.wc2026api.com';
+
+// ─── TEST MODE ───────────────────────────────────────────────────────────
+// Set to true to preview the dashboard with simulated live data (no key needed).
+// The /test/match endpoint cycles Brazil vs Argentina through all match phases.
+// Set back to false once your real API key arrives.
+const TEST_MODE = true;
 
 // ─── FLAG LOOKUP ─────────────────────────────────────────────────────────
 const FLAGS = {
@@ -292,19 +298,86 @@ function renderStandingsGroup(groupName, rows) {
   return `<div class="standings-card">${header}${body}</div>`;
 }
 
+// ─── TEST DATA (used when TEST_MODE = true) ───────────────────────────────
+function buildTestData(testMatch) {
+  // testMatch comes from /test/match and cycles through all phases
+  const phase = testMatch.phase || '1H';
+
+  const liveMatches = [
+    testMatch,
+    { home_team:'France', away_team:'Morocco', home_score:2, away_score:0, phase:'2H', group_name:'B', stadium:'SoFi Stadium, Los Angeles' },
+  ];
+
+  const upcomingMatches = [
+    { home_team:'England',    away_team:'Senegal',   kickoff_utc:'2026-06-08T21:00:00Z', stadium:"AT&T Stadium, Dallas",        group_name:'C' },
+    { home_team:'Spain',      away_team:'Japan',     kickoff_utc:'2026-06-09T18:00:00Z', stadium:'Rose Bowl, Los Angeles',      group_name:'D' },
+    { home_team:'USA',        away_team:'Cameroon',  kickoff_utc:'2026-06-09T21:00:00Z', stadium:"Levi's Stadium, San Francisco", group_name:'E' },
+  ];
+
+  const standingsData = {
+    A: [
+      { team_name:'Brazil',      played:2, won:2, drawn:0, lost:0, points:6 },
+      { team_name:'Netherlands', played:2, won:1, drawn:1, lost:0, points:4 },
+      { team_name:'Germany',     played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Switzerland', played:2, won:0, drawn:0, lost:2, points:0 },
+    ],
+    B: [
+      { team_name:'France',    played:2, won:2, drawn:0, lost:0, points:6 },
+      { team_name:'Morocco',   played:2, won:1, drawn:0, lost:1, points:3 },
+      { team_name:'Croatia',   played:2, won:0, drawn:1, lost:1, points:1 },
+      { team_name:'Canada',    played:2, won:0, drawn:1, lost:1, points:1 },
+    ],
+    C: [
+      { team_name:'England',   played:1, won:1, drawn:0, lost:0, points:3 },
+      { team_name:'Senegal',   played:1, won:0, drawn:1, lost:0, points:1 },
+      { team_name:'Iran',      played:1, won:0, drawn:1, lost:0, points:1 },
+      { team_name:'USA',       played:1, won:0, drawn:0, lost:1, points:0 },
+    ],
+  };
+
+  return { liveMatches, upcomingMatches, standingsData };
+}
+
 // ─── MAIN LOADER ─────────────────────────────────────────────────────────
 async function loadAll() {
-  const bar  = document.getElementById('statusBar');
-  const txt  = document.getElementById('statusText');
-  const lbl  = document.getElementById('liveLabel');
+  const bar = document.getElementById('statusBar');
+  const txt = document.getElementById('statusText');
+  const lbl = document.getElementById('liveLabel');
 
+  // ── TEST MODE ──
+  if (TEST_MODE) {
+    bar.className = 'status-bar idle';
+    txt.textContent = '🧪 TEST MODE — waiting for live data…';
+    try {
+      const testMatch = await fetch(BASE_URL + '/test/match').then(r => r.json());
+      const { liveMatches, upcomingMatches, standingsData } = buildTestData(testMatch);
+
+      const live = liveMatches.filter(m => isLivePhase(m.phase));
+      lbl.textContent = 'Live Matches (test)';
+      bar.className = 'status-bar live';
+      txt.innerHTML = `<div class="live-dot"></div> TEST MODE — simulating live match`;
+      document.getElementById('liveSection').innerHTML = live.map(renderMatch).join('');
+      document.getElementById('upcomingSection').innerHTML = upcomingMatches.map(renderUpcoming).join('');
+
+      let standHtml = '';
+      for (const [g, rows] of Object.entries(standingsData)) {
+        standHtml += renderStandingsGroup(g, rows);
+      }
+      document.getElementById('standingsSection').innerHTML = standHtml;
+    } catch(err) {
+      bar.className = 'status-bar error';
+      txt.textContent = '⚠  Test endpoint error: ' + err.message;
+    }
+    return;
+  }
+
+  // ── LIVE MODE ──
   if (API_KEY === 'YOUR_API_KEY_HERE') {
     bar.className = 'status-bar error';
-    txt.textContent = '⚠  Set your API key — get one free at wc2026api.com';
+    txt.textContent = '⚠  Add API key, or set TEST_MODE = true to preview';
     document.getElementById('liveSection').innerHTML =
       `<div class="empty-card"><div class="empty-msg">
-        Open this file and replace<br><strong>YOUR_API_KEY_HERE</strong><br>with your key from wc2026api.com<br><br>
-        Free tier (100 req/day) or Pro ($4.99 one-time)
+        Set TEST_MODE = true to preview,<br>or add your key from wc2026api.com
       </div></div>`;
     document.getElementById('upcomingSection').innerHTML = '';
     document.getElementById('standingsSection').innerHTML = '';
@@ -320,19 +393,14 @@ async function loadAll() {
     const finished  = matches.filter(m => isFinalPhase(m.phase));
     const scheduled = matches.filter(m => m.phase === 'PRE' || m.status === 'scheduled');
 
-    // Status bar
     if (live.length > 0) {
       bar.className = 'status-bar live';
       txt.innerHTML = `<div class="live-dot"></div> LIVE — ${live.length} match${live.length>1?'es':''} in progress`;
       lbl.textContent = 'Live Matches';
       document.getElementById('liveSection').innerHTML = live.slice(0,4).map(renderMatch).join('');
     } else {
-      // Show today's finished/upcoming results
       const todayStr = new Date().toISOString().split('T')[0];
-      const todayMatches = matches.filter(m => {
-        const d = m.kickoff_utc || m.kickoff || '';
-        return d.startsWith(todayStr);
-      });
+      const todayMatches = matches.filter(m => (m.kickoff_utc||'').startsWith(todayStr));
       if (todayMatches.length > 0) {
         lbl.textContent = "Today's Matches";
         document.getElementById('liveSection').innerHTML = todayMatches.slice(0,4).map(renderMatch).join('');
@@ -344,10 +412,10 @@ async function loadAll() {
         document.getElementById('liveSection').innerHTML = `<div class="empty-card"><div class="empty-msg">Tournament starts June 11, 2026</div></div>`;
       }
       bar.className = 'status-bar idle';
-      txt.textContent = live.length === 0 ? 'No live matches right now' : '';
+      txt.textContent = 'No live matches right now';
     }
 
-    // 2 — Upcoming fixtures (next 3 scheduled)
+    // 2 — Upcoming fixtures
     const nextUp = scheduled
       .filter(m => m.kickoff_utc)
       .sort((a,b) => new Date(a.kickoff_utc) - new Date(b.kickoff_utc))
@@ -357,23 +425,19 @@ async function loadAll() {
         ? nextUp.map(renderUpcoming).join('')
         : `<div class="empty-card" style="height:100px"><div class="empty-msg">No upcoming fixtures found</div></div>`;
 
-    // 3 — Standings (groups A, B, C, D shown)
+    // 3 — Standings
     let standHtml = '';
     try {
       const standings = await apiFetch('/standings');
       const data = Array.isArray(standings) ? standings : (standings.data || standings.standings || []);
-      // Group by group_name
       const byGroup = {};
       data.forEach(row => {
         const g = row.group_name || row.group || '?';
         if (!byGroup[g]) byGroup[g] = [];
         byGroup[g].push(row);
       });
-      // Sort by points desc within each group
-      const groupNames = Object.keys(byGroup).sort();
-      for (const g of groupNames) {
-        const rows = byGroup[g].sort((a,b) => (b.points??0)-(a.points??0));
-        standHtml += renderStandingsGroup(g, rows);
+      for (const g of Object.keys(byGroup).sort()) {
+        standHtml += renderStandingsGroup(g, byGroup[g].sort((a,b) => (b.points??0)-(a.points??0)));
       }
     } catch(e) {
       standHtml = `<div class="empty-card" style="height:120px"><div class="empty-msg">Standings not yet available</div></div>`;
