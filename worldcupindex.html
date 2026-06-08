@@ -145,8 +145,8 @@
 const API_KEY  = '7f925fe5bd00c0a208709e72dd1186425f0872db';
 const BASE_URL = 'https://sports.bzzoiro.com';
 
-// World Cup 2026 league ID — will be auto-detected on first run and cached
-let WORLD_CUP_LEAGUE_ID = null;
+// World Cup 2026 league ID in BSD's database (verified via debug page)
+const WORLD_CUP_LEAGUE_ID = 17;
 
 // ─── TEST MODE ───────────────────────────────────────────────────────────
 // Set to true to preview with simulated data (no API calls).
@@ -198,22 +198,6 @@ async function apiFetch(path) {
   });
   if (!r.ok) throw new Error('HTTP ' + r.status);
   return r.json();
-}
-
-// Find the World Cup 2026 league ID (one-time lookup, cached)
-async function getWorldCupLeagueId() {
-  if (WORLD_CUP_LEAGUE_ID) return WORLD_CUP_LEAGUE_ID;
-  // BSD's leagues endpoint — search for World Cup 2026
-  const data = await apiFetch('/api/leagues/?search=World+Cup');
-  const results = data.results || data || [];
-  // Prefer an entry that matches "World Cup 2026" or is the main world cup
-  const wc = results.find(l =>
-    (l.name || '').toLowerCase().includes('world cup') &&
-    !(l.name || '').toLowerCase().includes('qualification') &&
-    !(l.name || '').toLowerCase().includes('women')
-  );
-  WORLD_CUP_LEAGUE_ID = wc?.id || null;
-  return WORLD_CUP_LEAGUE_ID;
 }
 
 // ─── STATUS HELPERS (BSD status values) ─────────────────────────────────
@@ -529,9 +513,7 @@ async function loadAll() {
   }
 
   try {
-    // Find the World Cup league ID (cached after first call)
-    const wcId = await getWorldCupLeagueId();
-    if (!wcId) throw new Error('World Cup league not found');
+    const wcId = WORLD_CUP_LEAGUE_ID;
 
     // Fetch all World Cup matches for the tournament window
     const today = new Date();
