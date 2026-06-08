@@ -136,19 +136,22 @@
   <div class="skeleton" style="height:300px"></div>
 </div>
 
-<div class="footer">Auto-refreshes every 60s · FIFA World Cup 2026 · wc2026api.com</div>
+<div class="footer">Auto-refreshes every 60s · FIFA World Cup 2026 · sports.bzzoiro.com</div>
 
 <script>
 // ─── CONFIG ──────────────────────────────────────────────────────────────
-// Get your key at https://wc2026api.com  ($4.99 one-time for the full tournament)
-const API_KEY  = 'YOUR_API_KEY_HERE';
-const BASE_URL = 'https://api.wc2026api.com';
+// Free API from BSD (Bzzoiro Sports Data) — sports.bzzoiro.com
+// Sign up at https://sports.bzzoiro.com/register — 100% free, no rate limits.
+const API_KEY  = '7f925fe5bd00c0a208709e72dd1186425f0872db';
+const BASE_URL = 'https://sports.bzzoiro.com';
+
+// World Cup 2026 league ID — will be auto-detected on first run and cached
+let WORLD_CUP_LEAGUE_ID = null;
 
 // ─── TEST MODE ───────────────────────────────────────────────────────────
-// Set to true to preview the dashboard with simulated live data (no key needed).
-// The /test/match endpoint cycles Brazil vs Argentina through all match phases.
-// Set back to false once your real API key arrives.
-const TEST_MODE = true;
+// Set to true to preview with simulated data (no API calls).
+// Set to false to use real live data from BSD.
+const TEST_MODE = false;
 
 // ─── FLAG / COUNTRY CODE LOOKUP ──────────────────────────────────────────
 // FIFA 3-letter codes — works reliably on any device/font
@@ -191,22 +194,49 @@ tick(); setInterval(tick, 1000);
 // ─── API FETCH ────────────────────────────────────────────────────────────
 async function apiFetch(path) {
   const r = await fetch(BASE_URL + path, {
-    headers: { 'Authorization': 'Bearer ' + API_KEY }
+    headers: { 'Authorization': 'Token ' + API_KEY }
   });
   if (!r.ok) throw new Error('HTTP ' + r.status);
   return r.json();
 }
 
-// ─── PHASE → LABEL ───────────────────────────────────────────────────────
-// wc2026api phases: PRE, 1H, HT, 2H, ET1, ET2, PEN, FT, FT_PEN
-function phaseLabel(phase, status) {
-  if (!phase) return status || '—';
-  const map = { PRE:'Upcoming', '1H':'1st Half', HT:'Half Time', '2H':'2nd Half',
-    ET1:'Extra Time', ET2:'Extra Time', PEN:'Penalties', FT:'Full Time', FT_PEN:'FT (Pens)' };
-  return map[phase] || phase;
+// Find the World Cup 2026 league ID (one-time lookup, cached)
+async function getWorldCupLeagueId() {
+  if (WORLD_CUP_LEAGUE_ID) return WORLD_CUP_LEAGUE_ID;
+  // BSD's leagues endpoint — search for World Cup 2026
+  const data = await apiFetch('/api/leagues/?search=World+Cup');
+  const results = data.results || data || [];
+  // Prefer an entry that matches "World Cup 2026" or is the main world cup
+  const wc = results.find(l =>
+    (l.name || '').toLowerCase().includes('world cup') &&
+    !(l.name || '').toLowerCase().includes('qualification') &&
+    !(l.name || '').toLowerCase().includes('women')
+  );
+  WORLD_CUP_LEAGUE_ID = wc?.id || null;
+  return WORLD_CUP_LEAGUE_ID;
 }
-function isLivePhase(phase) { return ['1H','HT','2H','ET1','ET2','PEN'].includes(phase); }
-function isFinalPhase(phase) { return ['FT','FT_PEN'].includes(phase); }
+
+// ─── STATUS HELPERS (BSD status values) ─────────────────────────────────
+// BSD: notstarted, inprogress, 1st_half, halftime, 2nd_half, finished, postponed, cancelled
+function phaseLabel(status, minute) {
+  const map = {
+    'notstarted':'Upcoming', 'scheduled':'Upcoming',
+    '1st_half':'1st Half', 'halftime':'Half Time', '2nd_half':'2nd Half',
+    'extra_time':'Extra Time', 'penalties':'Penalties',
+    'inprogress':'Live', 'live':'Live',
+    'finished':'Full Time', 'ft':'Full Time',
+    'postponed':'Postponed', 'cancelled':'Cancelled',
+  };
+  if (map[status]) return map[status];
+  if (minute) return `${minute}'`;
+  return status || '—';
+}
+function isLivePhase(status) {
+  return ['inprogress','live','1st_half','halftime','2nd_half','extra_time','penalties'].includes(status);
+}
+function isFinalPhase(status) {
+  return ['finished','ft'].includes(status);
+}
 
 // ─── DATE HELPERS ────────────────────────────────────────────────────────
 function fmtKickoff(utcStr) {
@@ -221,16 +251,19 @@ function fmtKickoff(utcStr) {
 
 // ─── RENDER MATCH CARD ───────────────────────────────────────────────────
 function renderMatch(m) {
-  const home   = m.home_team || '—';
-  const away   = m.away_team || '—';
+  // BSD fields: home_team, away_team, home_score, away_score, status, current_minute, venue, group
+  const home   = (typeof m.home_team === 'string' ? m.home_team : m.home_team?.name) || '—';
+  const away   = (typeof m.away_team === 'string' ? m.away_team : m.away_team?.name) || '—';
   const hs     = m.home_score ?? '—';
   const as_    = m.away_score ?? '—';
-  const phase  = m.phase || '';
-  const live   = isLivePhase(phase);
-  const fin    = isFinalPhase(phase);
-  const label  = phaseLabel(phase, m.status);
-  const group  = m.group_name ? `<span class="group-badge">GROUP ${m.group_name}</span>` : '';
-  const venue  = m.stadium || '';
+  const status = m.status || m.phase || '';
+  const live   = isLivePhase(status);
+  const fin    = isFinalPhase(status);
+  const minute = m.current_minute || m.minute;
+  const label  = live && minute ? `${minute}'` : phaseLabel(status, minute);
+  const groupName = m.group || m.group_name || '';
+  const group  = groupName ? `<span class="group-badge">GROUP ${groupName}</span>` : '';
+  const venue  = (typeof m.venue === 'string' ? m.venue : m.venue?.name) || m.stadium || '';
   return `
     <div class="match-card ${live?'is-live':''}">
       ${live ? '<div class="live-badge">LIVE</div>' : ''}
@@ -254,10 +287,10 @@ function renderMatch(m) {
 
 // ─── RENDER UPCOMING CARD ────────────────────────────────────────────────
 function renderUpcoming(m) {
-  const home  = m.home_team || '—';
-  const away  = m.away_team || '—';
-  const dt    = fmtKickoff(m.kickoff_utc);
-  const venue = m.stadium || '';
+  const home  = (typeof m.home_team === 'string' ? m.home_team : m.home_team?.name) || '—';
+  const away  = (typeof m.away_team === 'string' ? m.away_team : m.away_team?.name) || '—';
+  const dt    = fmtKickoff(m.event_date || m.kickoff_utc || m.date);
+  const venue = (typeof m.venue === 'string' ? m.venue : m.venue?.name) || m.stadium || '';
   return `
     <div class="upcoming-card">
       <div class="upcoming-date">
@@ -488,7 +521,7 @@ async function loadAll() {
     txt.textContent = '⚠  Add API key, or set TEST_MODE = true to preview';
     document.getElementById('liveSection').innerHTML =
       `<div class="empty-card"><div class="empty-msg">
-        Set TEST_MODE = true to preview,<br>or add your key from wc2026api.com
+        Set TEST_MODE = true to preview,<br>or add your key from sports.bzzoiro.com
       </div></div>`;
     document.getElementById('upcomingSection').innerHTML = '';
     document.getElementById('standingsSection').innerHTML = '';
@@ -496,40 +529,54 @@ async function loadAll() {
   }
 
   try {
-    // 1 — Live matches
-    const allMatches = await apiFetch('/matches');
-    const matches    = Array.isArray(allMatches) ? allMatches : (allMatches.data || allMatches.matches || []);
+    // Find the World Cup league ID (cached after first call)
+    const wcId = await getWorldCupLeagueId();
+    if (!wcId) throw new Error('World Cup league not found');
 
-    const live      = matches.filter(m => isLivePhase(m.phase));
-    const finished  = matches.filter(m => isFinalPhase(m.phase));
-    const scheduled = matches.filter(m => m.phase === 'PRE' || m.status === 'scheduled');
+    // Fetch all World Cup matches for the tournament window
+    const today = new Date();
+    const dateFrom = '2026-06-11';
+    const dateTo   = '2026-07-19';
+    const path = `/api/events/?league=${wcId}&date_from=${dateFrom}&date_to=${dateTo}`;
+    const all = await apiFetch(path);
+    const matches = Array.isArray(all) ? all : (all.results || all.events || []);
 
+    const live      = matches.filter(m => isLivePhase(m.status));
+    const finished  = matches.filter(m => isFinalPhase(m.status)).sort((a,b) => new Date(b.event_date) - new Date(a.event_date));
+    const scheduled = matches.filter(m => m.status === 'notstarted' || m.status === 'scheduled');
+
+    // 1 — Live or today's matches in the top section
     if (live.length > 0) {
       bar.className = 'status-bar live';
       txt.innerHTML = `<div class="live-dot"></div> LIVE — ${live.length} match${live.length>1?'es':''} in progress`;
       lbl.textContent = 'Live Matches';
       document.getElementById('liveSection').innerHTML = live.slice(0,4).map(renderMatch).join('');
     } else {
-      const todayStr = new Date().toISOString().split('T')[0];
-      const todayMatches = matches.filter(m => (m.kickoff_utc||'').startsWith(todayStr));
+      const todayStr = today.toISOString().split('T')[0];
+      const todayMatches = matches.filter(m => (m.event_date || '').startsWith(todayStr));
       if (todayMatches.length > 0) {
         lbl.textContent = "Today's Matches";
         document.getElementById('liveSection').innerHTML = todayMatches.slice(0,4).map(renderMatch).join('');
       } else if (finished.length > 0) {
         lbl.textContent = 'Recent Results';
-        document.getElementById('liveSection').innerHTML = finished.slice(-4).reverse().map(renderMatch).join('');
+        document.getElementById('liveSection').innerHTML = finished.slice(0,4).map(renderMatch).join('');
       } else {
         lbl.textContent = 'Upcoming Matches';
-        document.getElementById('liveSection').innerHTML = `<div class="empty-card"><div class="empty-msg">Tournament starts June 11, 2026</div></div>`;
+        const nextMatch = scheduled.sort((a,b) => new Date(a.event_date) - new Date(b.event_date))[0];
+        document.getElementById('liveSection').innerHTML =
+          `<div class="empty-card"><div class="empty-msg">
+            Tournament starts<br><strong>June 11, 2026</strong>
+            ${nextMatch ? `<br><br>First match: ${nextMatch.home_team} vs ${nextMatch.away_team}` : ''}
+          </div></div>`;
       }
       bar.className = 'status-bar idle';
       txt.textContent = 'No live matches right now';
     }
 
-    // 2 — Upcoming fixtures
+    // 2 — Upcoming fixtures (next 5 scheduled)
     const nextUp = scheduled
-      .filter(m => m.kickoff_utc)
-      .sort((a,b) => new Date(a.kickoff_utc) - new Date(b.kickoff_utc))
+      .filter(m => m.event_date)
+      .sort((a,b) => new Date(a.event_date) - new Date(b.event_date))
       .slice(0, 5);
     document.getElementById('upcomingSection').innerHTML =
       nextUp.length > 0
@@ -538,21 +585,45 @@ async function loadAll() {
 
     // 3 — Standings carousel
     try {
-      const standings = await apiFetch('/standings');
-      const data = Array.isArray(standings) ? standings : (standings.data || standings.standings || []);
+      const stData = await apiFetch(`/api/v2/leagues/${wcId}/standings/`);
+      const groups = stData.groups || stData.standings || stData.data || [];
       const byGroup = {};
-      data.forEach(row => {
-        const g = row.group_name || row.group || '?';
-        if (!byGroup[g]) byGroup[g] = [];
-        byGroup[g].push(row);
-      });
+      // BSD v2 standings format: groups array with { name, standings: [...] }
+      if (Array.isArray(groups) && groups.length > 0 && groups[0].standings) {
+        groups.forEach(g => {
+          const groupName = (g.name || '').replace(/^group\s+/i,'').trim() || '?';
+          byGroup[groupName] = g.standings.map(row => ({
+            team_name: row.team?.name || row.team_name || row.name,
+            played:    row.played ?? row.matches_played ?? 0,
+            won:       row.won ?? row.wins ?? 0,
+            drawn:     row.drawn ?? row.draws ?? 0,
+            lost:      row.lost ?? row.losses ?? 0,
+            points:    row.points ?? 0,
+          }));
+        });
+      } else {
+        // Fallback: flat list with group field
+        const rows = Array.isArray(stData) ? stData : (stData.results || stData.standings || []);
+        rows.forEach(row => {
+          const g = (row.group || row.group_name || '?').replace(/^group\s+/i,'').trim();
+          if (!byGroup[g]) byGroup[g] = [];
+          byGroup[g].push({
+            team_name: row.team?.name || row.team_name || row.name,
+            played:    row.played ?? 0,
+            won:       row.won ?? 0,
+            drawn:     row.drawn ?? 0,
+            lost:      row.lost ?? 0,
+            points:    row.points ?? 0,
+          });
+        });
+      }
       if (Object.keys(byGroup).length > 0) {
         renderStandingsCarousel(byGroup);
       } else {
-        document.getElementById('standingsSection').innerHTML = `<div class="empty-card" style="height:120px"><div class="empty-msg">No standings data</div></div>`;
+        document.getElementById('standingsSection').innerHTML = `<div class="empty-card" style="height:120px"><div class="empty-msg">Standings not yet available<br>(tournament hasn't started)</div></div>`;
       }
     } catch(e) {
-      document.getElementById('standingsSection').innerHTML = `<div class="empty-card" style="height:120px"><div class="empty-msg">Standings not yet available</div></div>`;
+      document.getElementById('standingsSection').innerHTML = `<div class="empty-card" style="height:120px"><div class="empty-msg">Standings not yet available<br>(tournament hasn't started)</div></div>`;
     }
 
   } catch(err) {
