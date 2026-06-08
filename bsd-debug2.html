@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BSD Debug v2</title>
+<style>
+  body { font-family: monospace; background:#111; color:#eee; padding:20px; font-size:13px; }
+  h2 { color:#C9982A; margin-top:20px; border-bottom:1px solid #333; padding-bottom:4px; }
+  h3 { color:#9BB09F; margin-top:14px; }
+  pre { background:#1a1a1a; padding:10px; border-radius:6px; overflow:auto; max-height:400px; font-size:11px; }
+  .ok { color:#5fbf60; }
+  .err { color:#e87070; }
+  .hl { background:#2a2010; padding:2px 6px; border-radius:3px; color:#F0C755; }
+</style>
+</head>
+<body>
+<h1>BSD API Debug v2 — finding World Cup data</h1>
+<div id="output">Loading…</div>
+
+<script>
+const API_KEY = '7f925fe5bd00c0a208709e72dd1186425f0872db';
+const BASE = 'https://sports.bzzoiro.com';
+
+async function call(path) {
+  try {
+    const r = await fetch(BASE + path, { headers:{'Authorization':'Token '+API_KEY} });
+    if (!r.ok) return { error: `HTTP ${r.status}`, text: await r.text() };
+    return await r.json();
+  } catch(e) { return { error: e.message }; }
+}
+
+function log(html) {
+  document.getElementById('output').insertAdjacentHTML('beforeend', html);
+}
+
+async function run() {
+  document.getElementById('output').innerHTML = '';
+
+  // === 1) What is league 17 really? ===
+  log('<h2>1) What is league ID 17?</h2>');
+  const l17 = await call('/api/leagues/17/');
+  log(`<pre>${JSON.stringify(l17, null, 2)}</pre>`);
+
+  // === 2) Get the FULL leagues list — paginated to find World Cup ===
+  log('<h2>2) Full leagues list — searching for World Cup 2026</h2>');
+  for (const path of ['/api/v2/leagues/', '/api/leagues/?page=1', '/api/leagues/?page=2', '/api/leagues/?page=3']) {
+    const r = await call(path);
+    if (r.error) { log(`<p class="err">${path}: ${r.error}</p>`); continue; }
+    const list = r.results || r.leagues || (Array.isArray(r) ? r : []);
+    const wc = list.filter(l => (l.name||'').toLowerCase().includes('world cup'));
+    log(`<h3>${path} → ${list.length} leagues total, ${wc.length} matching "world cup"</h3>`);
+    if (wc.length > 0) {
+      log('<table border="1" cellpadding="6"><tr><th>ID</th><th>Name</th><th>Country</th></tr>' +
+        wc.map(l => `<tr><td class="hl">${l.id}</td><td>${l.name}</td><td>${l.country||''}</td></tr>`).join('') +
+        '</table>');
+    }
+  }
+
+  // === 3) Try fetching events for league 17 (whatever it is) ===
+  log('<h2>3) Events for league 17 in June 2026</h2>');
+  const ev17 = await call('/api/events/?league=17&date_from=2026-06-01&date_to=2026-07-31');
+  if (ev17.error) {
+    log(`<p class="err">${ev17.error}</p>`);
+  } else {
+    const events = ev17.results || ev17.events || [];
+    log(`<p>Found ${events.length} events. First 3:</p>`);
+    log(`<pre>${JSON.stringify(events.slice(0,3), null, 2)}</pre>`);
+  }
+
+  // === 4) Try league=29 (the other WC candidate from the screenshot) ===
+  log('<h2>4) What is league 29?</h2>');
+  const l29 = await call('/api/leagues/29/');
+  log(`<pre>${JSON.stringify(l29, null, 2)}</pre>`);
+
+  log('<h2>5) Events for league 29 in June 2026</h2>');
+  const ev29 = await call('/api/events/?league=29&date_from=2026-06-01&date_to=2026-07-31');
+  if (ev29.error) {
+    log(`<p class="err">${ev29.error}</p>`);
+  } else {
+    const events = ev29.results || ev29.events || [];
+    log(`<p>Found ${events.length} events. First 3:</p>`);
+    log(`<pre>${JSON.stringify(events.slice(0,3), null, 2)}</pre>`);
+  }
+
+  // === 6) Just try fetching ALL events around June 11 (no league filter) ===
+  log('<h2>6) ALL events June 11–15, 2026 (no league filter)</h2>');
+  const all = await call('/api/events/?date_from=2026-06-11&date_to=2026-06-15');
+  if (all.error) {
+    log(`<p class="err">${all.error}</p>`);
+  } else {
+    const events = all.results || all.events || [];
+    log(`<p>Found ${events.length} events. Listing leagues that appear:</p>`);
+    const byLeague = {};
+    events.forEach(e => {
+      const lid = e.league?.id || e.league_id || e.league || '?';
+      const lname = e.league?.name || e.league_name || '';
+      byLeague[lid] = byLeague[lid] || { name: lname, count: 0, example: e };
+      byLeague[lid].count++;
+    });
+    log('<table border="1" cellpadding="6"><tr><th>League ID</th><th>League Name</th><th>Match Count</th></tr>' +
+      Object.entries(byLeague).map(([lid, info]) =>
+        `<tr><td class="hl">${lid}</td><td>${info.name}</td><td>${info.count}</td></tr>`
+      ).join('') +
+      '</table>');
+    log(`<p>Sample event:</p><pre>${JSON.stringify(events[0], null, 2)}</pre>`);
+  }
+
+  log('<h2 class="ok">Done — find the row with the most matches on June 11 and use that ID</h2>');
+}
+
+run();
+</script>
+</body>
+</html>
