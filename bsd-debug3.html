@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BSD Debug v3</title>
+<style>
+  body { font-family: monospace; background:#111; color:#eee; padding:20px; font-size:13px; }
+  h2 { color:#C9982A; margin-top:20px; border-bottom:1px solid #333; padding-bottom:4px; }
+  pre { background:#1a1a1a; padding:10px; border-radius:6px; overflow:auto; max-height:500px; font-size:11px; }
+  .ok { color:#5fbf60; }
+  .err { color:#e87070; }
+</style>
+</head>
+<body>
+<h1>BSD Debug v3 — World Cup event & standings structure</h1>
+<div id="output">Loading…</div>
+
+<script>
+const API_KEY = '7f925fe5bd00c0a208709e72dd1186425f0872db';
+const BASE = 'https://sports.bzzoiro.com';
+
+async function call(path) {
+  try {
+    const r = await fetch(BASE + path, { headers:{'Authorization':'Token '+API_KEY} });
+    if (!r.ok) return { error: `HTTP ${r.status}`, text: await r.text() };
+    return await r.json();
+  } catch(e) { return { error: e.message }; }
+}
+
+function log(html) {
+  document.getElementById('output').insertAdjacentHTML('beforeend', html);
+}
+
+async function run() {
+  document.getElementById('output').innerHTML = '';
+
+  // ===  Get a World Cup event (league 27) to see full field structure ===
+  log('<h2>1) Full World Cup event structure (league 27)</h2>');
+  const wcEvents = await call('/api/events/?league=27&date_from=2026-06-11&date_to=2026-06-15');
+  if (wcEvents.error) {
+    log(`<p class="err">${wcEvents.error}</p>`);
+  } else {
+    const events = wcEvents.results || wcEvents.events || [];
+    log(`<p>Found ${events.length} World Cup events. Showing FIRST one with all fields:</p>`);
+    log(`<pre>${JSON.stringify(events[0], null, 2)}</pre>`);
+  }
+
+  // ===  Try standings endpoints (try multiple variations) ===
+  log('<h2>2) Standings — trying multiple endpoint variations</h2>');
+  const standingsPaths = [
+    '/api/v2/leagues/27/standings/',
+    '/api/leagues/27/standings/',
+    '/api/standings/?league=27',
+    '/api/v2/standings/?league=27',
+    '/api/v2/leagues/27/standings/?season=current',
+  ];
+  for (const p of standingsPaths) {
+    log(`<h3>${p}</h3>`);
+    const r = await call(p);
+    if (r.error) {
+      log(`<p class="err">${r.error}</p>`);
+      if (r.text) log(`<pre>${r.text.substring(0,300)}</pre>`);
+    } else {
+      log(`<pre>${JSON.stringify(r, null, 2).substring(0, 3000)}</pre>`);
+    }
+  }
+
+  log('<h2 class="ok">Done</h2>');
+}
+
+run();
+</script>
+</body>
+</html>
