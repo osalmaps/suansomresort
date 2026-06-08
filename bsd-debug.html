@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BSD Leagues Debug</title>
+<style>
+  body { font-family: monospace; background:#111; color:#eee; padding:20px; }
+  pre { background:#1a1a1a; padding:10px; border-radius:6px; overflow:auto; }
+  h2 { color:#C9982A; margin-top:20px; }
+  table { border-collapse:collapse; margin-top:10px; width:100%; }
+  td, th { border:1px solid #333; padding:6px 12px; text-align:left; }
+  th { background:#1a1a1a; color:#C9982A; }
+  .wc { background:#2a1a0a; }
+</style>
+</head>
+<body>
+<h1>BSD API Debug</h1>
+<p>This page lists all BSD leagues so we can find the right World Cup 2026 league ID.</p>
+<div id="output">Loading…</div>
+
+<script>
+const API_KEY = '7f925fe5bd00c0a208709e72dd1186425f0872db';
+
+async function run() {
+  const out = document.getElementById('output');
+  const log = (h) => out.insertAdjacentHTML('beforeend', h);
+  out.innerHTML = '';
+
+  // Try multiple endpoints to find leagues
+  const endpoints = [
+    '/api/leagues/?search=World+Cup',
+    '/api/leagues/?page_size=200',
+    '/api/v2/leagues/',
+    '/api/leagues/',
+  ];
+
+  for (const ep of endpoints) {
+    log(`<h2>GET ${ep}</h2>`);
+    try {
+      const r = await fetch('https://sports.bzzoiro.com' + ep, {
+        headers: { 'Authorization': 'Token ' + API_KEY }
+      });
+      log(`<p>Status: ${r.status} ${r.statusText}</p>`);
+      if (!r.ok) {
+        const text = await r.text();
+        log(`<pre>${text.substring(0,500)}</pre>`);
+        continue;
+      }
+      const data = await r.json();
+      const list = data.results || data.leagues || (Array.isArray(data) ? data : []);
+      log(`<p>Returned ${list.length} leagues. Showing those matching "world cup":</p>`);
+      const matching = list.filter(l => (l.name||'').toLowerCase().includes('world cup'));
+      if (matching.length === 0) {
+        log(`<p style="color:#e87070">No matches in this endpoint</p>`);
+        // Show first 20 for reference
+        log(`<p>First 20 leagues from this endpoint:</p>`);
+        log('<table><tr><th>ID</th><th>Name</th><th>Country</th></tr>' +
+          list.slice(0,20).map(l => `<tr><td>${l.id}</td><td>${l.name}</td><td>${l.country||''}</td></tr>`).join('') +
+          '</table>');
+      } else {
+        log('<table><tr><th>ID</th><th>Name</th><th>Country</th></tr>' +
+          matching.map(l => `<tr class="${(l.name||'').toLowerCase().includes('2026')?'wc':''}"><td><strong>${l.id}</strong></td><td>${l.name}</td><td>${l.country||''}</td></tr>`).join('') +
+          '</table>');
+      }
+    } catch(e) {
+      log(`<pre style="color:#e87070">Error: ${e.message}</pre>`);
+    }
+  }
+
+  log('<h2>Done</h2><p>Look for "World Cup 2026" above and note the ID in the leftmost column.</p>');
+}
+
+run();
+</script>
+</body>
+</html>
