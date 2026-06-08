@@ -226,13 +226,17 @@ function isFinalPhase(status) {
 }
 
 // ─── DATE HELPERS ────────────────────────────────────────────────────────
+// Show match dates/times in the tournament's local timezone (US Eastern, UTC-4)
+// rather than the viewer's local timezone — otherwise a Mexico-time evening
+// match shows as next-morning Singapore time.
+const TOURNAMENT_TZ = 'America/New_York';
 function fmtKickoff(utcStr) {
   if (!utcStr) return {day:'?',month:'?',time:'?'};
   const d = new Date(utcStr);
   return {
-    day:   d.getDate().toString(),
-    month: d.toLocaleString('en',{month:'short'}).toUpperCase(),
-    time:  d.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit'}),
+    day:   d.toLocaleString('en-US', { day:'numeric', timeZone: TOURNAMENT_TZ }),
+    month: d.toLocaleString('en-US', { month:'short', timeZone: TOURNAMENT_TZ }).toUpperCase(),
+    time:  d.toLocaleString('en-US', { hour:'2-digit', minute:'2-digit', timeZone: TOURNAMENT_TZ, hour12: true }),
   };
 }
 
