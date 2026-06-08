@@ -50,6 +50,9 @@
   .match-main { display:flex; align-items:center; justify-content:space-between; gap:12px; }
   .team { display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; }
   .flag { display:inline-flex; align-items:center; justify-content:center; min-width:60px; height:36px; padding:0 10px; background:var(--gold); color:var(--dark); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; border-radius:5px; line-height:1; }
+  .team-logo { width:60px; height:42px; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+  .upcoming-logo { width:32px; height:24px; object-fit:contain; flex-shrink:0; }
+  .logo-sm { width:24px; height:18px; object-fit:contain; flex-shrink:0; }
   .team-name { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; letter-spacing:1px; text-align:center; text-transform:uppercase; line-height:1.1; }
   .score-block { display:flex; flex-direction:column; align-items:center; gap:4px; min-width:120px; }
   .score { font-family:'Bebas Neue',sans-serif; font-size:58px; line-height:0.9; letter-spacing:4px; }
@@ -233,11 +236,29 @@ function fmtKickoff(utcStr) {
   };
 }
 
+// ─── IMAGE URL HELPERS ───────────────────────────────────────────────────
+// BSD's image proxy — no auth needed, cached 365 days
+function teamLogo(id) { return id ? `${BASE_URL}/img/team/${id}/?bg=transparent` : ''; }
+function venuePhoto(id) { return id ? `${BASE_URL}/img/venue/${id}/` : ''; }
+
+// Extract IDs robustly from BSD event objects
+function teamId(team, fallback) {
+  if (team && typeof team === 'object' && team.id) return team.id;
+  return fallback || null;
+}
+function venueId(m) {
+  if (m.venue && typeof m.venue === 'object' && m.venue.id) return m.venue.id;
+  return m.venue_id || m.home_team_obj?.venue_id || null;
+}
+
 // ─── RENDER MATCH CARD ───────────────────────────────────────────────────
 function renderMatch(m) {
   // BSD fields: home_team, away_team, home_score, away_score, status, current_minute, venue, group
   const home   = (typeof m.home_team === 'string' ? m.home_team : m.home_team?.name) || '—';
   const away   = (typeof m.away_team === 'string' ? m.away_team : m.away_team?.name) || '—';
+  const homeId = teamId(m.home_team_obj, m.home_team_id) || teamId(m.home_team);
+  const awayId = teamId(m.away_team_obj, m.away_team_id) || teamId(m.away_team);
+  const venId  = venueId(m);
   const hs     = m.home_score ?? '—';
   const as_    = m.away_score ?? '—';
   const status = m.status || m.phase || '';
@@ -248,13 +269,21 @@ function renderMatch(m) {
   const groupName = m.group || m.group_name || '';
   const group  = groupName ? `<span class="group-badge">GROUP ${groupName}</span>` : '';
   const venue  = (typeof m.venue === 'string' ? m.venue : m.venue?.name) || m.stadium || '';
+  // Stadium photo as faint backdrop on live cards
+  const bgStyle = (live && venId) ? `style="background-image:linear-gradient(135deg, rgba(30,46,38,0.92), rgba(42,26,26,0.92)), url('${venuePhoto(venId)}'); background-size:cover; background-position:center;"` : '';
+  const homeLogoHtml = homeId
+    ? `<img class="team-logo" src="${teamLogo(homeId)}" alt="${home}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="flag" style="display:none">${flag(home)}</span>`
+    : `<span class="flag">${flag(home)}</span>`;
+  const awayLogoHtml = awayId
+    ? `<img class="team-logo" src="${teamLogo(awayId)}" alt="${away}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="flag" style="display:none">${flag(away)}</span>`
+    : `<span class="flag">${flag(away)}</span>`;
   return `
-    <div class="match-card ${live?'is-live':''}">
+    <div class="match-card ${live?'is-live':''}" ${bgStyle}>
       ${live ? '<div class="live-badge">LIVE</div>' : ''}
       <div class="match-meta">${group}${venue?`<span>${venue}</span>`:''}</div>
       <div class="match-main">
         <div class="team">
-          <div class="flag">${flag(home)}</div>
+          ${homeLogoHtml}
           <div class="team-name">${home}</div>
         </div>
         <div class="score-block">
@@ -262,7 +291,7 @@ function renderMatch(m) {
           <div class="score-status ${live?'live-min':''}">${label}</div>
         </div>
         <div class="team">
-          <div class="flag">${flag(away)}</div>
+          ${awayLogoHtml}
           <div class="team-name">${away}</div>
         </div>
       </div>
@@ -273,8 +302,16 @@ function renderMatch(m) {
 function renderUpcoming(m) {
   const home  = (typeof m.home_team === 'string' ? m.home_team : m.home_team?.name) || '—';
   const away  = (typeof m.away_team === 'string' ? m.away_team : m.away_team?.name) || '—';
+  const homeId = teamId(m.home_team_obj, m.home_team_id) || teamId(m.home_team);
+  const awayId = teamId(m.away_team_obj, m.away_team_id) || teamId(m.away_team);
   const dt    = fmtKickoff(m.event_date || m.kickoff_utc || m.date);
   const venue = (typeof m.venue === 'string' ? m.venue : m.venue?.name) || m.stadium || '';
+  const homeLogoHtml = homeId
+    ? `<img class="upcoming-logo" src="${teamLogo(homeId)}" alt="${home}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="upcoming-flag" style="display:none">${flag(home)}</span>`
+    : `<span class="upcoming-flag">${flag(home)}</span>`;
+  const awayLogoHtml = awayId
+    ? `<img class="upcoming-logo" src="${teamLogo(awayId)}" alt="${away}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="upcoming-flag" style="display:none">${flag(away)}</span>`
+    : `<span class="upcoming-flag">${flag(away)}</span>`;
   return `
     <div class="upcoming-card">
       <div class="upcoming-date">
@@ -284,12 +321,12 @@ function renderUpcoming(m) {
       </div>
       <div class="upcoming-match">
         <div class="upcoming-team">
-          <span class="upcoming-flag">${flag(home)}</span>
+          ${homeLogoHtml}
           <span class="upcoming-name">${home}</span>
         </div>
         <span class="upcoming-vs">VS</span>
         <div class="upcoming-team">
-          <span class="upcoming-flag">${flag(away)}</span>
+          ${awayLogoHtml}
           <span class="upcoming-name">${away}</span>
         </div>
       </div>
@@ -320,7 +357,9 @@ function renderStandingsGroup(groupName, rows, allGroupNames, currentIndex) {
       <div class="s-grid s-row ${qualify} ${out}">
         <div><span class="pos">${i+1}</span></div>
         <div style="display:flex;align-items:center">
-          <span class="flag-sm">${flag(t.team_name)}</span>
+          ${t.team_id
+            ? `<img class="logo-sm" src="${teamLogo(t.team_id)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="flag-sm" style="display:none">${flag(t.team_name)}</span>`
+            : `<span class="flag-sm">${flag(t.team_name)}</span>`}
           <span class="cell-name">${t.team_name || '—'}</span>
         </div>
         <div class="cell-stat">${t.played ?? 0}</div>
@@ -575,6 +614,7 @@ async function loadAll() {
         groups.forEach(g => {
           const groupName = (g.name || '').replace(/^group\s+/i,'').trim() || '?';
           byGroup[groupName] = g.standings.map(row => ({
+            team_id:   row.team?.id || row.team_id || null,
             team_name: row.team?.name || row.team_name || row.name,
             played:    row.played ?? row.matches_played ?? 0,
             won:       row.won ?? row.wins ?? 0,
@@ -590,6 +630,7 @@ async function loadAll() {
           const g = (row.group || row.group_name || '?').replace(/^group\s+/i,'').trim();
           if (!byGroup[g]) byGroup[g] = [];
           byGroup[g].push({
+            team_id:   row.team?.id || row.team_id || null,
             team_name: row.team?.name || row.team_name || row.name,
             played:    row.played ?? 0,
             won:       row.won ?? 0,
