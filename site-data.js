@@ -135,7 +135,7 @@ const SITE_DATA = {
       title: "Farang (Western) Food Menu",
       sections: [
         { heading: "Main Dishes", items: [
-          { name: "Hamburger with Fries",            price: "150 Baht" },
+          { name: "Hamburger with Fries",            price: "220 Baht" },
           { name: "Cheeseburger with Fries",         price: "170 Baht" },
           { name: "Chicken Nuggets with Fries",      price: "120 Baht" },
           { name: "Fish & Chips",                    price: "160 Baht" },
