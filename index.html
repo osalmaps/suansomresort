@@ -576,20 +576,8 @@
         <section id="gallery" class="section">
             <h2>Our Restaurant</h2>
             <p>A glimpse of some of the dishes here @ Suan Som Resort.</p>
-            <div class="gallery-images">
-                <div class="image-container">
-                    <img src="burger-fries.jpg" alt="Our classic Burger and Fries" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Our classic Burger and Fries, a Western favorite.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="Mango-Sticky-Rice.jpg" alt="Sweet Mango Sticky Rice" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Indulge in seasonal Mango Sticky Rice.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="porkroast.jpg" alt="Chef's Special" onclick="openModal(this)">
-                    <div class="image-overlay"><p>A look at one of our delicious Crispy Pork Roast.</p></div>
-                </div>
-            </div>
+            <!-- Photos are filled in automatically from site-data.js (galleryPhotos) -->
+            <div class="gallery-images" id="mainGallery"></div>
         </section>
     </main>
 
@@ -609,28 +597,11 @@
         <span class="close" onclick="closePopup('about-popup')">×</span>
         <h2>About Suan Som Resort</h2>
         <div class="popup-content">
-            <p>Welcome to Suan Som Resort, nestled in the serene landscapes of Thailand. Our resort offers a tranquil escape with breathtaking views and exceptional service. We pride ourselves on blending traditional Thai hospitality with modern comforts, ensuring a memorable stay for every guest.</p>
-            <div class="about-images">
-                <div class="image-container">
-                    <img src="Driveway-Outside-01.jpg" alt="Scenic view of the resort" onclick="openModal(this)">
-                    <div class="image-overlay"><p>View of the entrance to our resort.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="Driveway-Outside-02.jpg" alt="Resort view outside" onclick="openModal(this)">
-                    <div class="image-overlay"><p>View outside.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="Driveway-Outside-03.jpg" alt="Resort view outside" onclick="openModal(this)">
-                    <div class="image-overlay"><p>View outside.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="Driveway-Outside-04.jpg" alt="Resort night view outside" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Night view outside.</p></div>
-                </div>
-
-            </div>
-            <h3>Our Mission</h3>
-            <p>To provide an unparalleled experience of relaxation and cultural immersion, making every visit to Suan Som Resort a cherished memory.</p>
+            <p id="aboutIntro"></p>
+            <!-- About photos filled from site-data.js (about.photos) -->
+            <div class="about-images" id="aboutGallery"></div>
+            <h3 id="aboutMissionTitle"></h3>
+            <p id="aboutMission"></p>
         </div>
     </div>
 
@@ -639,31 +610,10 @@
         <h2>Our Rooms</h2>
         <div class="popup-content">
             <p>Discover our comfortable and elegantly designed rooms, perfect for every traveler.</p>
-            <div class="gallery-images">
-                <div class="image-container">
-                    <img src="Standard-Room-02.jpg" alt="Standard Room Bed" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Spacious Standard Room Bed.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="Standard-Room-04.jpg" alt="Standard Room" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Cozy Standard Room.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="Standard-Room-07.jpg" alt="Luxurious Bathroom" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Modern and luxurious bathroom facilities.</p></div>
-                </div>
-                <div class="image-container">
-                    <img src="Standard-Room-06.jpg" alt="Toilet" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Comfortable Toilet.</p></div>
-                </div>
-            </div>
-            <p>B400,- for Standard Room.<br>
-            <p>All rooms include:<br>
-            - Air conditioning<br>
-            - Free Wi-Fi<br>
-            - Private bathroom with hot shower<br>
-            - Flat-screen TV<br>
-            - Coffee & Bottled Water</p>
+            <!-- Room photos filled from site-data.js (rooms.photos) -->
+            <div class="gallery-images" id="roomsGallery"></div>
+            <!-- Room price + amenities filled from site-data.js (rooms) -->
+            <div id="roomsInfo"></div>
             <p>Contact us to inquire about availability and special rates.</p>
             <button class="sub-button" onclick="openPopup('contact-popup')">Inquire Now</button>
         </div>
@@ -675,22 +625,11 @@
         <h2>Contact Us</h2>
         <div class="popup-content">
         <p>We'd love to hear from you! Reach out to us for reservations, inquiries, or feedback.</p>
-     <ul>
-       <li style="margin-bottom: 15px; display: flex;">
-    <strong style="flex-shrink: 0; min-width: 80px;">Office 📞:</strong>
-    <a href="tel:+660833438771">+66 083 343 8771</a>
-</li>
-<li style="margin-bottom: 15px; display: flex;">
-    <strong style="flex-shrink: 0; min-width: 80px;">Som 📞:</strong>
-    <a href="tel:+660939356326">+66 093 935 6326</a>
-</li>
-        <li><strong>Address:</strong> 86/4 Ban Sawsawan, Han Na Ngam, Nong Bua Lamphu, Si Bun Rueang, 39180, Thailand</li>
-      </ul>
-            <div class="image-container">
-                <img src="Driveway-Outside-01.jpg" alt="Resort Entrance" onclick="openModal(this)">
-                <div class="image-overlay"><p>The welcoming entrance to Suan Som Resort.</p></div>
-            </div>
-            <p>Our friendly staff are available to assist you during business hours. Refreshments & Snacks available on request.</p>
+        <!-- Phone numbers + address filled from site-data.js (contact) -->
+        <ul id="contactList"></ul>
+        <!-- Contact photo filled from site-data.js (contact.image) -->
+        <div id="contactImage"></div>
+        <p>Our friendly staff are available to assist you during business hours. Refreshments & Snacks available on request.</p>
         </div>
     </div>
 
@@ -712,10 +651,8 @@
                     <button class="sub-button" onclick="openPopup('desserts-popup')">Desserts</button>
                     <button class="sub-button" onclick="openPopup('special-food-popup')">This Week's Special</button>
                 </div>
-                <div class="image-container">
-                    <img src="padthai.jpg" alt="Variety of Thai dishes" onclick="openModal(this)">
-                    <div class="image-overlay"><p>A glimpse into our delicious range of Thai cuisine.</p></div>
-                </div>
+                <!-- Food tab photo filled from site-data.js (restaurantPhotos.food) -->
+                <div id="foodTabImage"></div>
             </div>
 
             <div id="drink-menu-section" class="menu-section">
@@ -727,228 +664,61 @@
                     <button class="sub-button" onclick="openPopup('alcoholic-drinks-popup')">Alcoholic Beverages</button>
                     <button class="sub-button" onclick="openPopup('thai-bar-drinks-popup')">Thai Bar Drinks</button>
                 </div>
-                <div class="image-container">
-                    <img src="beergarden.jpg" alt="Refreshing drinks" onclick="openModal(this)">
-                    <div class="image-overlay"><p>Enjoy a refreshing drink at our resort's friendly bar.</p></div>
-                </div>
+                <!-- Drink tab photo filled from site-data.js (restaurantPhotos.drink) -->
+                <div id="drinkTabImage"></div>
             </div>
         </div>
     </div>
 
+    <!-- All menu pop-ups below are filled in automatically from site-data.js (menus) -->
     <div id="thai-food-popup" class="popup">
         <span class="close" onclick="closePopup('thai-food-popup')">×</span>
         <h2>Thai Food Menu</h2>
-        <div class="popup-content">
-         <div class="drinks-menu">
- <h3>Curries</h3>
- <ul>
-    <li><span class="item-name">Green Curry with Chicken</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Red Curry with Pork</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Massaman Curry with Beef</span> <span class="price">120 Baht</span></li>
-    <li><span class="item-name">Panang Curry with Shrimp</span> <span class="price">110 Baht</span></li>
-    </ul>
- <h3>Stir-fries</h3>
- <ul>
-     <li><span class="item-name">Pad Krapow (Basil Stir-fry) - Chicken</span> <span class="price">80 Baht</span></li>
-     <li><span class="item-name">Pad Krapow (Basil Stir-fry) - Pork</span> <span class="price">80 Baht</span></li>
-     <li><span class="item-name">Pad Krapow (Basil Stir-fry) - Beef</span> <span class="price">100 Baht</span></li>
-     <li><span class="item-name">Pad Med Mamuang (Cashew Nut Stir-fry) - Chicken</span> <span class="price">90 Baht</span></li>
-     <li><span class="item-name">Pad Priew Wan (Sweet & Sour) - Chicken/Pork</span> <span class="price">80 Baht</span></li>
-     <li><span class="item-name">Pad Pak Ruam (Mixed Vegetables)</span> <span class="price">70 Baht</span></li>
- </ul>
- <h3>Soups</h3>
- <ul>
-    <li><span class="item-name">Tom Yum Goong (Spicy Shrimp Soup)</span> <span class="price">120 Baht</span></li>
-    <li><span class="item-name">Tom Kha Gai (Chicken Coconut Soup)</span> <span class="price">100 Baht</span></li>
-    <li><span class="item-name">Gaeng Jued (Clear Soup with Tofu & Veg)</span> <span class="price">80 Baht</span></li>
-</ul>
-<h3>Noodles & Rice</h3>
-<ul>
-    <li><span class="item-name">Pad See Ew (Stir-fried Noodles) - Chicken/Pork</span> <span class="price">80 Baht</span></li>
-    <li><span class="item-name">Pad Thai - Chicken</span> <span class="price">80 Baht</span></li>
-    <li><span class="item-name">Pad Thai - Shrimp</span> <span class="price">100 Baht</span></li>
-    <li><span class="item-name">Fried Rice - Shrimp</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Fried Rice - Chicken/Pork/Veg</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Khao Pad Sapparot (Pineapple Fried Rice)</span> <span class="price">120 Baht</span></li>
-</ul>
-<h3>Salads</h3>
-<ul>
-    <li><span class="item-name">Som Tum (Papaya Salad)</span> <span class="price">70 Baht</span></li>
-    <li><span class="item-name">Laab Moo (Spicy Minced Pork Salad)</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Yum Woon Sen (Glass Noodle Salad)</span> <span class="price">100 Baht</span></li>
-</ul>        
-            </div>
-        </div>
+        <div class="popup-content" id="thaiFoodContent"></div>
     </div>
 
     <div id="farang-food-popup" class="popup">
         <span class="close" onclick="closePopup('farang-food-popup')">×</span>
         <h2>Farang (Western) Food Menu</h2>
-        <div class="popup-content">
-            <div class="drinks-menu">
-    <h3>Main Dishes</h3>
-<ul>
-    <li><span class="item-name">Hamburger with Fries</span> <span class="price">150 Baht</span></li>
-    <li><span class="item-name">Cheeseburger with Fries</span> <span class="price">170 Baht</span></li>
-    <li><span class="item-name">Chicken Nuggets with Fries</span> <span class="price">120 Baht</span></li>
-    <li><span class="item-name">Fish & Chips</span> <span class="price">160 Baht</span></li>
-    <li><span class="item-name">Spaghetti Carbonara</span> <span class="price">130 Baht</span></li>
-    <li><span class="item-name">Spaghetti Bolognese</span> <span class="price">140 Baht</span></li>
-    <li><span class="item-name">Grilled Chicken Breast with Salad</span> <span class="price">180 Baht</span></li>
-</ul>
-<h3>Sides</h3>
-<ul>
-    <li><span class="item-name">French Fries</span> <span class="price">50 Baht</span></li>
-    <li><span class="item-name">Onion Rings</span> <span class="price">60 Baht</span></li>
-    <li><span class="item-name">Mixed Green Salad</span> <span class="price">70 Baht</span></li>
-</ul>           
-            </div>
-        </div>
+        <div class="popup-content" id="farangFoodContent"></div>
     </div>
 
     <div id="desserts-popup" class="popup">
         <span class="close" onclick="closePopup('desserts-popup')">×</span>
         <h2>Desserts Menu</h2>
-        <div class="popup-content">
-            <div class="drinks-menu">
- <ul>
-    <li><span class="item-name">Mango Sticky Rice (Seasonal)</span> <span class="price">80 Baht</span></li>
-    <li><span class="item-name">Fried Banana with Honey</span> <span class="price">60 Baht</span></li>
-    <li><span class="item-name">Fried Banana with Ice Cream</span> <span class="price">70 Baht</span></li>
-    <li><span class="item-name">Ice Cream (Vanilla, Chocolate, Strawberry)</span> <span class="price">50 Baht (per scoop)</span></li>
-    <li><span class="item-name">Fresh Fruit Plate</span> <span class="price">90 Baht</span></li>
-</ul>
-            </div>
-        </div>
+        <div class="popup-content" id="dessertsContent"></div>
     </div>
 
     <div id="special-food-popup" class="popup">
         <span class="close" onclick="closePopup('special-food-popup')">×</span>
         <h2>This Week's Special!</h2>
-        <div class="popup-content">
-            <div class="drinks-menu">
-                <p>Ask our staff for this week's delicious special!</p>
-                <ul>
-                    <li><strong>Chef's Weekly Special</strong> - Price Varies</li>
-                    <li>(Example: Roasted Crispy Pork Shoulder)</li>
-                    <li>(Example: Grilled Snapper with Tamarind Sauce)</li>
-                    <li>(Example: Duck Red Curry)</li>
-                </ul>
-            </div>
-            <div class="image-container">
-                <img src="porkroast.jpg" alt="Chef's Special Example" onclick="openModal(this)">
-                <div class="image-overlay"><p>Today's special: A savory Pork Roast. (Image for illustration)</p></div>
-            </div>
-        </div>
+        <div class="popup-content" id="specialContent"></div>
     </div>
 
     <div id="soft-drinks-popup" class="popup">
         <span class="close" onclick="closePopup('soft-drinks-popup')">×</span>
         <h2>Soft Drinks Menu</h2>
-        <div class="popup-content">
-            <div class="drinks-menu">
-               <h3>Carbonated Drinks</h3>
-<ul>
-    <li><span class="item-name">Coca-Cola / Pepsi</span> <span class="price">25 Baht</span></li>
-    <li><span class="item-name">Sprite / 7-Up</span> <span class="price">25 Baht</span></li>
-    <li><span class="item-name">Fanta (Orange/Strawberry)</span> <span class="price">25 Baht</span></li>
-    <li><span class="item-name">Soda Water</span> <span class="price">20 Baht</span></li>
-</ul>
-<h3>Juices</h3>
-<ul>
-    <li><span class="item-name">Orange Juice</span> <span class="price">40 Baht</span></li>
-    <li><span class="item-name">Pineapple Juice</span> <span class="price">40 Baht</span></li>
-    <li><span class="item-name">Mango Juice</span> <span class="price">40 Baht</span></li>
-    <li><span class="item-name">Coconut Water (Fresh)</span> <span class="price">60 Baht</span></li>
-</ul>
-<h3>Other</h3>
-<ul>
-    <li><span class="item-name">Drinking Water (small bottle)</span> <span class="price">15 Baht</span></li>
-    <li><span class="item-name">Drinking Water (large bottle)</span> <span class="price">25 Baht</span></li>
-    <li><span class="item-name">Iced Tea (Lemon/Thai Milk Tea)</span> <span class="price">30 Baht</span></li>
-    <li><span class="item-name">Hot Coffee</span> <span class="price">40 Baht</span></li>
-    <li><span class="item-name">Iced Coffee</span> <span class="price">50 Baht</span></li>
-</ul>
-            </div>
-        </div>
+        <div class="popup-content" id="softDrinksContent"></div>
     </div>
 
     <div id="local-beers-popup" class="popup">
         <span class="close" onclick="closePopup('local-beers-popup')">×</span>
         <h2>Local Beers Menu</h2>
-        <div class="popup-content">
-            <div class="drinks-menu">
- <ul>
-    <li><span class="item-name">Chang Beer (Small Bottle)</span> <span class="price">60 Baht</span></li>
-    <li><span class="item-name">Chang Beer (Large Bottle)</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Leo Beer (Small Bottle)</span> <span class="price">60 Baht</span></li>
-    <li><span class="item-name">Leo Beer (Large Bottle)</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Singha Beer (Small Bottle)</span> <span class="price">70 Baht</span></li>
-    <li><span class="item-name">Singha Beer (Large Bottle)</span> <span class="price">100 Baht</span></li>
-    <li><span class="item-name">Archa Beer (Small Bottle)</span> <span class="price">55 Baht</span></li>
-    <li><span class="item-name">Archa Beer (Large Bottle)</span> <span class="price">85 Baht</span></li>
-</ul>             
-                <p><em>Prices may vary slightly.</em></p>
-            </div>
-        </div>
+        <div class="popup-content" id="localBeersContent"></div>
     </div>
 
     <div id="alcoholic-drinks-popup" class="popup">
         <span class="close" onclick="closePopup('alcoholic-drinks-popup')">×</span>
         <h2>Alcoholic Beverages Menu</h2>
-        <div class="popup-content">
-            <div class="drinks-menu">
-                <h3>Spirits (per shot/glass)</h3>
-     <ul>
-    <li><span class="item-name">Thai Whiskey (Blend 285, Hong Thong)</span> <span class="price">60 Baht</span></li>
-    <li><span class="item-name">Local Rum (SangSom)</span> <span class="price">60 Baht</span></li>
-    <li><span class="item-name">Imported Whiskey (Johnnie Red)</span> <span class="price">100 Baht</span></li>
-    <li><span class="item-name">Imported Whiskey (Johnnie Black)</span> <span class="price">150 Baht</span></li>
-    <li><span class="item-name">Vodka (Gilbey's)</span> <span class="price">90 Baht</span></li>  
-    <li><span class="item-name">Vodka (Smirnoff)</span> <span class="price">100 Baht</span></li>
-    <li><span class="item-name">Jägermeister</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Tequila</span> <span class="price">90 Baht</span></li>  
-    <li><span class="item-name">Gin (Gilbey's)</span> <span class="price">90 Baht</span></li>
-    <li><span class="item-name">Gin (Bombay)</span> <span class="price">110 Baht</span></li>  
-</ul>
-                <h3>Wine (per glass / bottle)</h3>
-               <ul>
-    <li><span class="item-name">House Red Wine</span> <span class="price">150 Baht / 700 Baht</span></li>
-    <li><span class="item-name">House White Wine</span> <span class="price">150 Baht / 700 Baht</span></li>
-    <li><span class="item-name">(Ask for our wine list for other selections)</span></li>
-</ul>
-                <h3>Other</h3>
-                <ul>
-                    <li>Cider (Local/Imported) - Prices Vary</li>
-                    <li>Cocktails (see Thai Bar Drinks)</li>
-                </ul>
-            </div>
-        </div>
+        <div class="popup-content" id="alcoholicContent"></div>
     </div>
 
     <div id="thai-bar-drinks-popup" class="popup">
         <span class="close" onclick="closePopup('thai-bar-drinks-popup')">×</span>
         <h2>Thai Bar Drinks (Cocktails)</h2>
-        <div class="popup-content">
-            <div class="drinks-menu">
-                <p>Enjoy our refreshing tropical and classic cocktails!</p>
-                <ul>
-    <li><span class="item-name">Mekong Cocktail (Thai Whiskey, Lime, Soda)</span> <span class="price">120 Baht</span></li>
-    <li><span class="item-name">SangSom Special (Thai Rum, Coke/Soda, Lime)</span> <span class="price">120 Baht</span></li>
-    <li><span class="item-name">Jäger Bomb (Jägermeister, Red Bull)</span> <span class="price">120 Baht</span></li>             
-    <li><span class="item-name">Mojito (Rum, Mint, Lime, Soda)</span> <span class="price">150 Baht</span></li>
-    <li><span class="item-name">Pina Colada (Rum, Coconut Cream, Pineapple)</span> <span class="price">150 Baht</span></li>
-    <li><span class="item-name">Margarita (Tequila, Triple Sec, Lime)</span> <span class="price">150 Baht</span></li>
-    <li><span class="item-name">Long Island Iced Tea</span> <span class="price">200 Baht</span></li>
-    <li><span class="item-name">Thai Sabai (Thai Basil, Mekong, Lime)</span> <span class="price">140 Baht</span></li>
-</ul>
-            </div>
-            <div class="image-container">
-                <img src="thai_cocktail.jpg" alt="Thai Cocktail" onclick="openModal(this)">
-                <div class="image-overlay"><p>A vibrant example of our refreshing Thai cocktails.</p></div>
-            </div>
-        </div>
+        <div class="popup-content" id="thaiBarContent"></div>
     </div>
+
  <p> Find us here:</p>
   <iframe
     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1876.3699461646067!2d102.26189218910463!3d16.952779195224807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3123cd64ced576e3%3A0xb4cdfba10e398850!2s2%2C%20Tambon%20Han%20Na%20Ngam%2C%20Amphoe%20Si%20Bun%20Rueang%2C%20Chang%20Wat%20Nong%20Bua%20Lam%20Phu%2039180%2C%20Thailand!5e1!3m2!1sen!2sno!4v1749902600166!5m2!1sen!2sno"
@@ -967,7 +737,125 @@
 
     <div class="overlay"></div>
 
+    <!-- Load the content file BEFORE the script that uses it -->
+    <script src="site-data.js"></script>
+
     <script>
+        /* =================================================================
+           CONTENT RENDERING
+           These functions read your SITE_DATA (from site-data.js) and
+           build the menus and photo galleries on the page. You normally
+           never need to touch anything below — just edit site-data.js.
+           ================================================================= */
+
+        // Make text safe to put inside the page (handles &, <, >, ").
+        function escapeHtml(s) {
+            return String(s == null ? "" : s)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
+
+        // One photo box (clickable, with caption overlay).
+        function renderImageContainer(img) {
+            return '<div class="image-container">' +
+                '<img src="' + escapeHtml(img.src) + '" alt="' + escapeHtml(img.caption) + '" onclick="openModal(this)">' +
+                '<div class="image-overlay"><p>' + escapeHtml(img.caption) + '</p></div>' +
+                '</div>';
+        }
+
+        // A list of photo boxes (used to fill a gallery wrapper).
+        function renderImageContainers(photos) {
+            return (photos || []).map(renderImageContainer).join('');
+        }
+
+        // The price/name lines of a menu.
+        function renderMenuItems(items) {
+            return (items || []).map(function (it) {
+                var price = it.price ? ' <span class="price">' + escapeHtml(it.price) + '</span>' : '';
+                return '<li><span class="item-name">' + escapeHtml(it.name) + '</span>' + price + '</li>';
+            }).join('');
+        }
+
+        // A full menu (intro, headed sections, optional note, optional photo).
+        function renderMenu(menu) {
+            var html = '<div class="drinks-menu">';
+            if (menu.intro) html += '<p>' + escapeHtml(menu.intro) + '</p>';
+            (menu.sections || []).forEach(function (sec) {
+                if (sec.heading) html += '<h3>' + escapeHtml(sec.heading) + '</h3>';
+                html += '<ul>' + renderMenuItems(sec.items) + '</ul>';
+            });
+            if (menu.note) html += '<p><em>' + escapeHtml(menu.note) + '</em></p>';
+            html += '</div>';
+            if (menu.image) html += renderImageContainer(menu.image);
+            return html;
+        }
+
+        function setHTML(id, html) {
+            var el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+
+        // Build the whole page from SITE_DATA.
+        function renderSiteContent() {
+            if (typeof SITE_DATA === 'undefined') {
+                console.error('site-data.js did not load. Check that the file is uploaded and named correctly.');
+                return;
+            }
+            var d = SITE_DATA;
+
+            // Main page restaurant gallery
+            setHTML('mainGallery', renderImageContainers(d.galleryPhotos));
+
+            // About
+            setHTML('aboutIntro', escapeHtml(d.about.intro));
+            setHTML('aboutGallery', renderImageContainers(d.about.photos));
+            setHTML('aboutMissionTitle', escapeHtml(d.about.missionTitle));
+            setHTML('aboutMission', escapeHtml(d.about.mission));
+
+            // Rooms
+            setHTML('roomsGallery', renderImageContainers(d.rooms.photos));
+            var amenities = (d.rooms.amenities || []).map(function (a) { return '- ' + escapeHtml(a); }).join('<br>');
+            setHTML('roomsInfo', '<p>' + escapeHtml(d.rooms.price) + '</p>' +
+                '<p>All rooms include:<br>' + amenities + '</p>');
+
+            // Contact
+            var c = d.contact;
+            setHTML('contactList',
+                '<li style="margin-bottom: 15px; display: flex;"><strong style="flex-shrink: 0; min-width: 80px;">Office \uD83D\uDCDE:</strong> <a href="tel:' + escapeHtml(c.officePhoneDial) + '">' + escapeHtml(c.officePhoneDisplay) + '</a></li>' +
+                '<li style="margin-bottom: 15px; display: flex;"><strong style="flex-shrink: 0; min-width: 80px;">Som \uD83D\uDCDE:</strong> <a href="tel:' + escapeHtml(c.somPhoneDial) + '">' + escapeHtml(c.somPhoneDisplay) + '</a></li>' +
+                '<li><strong>Address:</strong> ' + escapeHtml(c.address) + '</li>');
+            setHTML('contactImage', renderImageContainer(c.image));
+
+            // Restaurant tab photos
+            setHTML('foodTabImage', renderImageContainer(d.restaurantPhotos.food));
+            setHTML('drinkTabImage', renderImageContainer(d.restaurantPhotos.drink));
+
+            // Food + drink menus
+            setHTML('thaiFoodContent', renderMenu(d.menus.thaiFood));
+            setHTML('farangFoodContent', renderMenu(d.menus.farangFood));
+            setHTML('dessertsContent', renderMenu(d.menus.desserts));
+            setHTML('softDrinksContent', renderMenu(d.menus.softDrinks));
+            setHTML('localBeersContent', renderMenu(d.menus.localBeers));
+            setHTML('alcoholicContent', renderMenu(d.menus.alcoholic));
+            setHTML('thaiBarContent', renderMenu(d.menus.thaiBar));
+
+            // This week's special (first line shown in bold)
+            var sp = d.special;
+            var spLines = (sp.lines || []).map(function (line, i) {
+                return '<li>' + (i === 0 ? '<strong>' + escapeHtml(line) + '</strong>' : escapeHtml(line)) + '</li>';
+            }).join('');
+            setHTML('specialContent',
+                '<div class="drinks-menu"><p>' + escapeHtml(sp.intro) + '</p><ul>' + spLines + '</ul></div>' +
+                renderImageContainer(sp.image));
+        }
+
+
+        /* =================================================================
+           POP-UP / PHOTO VIEWER  (unchanged behaviour)
+           ================================================================= */
+
         // Global constant for transition duration (matches CSS)
         const TRANSITION_DURATION_MS = 500; // Adjusted for smoother fades across elements
 
@@ -1303,6 +1191,9 @@
 
         // Attach event listener to overlay for closing all popups/modal
         document.addEventListener('DOMContentLoaded', () => {
+            // Build all menus and galleries from site-data.js FIRST
+            renderSiteContent();
+
             if (overlay) {
                 overlay.addEventListener('click', closeAllPopups);
             }
@@ -1323,10 +1214,10 @@
             const emailContactButton = document.getElementById('emailContactButton');
             if (emailContactButton) {
                 emailContactButton.addEventListener('click', () => {
-                    const email = 'naris090952@gmail.com'; // Your resort's email address
+                    const email = (typeof SITE_DATA !== 'undefined' && SITE_DATA.contact.email) || 'naris090952@gmail.com';
                     const subject = encodeURIComponent('Room Inquiry from Suan Som Resort Website');
                     const body = encodeURIComponent('Dear Suan Som Resort Team,\n\nI am writing to inquire about room availability and rates.\n\nPlease let me know what information you require from me.\n\nThank you,\n[Your Name]');
-                    
+
                     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
                 });
             }
